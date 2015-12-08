@@ -1,0 +1,87 @@
+Sample Configuration File 
+Modeless Interface with Stdscr Curses Function Keys
+Anthony's Editor July 93
+Copyright 1993, 1993 by Anthony Howe.  All rights reserved.  No warranty.
+
+1:\
+File read and write\t\^R  \^W\t\tLeft, down, up, right\tarrow keys\n\
+Version, quit\t\t\^K\^V  \^X  \^K\^X\tWord left and right\t\^Left  \^Right\n\
+Macros\t\t\t\^K\^M\t\tPage down and up\tPgUp   PgDn\n\
+Help on and off\t\tF1\t\tFront and end of line\tHome   End\n\
+Redraw\t\t\t\^L\t\tTop and bottom of file\t\^Home  \^End\n\
+Insert \t\t\ttyped keys\tDelete left and right\tBACKSPACE DEL\n\
+Literal escape\t\t\^V\t\tBlock, cut, paste\tF2  F3  F4\n\
+Undo\t\t\t\^U\t\tInvert case\t\tF5\n
+
+#.help_off
+.literal	^V
+.cursor_up	^[H
+.cursor_down	^[P
+.cursor_left	^[K
+.cursor_right	^[M
+.page_up	^[I
+.page_down	^[Q
+.word_left	^[s
+.word_right	^[t
+.line_left	^[G
+.line_right	^[O
+.file_top	^[w
+.file_bottom	^[u
+.delete_left	^H
+.delete_right	^[S
+.help		^[;
+.block		^[<
+.cut		^[=
+.paste		^[>
+.flip_case	^[?
+.undo		^U
+.file_read	^R
+.file_write	^W
+.redraw		^L
+.quit_ask	^X
+.quit		^K^X
+.show_version	^K^V
+.macro		^K^M
+.macro_define
+.macro_define
+.macro_define
+.macro_define
+.macro_define
+
+2:%s: Terminated successfully.\n
+3:%s: Unspecified error.\n
+4:usage: %s [-f <config>] [file]\n
+5:%s: Failed to initialize the screen.\n
+6:%s: Problem with configuration file.\n
+7:%s: Failed to allocate required memory.\n
+8:Ok.
+9:An error occured.
+10:No more memory available.
+11:File \"%s\" is too big to load.
+12:Scrap is empty.  Nothing to paste.
+13:Failed to find file \"%s\".
+14:Failed to open file \"%s\".
+15:Failed to close file \"%s\".
+16:Failed to read file \"%s\".
+17:Failed to write file \"%s\".
+18:Not a portable POSIX file name.
+19:File \"%s\" %ld bytes.
+20:File \"%s\" %ld bytes saved.
+21:File \"%s\" %ld bytes read.
+22:File \"%s\" modified.
+23:Invalid control character or \\number not 0..255.
+24:No such macro defined.
+25:No more macro space.
+26:Interrupt.
+27:<< EOF >>
+28:Macro :
+29:File not saved.  Quit (y/n) ?
+30:[ Press a key to continue. ]
+31:Read file :
+32:Write file :
+33:Write block :
+34:\smore\s
+35:\sy\b
+36:\sn\b
+37:\sq\b
+38:Nothing to undo.

@@ -1,0 +1,46 @@
+#
+# makefile
+#
+# Copyright 1991, 1993 by Anthony Howe.  All rights reserved.  No warranty.
+#
+
+E	= .exe
+O	= .obj
+
+CC	= wcl
+CFLAGS	= -m$(MODEL) $(CCDEBUG) -I\usr\include 
+
+LD	= wcl
+LDFLAGS	= -x -m$(MODEL) $(LDDEBUG) -L\usr\lib\$(MODEL) 
+LIBS	= -@linkfile.pc
+
+RM	= rm
+
+OBJ	= data$(O) display$(O) command$(O) gap$(O) key$(O) main$(O)
+
+ae$(E) : $(OBJ) 
+	$(LD) $(LDFLAGS) $(LIBS) 
+
+header.h: key.h
+
+command$(O): command.c header.h
+	$(CC) $(CFLAGS) -c command.c
+
+data$(O): data.c header.h
+	$(CC) $(CFLAGS) -c data.c
+
+display$(O): display.c header.h
+	$(CC) $(CFLAGS) -c display.c
+
+gap$(O): gap.c header.h
+	$(CC) $(CFLAGS) -c gap.c
+
+key$(O): key.c header.h
+	$(CC) $(CFLAGS) -c key.c
+
+main$(O): main.c header.h
+	$(CC) $(CFLAGS) -c main.c
+
+clean:
+	-$(RM) $(OBJ) ae$(E) 
+

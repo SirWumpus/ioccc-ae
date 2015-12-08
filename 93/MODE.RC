@@ -1,0 +1,106 @@
+Modual Interface Sample Configuration File
+Anthony's Editor July 93
+Copyright 1993, 1993 by Anthony Howe.  All rights reserved.  No warranty.
+
+1:\
+Left, down, up, right	h  j  k  l	Insert on, off, erase	i  ESC  ERASE\n\
+Word left and right	H  L		Literal escape		\^V\n\
+Page down and up	J  K		Delete left and right	X  x\n\
+Start and end of line	[  ]		Block, cut, paste	SPACE  C  P\n\
+Top and bottom of file	T  B		Invert case		~\n\
+Macros			M		File read and write	R  W\n\
+Redraw			r		Undo			u\n\
+Help on and off		?		Version, quit		V  q  Q\n
+
+#.help_off
+.stty_erase
+.show_version	V
+.show_version	:ver
+.macro		M
+.macro		:map
+.macro_define
+.macro_define
+.macro_define
+.macro_define
+.macro_define	D	\s]C
+.macro_define	dd	[\sjC
+.macro_define	A	]i
+.macro_define	a	li
+.macro_define	dw	\swC
+.macro_define	cw	dwi
+.macro_define	o	[ji\n^[ki
+.macro_define	O	[i\n^[ki
+.macro_define	y	CP
+.cursor_up	k
+.cursor_down	j
+.cursor_left	h
+.cursor_right	l
+.page_up	K
+.page_down	J
+.page_up	^B
+.page_down	^F
+.word_left	H
+.word_right	L
+.word_left	b
+.word_right	w
+.line_left	[
+.line_right	]
+.line_left	0
+.line_right	$
+.file_top	T
+.file_bottom	B
+.delete_left	X
+.delete_right	x
+.insert_enter	i
+.insert_exit	^[
+.literal	^V
+.block		\s
+.cut		C
+.paste		P
+.flip_case	~
+.undo		u
+.help		?
+.file_write	W
+.file_read	R
+.redraw		r
+.quit_ask	q
+.quit		Q
+
+2:%s: Terminated successfully.\n
+3:%s: Unspecified error.\n
+4:usage: %s [-f <config>] [file]\n
+5:%s: Failed to initialize the screen.\n
+6:%s: Problem with configuration file.\n
+7:%s: Failed to allocate required memory.\n
+8:Ok.
+9:An error occured.
+10:No more memory available.
+11:File \"%s\" is too big to load.
+12:Scrap is empty.  Nothing to paste.
+13:Failed to find file \"%s\".
+14:Failed to open file \"%s\".
+15:Failed to close file \"%s\".
+16:Failed to read file \"%s\".
+17:Failed to write file \"%s\".
+18:Not a portable POSIX file name.
+19:File \"%s\" %ld bytes.
+20:File \"%s\" %ld bytes saved.
+21:File \"%s\" %ld bytes read.
+22:File \"%s\" modified.
+23:Invalid control character or \\number not 0..255.
+24:No such macro defined.
+25:No more macro space.
+26:Interrupt.
+27:<< EOF >>
+28:Macro :
+29:File not saved.  Quit (y/n) ?
+30:[ Press a key to continue. ]
+31:Read file :
+32:Write file :
+33:Write block :
+34:\smore\s
+35:\sy\b
+36:\sn\b
+37:\sq\b
+38:Nothing to undo.
+

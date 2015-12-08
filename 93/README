@@ -1,0 +1,74 @@
+Anthony's Editor July 93
+========================
+
+Copyright 1993, 1993 by Anthony Howe.  All rights reserved.  No warranty.
+
+WHAT'S NEW since AE April 93
+
+   o	Add recognition of ETCDIR environment variable as another
+	possible location for the configuration file.  This should
+	be initial set in a system .profile in case some users 
+	neglect to provide their own editor configuration.
+
+The original AE, in its obfuscated form, won "Best Utility" in the
+1991 International Obfuscated C Code Contest.  Since that contest, AE
+has been revised and extended in order to try new ideas and provide
+better functionality, while still retaining a simple interface and
+modualar design.
+
+The distribution composes of several files.  Below is a list of the 
+files in this distribution:
+
+	readme		This file.
+	ae.man		Manual reference and installation guide.
+	copying		Public License
+
+	makefile        Source makefile suitable for Make or AM.
+	command.c	AE source. 
+	data.c		    "
+	display.c	    "
+	gap.c		    "
+	key.c		    "
+	main.c		    "
+	header.h	    "
+	key.h		    "
+	
+	mode.rc		Sample configuration file modual style. 
+	modeless.rc	Sample configuration file modeless style (ansi keys).
+
+AE merges two schools of thought by providing both VI style (modual)
+and EMACS style (modeless) editing interfaces.  Users can configure the
+command-key bindings and the help text for either style.
+
+AE is simple enough that anyone can modify it to add features.  The
+source is free.  People are welcome to use and modify personal copies
+(see the "copying" file for more details).
+
+e.g.
+	o  Tutorials on the Buffer Gap Scheme and/or editor design.
+	o  A basis for an editor that can be built into a project.
+	o  An editor for novice users.
+
+AE has been know to compile on a wide variety of machines and compilers
+like BSD and System V Unix with GNU C, PC mahcines with WatCom C or Turbo C,
+and ATARI ST machines with Sozobon C.  Any machine that provides at least 
+K&R C and a CURSES library should have no trouble getting AE to compile.
+
+See the INSTALLATION section of the manual on how to build AE.  Also
+take note of the BUG section of the manual.
+
+Anthony Howe
+ant@mks.com
+
+
+PS.     Available upon request is AM, Anthony's Make, winner of "Best
+	Utility" in the 1992 International Obfuscated C Code Contest.
+	Please specify either the entry or human-readable version.
+
+	Also available upon request, Stdscr Curses for PC class
+	machines.  For those people who cannot find a suitable Curses
+	library to link AE with or use for other small projects.  This
+	small Curses library supports only the standard full screen
+	window, stdscr.
+
+
