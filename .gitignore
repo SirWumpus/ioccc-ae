@@ -1,0 +1,6 @@
+*.tws
+config.log
+config.status
+ant
+ae
+*.exe
