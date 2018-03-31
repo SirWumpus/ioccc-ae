@@ -1,532 +1,436 @@
-0.  NAME
+ae - Anthony's Editor July 93
+================================
 
-	ae	Anthony's Editor July 93
+## 1.  SYNOPSIS
 
-
-1.  SYNOPSIS
-
-	ae [-f config_file]  [filename]
+    ae [-f config_file]  [filename]
 
 
-2.  OPERANDS
+## 2.  OPERANDS
 
-config_file     The pathname of an AE configuration file.  The
-		pathname may be absolute, relative the current
-		directory, or relative the user's home directory.
+config_file     The pathname of an AE configuration file.  The pathname may be absolute, relative the current directory, or relative the user's home directory.
 
-filename	The name of a existing or new file to edit.
+filename    The name of a existing or new file to edit.
 
 
-3.  DESCRIPTION
+## 3.  DESCRIPTION
 
-AE is a simple full screen text editor that can be configured for
-either a modual (VI-style interface) or a modeless (EMACS-style
-interface).
+AE is a simple full screen text editor that can be configured for either a modual (VI-style interface) or a modeless (EMACS-style interface).
 
-Text files consist of lines of printable text or tab characters.  
-A line can be of arbitary length and is delimited by either a 
-newline or the end of file.  Carriage return is mapped to newline 
-on input and ignored on output.  Carriage returns already in the file
-are preserved.  Tab stops are every eight columns.
+Text files consist of lines of printable text or tab characters. A line can be of arbitary length and is delimited by either a newline or the end of file.  Carriage return is mapped to newline on input and ignored on output. Carriage returns already in the file are preserved.  Tab stops are every eight columns.
 
 
-4.  COMMANDS
+## 4.  COMMANDS
 
-Two default configuration files are supplied.  One of them should be
-renamed to "ae.rc" and placed in the user's home directory.  The two
-supplied files are "mode.rc" and "modeless.rc" which configure the
-editor for either modual (VI-style) or modeless (EMACS-style)
-operation.
+Two default configuration files are supplied.  One of them should be renamed to "ae.rc" and placed in the user's home directory.  The two supplied files are "mode.rc" and "modeless.rc" which configure the editor for either modual (VI-style) or modeless (EMACS-style) operation.
 
 
-4.1.  MODUAL CONFIGURATION 
+### 4.1.  MODUAL CONFIGURATION 
 
-4.1.1.  SUPPORT
+#### 4.1.1.  SUPPORT
 
-?		Toggle help on/off.
-M		Macro add, change, delete, or view.
-r		Refresh the screen.
-R W		Read and write file to and from the buffer.
-q Q		Quit with and without query.
-V		Display version.
+    ?               Toggle help on/off.
+    M               Macro add, change, delete, or view.
+    r               Refresh the screen.
+    R W             Read and write file to and from the buffer.
+    q Q             Quit with and without query.
+    V               Display version.
 
-4.1.2.  MOVEMENT
+#### 4.1.2.  MOVEMENT
 
-h j k l		Left, down, up, right cursor movement.
-H J K L		Word left, page down, page up, word right.
-[ ]		Beginning and end of line.
-T B		Top and bottom of file.
+    h j k l         Left, down, up, right cursor movement.
+    H J K L         Word left, page down, page up, word right.
+    [ ]             Beginning and end of line.
+    T B             Top and bottom of file.
 
-4.1.3.  EDIT
+#### 4.1.3.  EDIT
 
-i ESC ERASE	Enter insert mode, escape to leave, backspace.
-^V		Next character typed will be treated as a literal.
-X x		Delete character left or under the cursor.
-SPACE		Toggle block on/off.
-C		Cut block to scrap.
-P		Paste scrap into buffer.
-u		Undo last cut, delete, paste, read, insert, or undo.
-~		Invert case of letters.
+    i ESC ERASE     Enter insert mode, escape to leave, backspace.
+    ^V              Next character typed will be treated as a literal.
+    X x             Delete character left or under the cursor.
+    SPACE           Toggle block on/off.
+    C               Cut block to scrap.
+    P               Paste scrap into buffer.
+    u               Undo last cut, delete, paste, read, insert, or undo.
+    ~               Invert case of letters.
 
-4.1.4.  MACROS
+#### 4.1.4.  MACROS
 
-a		Append after cursor.
-A		Append at teh end of a line.
-cw		Change word.
-D		Delete from cursor to end of line.
-dd		Delete line.
-dw		Delete word.
-o O		Open line below or above.
-y		Yank current block.
-
-
-4.2.  MODELESS CONFIGURATION
-
-4.2.1.  SUPPORT
-
-F1		Toggle help on/off.
-^K^M		Macro add, change, delete, or view.
-^L		Refresh the screen.
-^R ^W		Read and write file to and from the buffer.
-^C ^K^C		Quit with and without query.  
-^K^V		Display version.
+    a               Append after cursor.
+    A               Append at the end of a line.
+    cw              Change word.
+    D               Delete from cursor to end of line.
+    dd              Delete line.
+    dw              Delete word.
+    o O             Open line below or above.
+    y               Yank current block.
 
 
-4.2.2.  MOVEMENT
+### 4.2.  MODELESS CONFIGURATION
 
-cursor keys	Left, down, up, right cursor movement (ansi defined).
-^A ^D		Word left,  word right.
-^F ^E		Front and end of line.
-^N ^P		Next and previous page.
-^T ^B		Top and bottom of file.
+#### 4.2.1.  SUPPORT
+
+    F1              Toggle help on/off.
+    ^K^M            Macro add, change, delete, or view.
+    ^L              Refresh the screen.
+    ^R ^W           Read and write file to and from the buffer.
+    ^C ^K^C         Quit with and without query.  
+    ^K^V            Display version.
 
 
-4.2.3.  EDIT
+#### 4.2.2.  MOVEMENT
 
-unbound keys	Insert.
-BACKSPACE ^X	Delete character left or under the cursor.
-^V		Next character typed will be treated as a literal.
-F2		Toggle block on/off.
-F3		Cut block to scrap.
-F4		Paste scrap into buffer.
-^U		Undo last cut, paste, read, or undo.
-F5		Invert case of letters.
+    cursor keys     Left, down, up, right cursor movement (ansi defined).
+    ^A ^D           Word left,  word right.
+    ^F ^E           Front and end of line.
+    ^N ^P           Next and previous page.
+    ^T ^B           Top and bottom of file.
 
-4.2.4.  MACROS
+
+#### 4.2.3.  EDIT
+
+    unbound keys    Insert.
+    BACKSPACE ^X    Delete character left or under the cursor.
+    ^V              Next character typed will be treated as a literal.
+    F2              Toggle block on/off.
+    F3              Cut block to scrap.
+    F4              Paste scrap into buffer.
+    ^U              Undo last cut, paste, read, or undo.
+    F5              Invert case of letters.
+
+#### 4.2.4.  MACROS
 
 No pre-defined macros.
 
 
-5.  CONFIGURATION
+## 5.  CONFIGURATION
 
-It is possible to redefine copies of the sample configuration files in 
-order to support key-bindings and text messages of the user's choice.  
-The user can define an interface similar to either Vi or Emacs, and 
-support multibyte key sequences.  The text messages can be rephrased or
-translated into any 8-bit character set.  
+It is possible to redefine copies of the sample configuration files in order to support key-bindings and text messages of the user's choice.   The user can define an interface similar to either Vi or Emacs, and  support multibyte key sequences.  The text messages can be rephrased or translated into any 8-bit character set.  
 
-The configuration file layout is fairly simple.  All keywords begin 
-on a line starting with a period (.).  Messages begin with a message
-number followed by a colon (:) and end with the first unescaped newline.
-Invalid keywords and messages are ignored.
+The configuration file layout is fairly simple.  All keywords begin on a line starting with a period (.).  Messages begin with a message number followed by a colon (:) and end with the first unescaped newline. Invalid keywords and messages are ignored.
 
-The parameters <string> and <character> can be any text other than
-whitspace (blank, tab, carriage-return, and newline).  It is possible
-to specify control keys by prefixing the following characters with a
-caret (^):
+The parameters <string> and <character> can be any text other than whitspace (blank, tab, carriage-return, and newline).  It is possible to specify control keys by prefixing the following characters with a caret (^):
 
-	@ a b c d e f g h i j k l m n o 
-	p q r s t u v w x y z [ \ ] ^ _
+    @ a b c d e f g h i j k l m n o 
+    p q r s t u v w x y z [ \ ] ^ _
 
-The sequence ^? represents ASCII DEL (0x7f).  The following escape 
-constants are recognised:
+The sequence ^? represents ASCII DEL (0x7f).  The following escape constants are recognised:
 
-	backspace	\b
-	formfeed	\f
-	newline		\n
-	return		\r
-	space		\s
-	tab		\t
-	
-Also numeric escapes are possible.  The value represented must be 
-between 0 and 255 inclusive.
+    backspace       \b
+    formfeed        \f
+    newline         \n
+    return          \r
+    space           \s
+    tab             \t
 
-	decimal		\ddd
-	octal		\0ooo
-	hex		\0xhh
+Also numeric escapes are possible.  The value represented must be between 0 and 255 inclusive.
 
-A literal escape begins with a backslash and is followed by any
-character that does not specify an escape constant or start a 
-number, and will represent the character itself.
+    decimal         \ddd
+    octal           \0ooo
+    hex             \0xhh
 
-eg.
-	.insert_enter	i		<-- single character string
-	.insert_exit	^[		<-- defines ASCII ESC
-	.delete_right	\0x7f		<-- defines ASCII DEL
-	.cursor_up	^[[A		<-- defines sequence ESC [ A
+A literal escape begins with a backslash and is followed by any character that does not specify an escape constant or start a  number, and will represent the character itself.
+
+    .insert_enter    i       <-- single character string
+    .insert_exit     ^[      <-- defines ASCII ESC
+    .delete_right    \0x7f   <-- defines ASCII DEL
+    .cursor_up       ^[[A    <-- defines sequence ESC [ A
 
 
-5.1.  KEYWORDS
+## 5.1.  KEYWORDS
 
-5.1.1.  SUPPORT
+### 5.1.1.  SUPPORT
 
-.file_read <string>
-.file_write <string>
-	Read or write a file to or from a buffer.
+* `.file_read <string>`
+* `.file_write <string>`  
+  Read or write a file to or from a buffer.
 
-.help <string>
-	Toggle the help text and ruler line on and off.
+* `.help <string>`  
+  Toggle the help text and ruler line on and off.
 
-.help_off
-	Disable initial help message at startup.  
+* `.help_off`  
+  Disable initial help message at startup.
 
-.itself <character>
-	The following character represents itself.  This is really a
-	redundant keyword since any key not defined by a keyword,
-	automatically represents itself.
+* `.itself <character>`  
+  The following character represents itself.  This is really a redundant keyword since any key not defined by a keyword, automatically represents itself.
 
-.macro <string>
-	Define a macro during an edit session.  The user will be
-	prompted for an input line consisting of zero, one, or two 
-	<strings> separated by whitespace.  
+* `.macro <string>`  
+  Define a macro during an edit session.  The user will be prompted for an input line consisting of zero, one, or two `<strings>` separated by whitespace. Pressing <return> at the prompt, with no input strings, will display the current set of macros definitions and how many slots have been used versus the total number of slots available. One string entered will remove the macro defined to have that string as the left-hand-side.   Two input strings defines a macro, where the first string, when typed, pushes the second string onto an input stack. Macros may be nested.  It is only possible to delete or change macros that appear in the listing of currently defined macros. All other key-bindings cannot be redefined during an edit session.
 
-	Pressing <return> at the prompt, with no input strings, will
-	display the current set of macros definitions and how many
-	slots have been used versus the total number of slots available.
+* `.macro_define`
+* `.macro_define <lhs string> <rhs string>`  
+  The first case reserves space for one macro definition that may be defined during the edit session.  The other case will  actually define a macro, where the left-hand-side, when typed will push onto an input stack the right-hand-side.  Either case may be used as many times as desired (memory permiting). Macros may be nested.
 
-	One string entered will remove the macro defined to have 
-	that string as the left-hand-side.  
+* `.quit <string>`
+* `.quit_ask <string>`  
+  Exit the editor.
 
-	Two input strings defines a macro, where the first string, 
-	when typed, pushes the second string onto an input stack.
+* `.redraw <string>`  
+  Force a screen redraw.
 
-	Macros may be nested.  It is only possible to delete or change 
-	macros that appear in the listing of currently defined macros.
-	All other key-bindings cannot be redefined during an edit
-	session.
-
-.macro_define
-.macro_define <lhs string> <rhs string>
-	The first case reserves space for one macro definition that 
-	may be defined during the edit session.  The other case will 
-	actually define a macro, where the left-hand-side, when typed
-	will push onto an input stack the right-hand-side.  Either
-	case may be used as many times as desired (memory permiting).
-	Macros may be nested.
-
-.quit <string>
-.quit_ask <string>
-	Exit the editor.
-
-.redraw <string>
-	Force a screen redraw.
-
-.show_version <string>
-	Display the release information.
+* `.show_version <string>`  
+  Display the release information.
 
 
-5.1.2.  CURSOR MOTION
+### 5.1.2.  CURSOR MOTION
 
-.cursor_up <string>
-.cursor_down <string>
-.cursor_left <string>
-.cursor_right <string>
-	Cursor motion in four directions.  Typically the arrow keys.
+* `.cursor_up <string>`
+* `.cursor_down <string>`
+* `.cursor_left <string>`
+* `.cursor_right <string>`  
+  Cursor motion in four directions.  Typically the arrow keys.
 
-.file_top <string>
-.file_bottom <string>
-	Move to the top and bottom of the file buffer.
+* `.file_top <string>`
+* `.file_bottom <string>`  
+  Move to the top and bottom of the file buffer.
 
-.line_left <string>
-.line_right <string>
-	Move to the beginning or end of the line.
+* `.line_left <string>`
+* `.line_right <string>`  
+  Move to the beginning or end of the line.
 
-.page_up <string>
-.page_down <string>
-        Previous or next screen full of text.
+* `.page_up <string>`
+* `.page_down <string>`  
+  Previous or next screen full of text.
 
-.word_left <string>
-.word_right <string>
-        Move the cursor to start of the previous or next word.  
-	A word is defined as a sequence of alpha and/or numeric
-	characters.
+* `.word_left <string>`
+* `.word_right <string>`  
+  Move the cursor to start of the previous or next word. A word is defined as a sequence of alpha and/or numeric characters.
 
 
-5.1.3.  EDIT
+### 5.1.3.  EDIT
 
-.block <string>
-.cut <string>
-.paste <string>
-	Block on/off toggle, cut block, and paste before.
+* `.block <string>`
+* `.cut <string>`
+* `.paste <string>`  
+  Block on/off toggle, cut block, and paste before.
 
-.delete_left <string>
-.delete_right <string>
-	Delete character to the left or right of the cursor.
+* `.delete_left <string>`
+* `.delete_right <string>`  
+  Delete character to the left or right of the cursor.
 
-.insert_enter <string>
-.insert_exit <string>
-	Enter and exit insert mode.  The use of .insert_enter denotes
-	a modual user interface.  Insert mode does not perform macro
-	expansion.
+* `.insert_enter <string>`
+* `.insert_exit <string>`  
+  Enter and exit insert mode.  The use of `.insert_enter` denotes a modual user interface.  Insert mode does not perform macro expansion.
 
-.literal <string>
-	Next character entered is treated as a literal.
+* `.literal <string>`  
+  Next character entered is treated as a literal.
 
-.stty_erase
-.stty_kill
-	Declare that the terminal's values for the erase and kill
-	characters should be used in insert mode to backspace-erase,
-	or discard and restart input.
+* `.stty_erase`
+* `.stty_kill`  
+  Declare that the terminal's values for the erase and kill characters should be used in insert mode to backspace-erase, or discard and restart input.
 
-.undo <string>
-	Undo last cut, delete, insert, paste, read, or undo.
+* `.undo <string>`  
+  Undo last cut, delete, insert, paste, read, or undo.
 
-.flip_case <string>
-	Invert the case of letters from lower to upper and visa-versa.
-	When no region is selected, the cursor will advance right one 
-	character position.
+* `.flip_case <string>`  
+  Invert the case of letters from lower to upper and visa-versa. When no region is selected, the cursor will advance right one  character position.
 
 
-5.2.  MESSAGES
+## 5.2.  MESSAGES
 
 Each message has the form:
 
-	number : text
+    number : text
 
-Long messages can be continued by escaping the newline with a backslash (\).
-The first unescaped newline terminates the message text and is not included
-as part of the text.
+Long messages can be continued by escaping the newline with a backslash (\\). The first unescaped newline terminates the message text and is not included as part of the text.
 
 The following is a list of messages:
 
-1:
-	Help text. See the sample configuration files for an example.
+* `1:`  
+  Help text. See the sample configuration files for an example.
 
-2:%s: Terminated successfully.\n
-	Exit succesfully.  %s is the program name.
+* `2:%s: Terminated successfully.\n`  
+  Exit succesfully.  %s is the program name.
 
-3:%s: Unspecified error.\n
-	Exit due to an unknown error.  %s is the program name.
+* `3:%s: Unspecified error.\n`  
+  Exit due to an unknown error.  %s is the program name.
 
-4:usage: %s [-f <config>] [file]\n
-	Exit with usage error.  %s is the program name.
+* `4:usage: %s [-f <config>] [file]\n`  
+  Exit with usage error.  %s is the program name.
 
-5:%s: Failed to initialize the screen.\n
-	Exit because Curses couldn't be initialized.  %s is the program name.
+* `5:%s: Failed to initialize the screen.\n`  
+  Exit because Curses couldn't be initialized.  %s is the program name.
 
-6:%s: Problem with configuration file.\n
-	Exit due to a problem with the configuration file.  %s is the 
-	program name.  Possible causes are:
+* `6:%s: Problem with configuration file.\n`  
+  Exit due to a problem with the configuration file.  %s is the program name.  Possible causes are:
 
-	o   Configuration file not found.
-	o   Invalid control character, ^X, specified.
-	o   Numeric escape not in range 0 .. 255.
-	
-7:%s: Failed to allocate required memory.\n
-	Exit because required memory is not available.  %s is the program
-	name.
+  o   Configuration file not found.  
+  o   Invalid control character, ^X, specified.  
+  o   Numeric escape not in range 0 .. 255.  
 
-8:Ok.
-	No error.
-	
-9:An unknown error occured.
-	Internal error.
+* `7:%s: Failed to allocate required memory.\n`  
+  Exit because required memory is not available.  %s is the program name.
 
-10:No more memory available.
-	Requests for additional memory to either grow the edit buffer
-	or macro definitions failed.
+* `8:Ok.`  
+  No error.
+  
+* `9:An unknown error occured.`  
+  Internal error.
 
-11:File \"%s\" is too big to load.
-	The file is too large to load into available memory.  %s is the
-	name of the file that could not be loaded.
+* `10:No more memory available.`  
+  Requests for additional memory to either grow the edit buffer or macro definitions failed.
 
-12:Scrap is empty.  Nothing to paste.
-	An attempt to paste the scrap buffer failed because is was empty.
+* `11:File \"%s\" is too big to load.`  
+  The file is too large to load into available memory.  %s is the name of the file that could not be loaded.
 
-13:Failed to find file \"%s\".
-	%s is a file that could not be found.
+* `12:Scrap is empty.  Nothing to paste.`  
+  An attempt to paste the scrap buffer failed because is was empty.
 
-14:Failed to open file \"%s\".
-	%s is a file that could not be opened.
+* `13:Failed to find file \"%s\".`  
+  %s is a file that could not be found.
 
-15:Failed to close file \"%s\".
-	%s is a file that could not be closed.
+* `14:Failed to open file \"%s\".`  
+  %s is a file that could not be opened.
 
-16:Failed to read file \"%s\".
-	A read error occur for a file %s.
+* `15:Failed to close file \"%s\".`  
+  %s is a file that could not be closed.
 
-17:Failed to write file \"%s\".
-	A write error occur for a file %s.
+* `16:Failed to read file \"%s\".`  
+  A read error occur for a file %s.
 
-18:Not a portable POSIX file name.
-	File names must be portable POSIX file names.
+* `17:Failed to write file \"%s\".`  
+  A write error occur for a file %s.
 
-19:File \"%s\" %ld bytes.
-	%ld is the current length of the file named by %s in the buffer.
+* `18:Not a portable POSIX file name.`  
+  File names must be portable POSIX file names.
 
-20:File \"%s\" %ld bytes saved.
-	%ld is the length of the file named by %s just saved.
-	
-21:File \"%s\" %ld bytes read.
-	%ld is the length of the file named by %s just read.
+* `19:File \"%s\" %ld bytes.`  
+  %ld is the current length of the file named by %s in the buffer.
 
-22:File \"%s\" modified.
-	The file named by %s has been modified.
+* `20:File \"%s\" %ld bytes saved.`  
+  %ld is the length of the file named by %s just saved.
+  
+* `21:File \"%s\" %ld bytes read.`  
+  %ld is the length of the file named by %s just read.
 
-23:Invalid control character or \\number not 0..255.
-	An invalid control character was specified by ^X, or a
-	numeric escape is not in the range 0 .. 255.
+* `22:File \"%s\" modified.`  
+  The file named by %s has been modified.
 
-24:No such macro defined.
-	The left-hand-side of a macro is not currently defined and so
-	cannot be changed or deleted.
+* `23:Invalid control character or \\number not 0..255.`  
+  An invalid control character was specified by ^X, or a numeric escape is not in the range 0 .. 255.
 
-25:No more macro space.
-	All the macro space, allocated in the configuration file, is 
-	currently being used.
+* `24:No such macro defined.`  
+  The left-hand-side of a macro is not currently defined and so cannot be changed or deleted.
 
-26:Interrupt.
-	An interrupt occured.
+* `25:No more macro space.`  
+  All the macro space, allocated in the configuration file, is currently being used.
 
-27:<< EOF >>
-	End of file marker.
+* `26:Interrupt.`  
+  An interrupt occured.
 
-28:Macro :
-	Prompt for a macro to define, delete, or list.
+* `27:<< EOF >>`  
+  End of file marker.
 
-29:File not saved.  Quit (y/n) ?
-	Ask the user if he really wants to quit before he has saved
-	his changes.
+* `28:Macro :`  
+  Prompt for a macro to define, delete, or list.
 
-30:[ Press a key to continue. ]
-	Prompt the user for a key press in order to proceed.
+* `29:File not saved.  Quit (y/n) ?`  
+  Ask the user if he really wants to quit before he has saved his changes.
 
-31:Read file :
-	Prompt the user for a file name to read.
+* `30:[ Press a key to continue. ]`  
+  Prompt the user for a key press in order to proceed.
 
-32:Write file :
-	Prompt the user for a file name to save the buffer to.
+* `31:Read file :`  
+  Prompt the user for a file name to read.
 
-33:Write block :
-	Prompt the user for a file name to save a block of text to.
+* `32:Write file :`  
+  Prompt the user for a file name to save the buffer to.
 
-34:\smore\s
-	Pause output till user responds with either Q, q, or another key.
+* `33:Write block :`  
+  Prompt the user for a file name to save a block of text to.
 
-35:\sy\b
-	Yes response.
+* `34:\smore\s`  
+  Pause output till user responds with either Q, q, or another key.
 
-36:\sn\b
-	No response.
+* `35:\sy\b`  
+  Yes response.
 
-37:\sq\b
-	Quit response.
+* `36:\sn\b`  
+  No response.
 
-38:Nothing to undo.
-	An attempt was made to undo a change when the buffer had not yet
-	been modified.
-	
+* `37:\sq\b`  
+  Quit response.
 
-6.  EXIT STATUS
-
-0	Success.
-1	Unknown error.
-2	Usage error.
-3	Understood failure.
+* `38:Nothing to undo.`  
+  An attempt was made to undo a change when the buffer had not yet been modified.
 
 
-7.  INSTALLATION 
+## 6.  EXIT STATUS
 
-The source has been know to compile on a wide variety of machines and 
-compilers like BSD and System V Unix with GNU C, PC mahcines with 
-WatCom C or Turbo C, and ATARI ST machines with Sozobon C.  Any machine 
-that provides at least K&R C and a BSD CURSES library (as described by 
-Ken Arnolds's paper) should have no trouble getting AE to compile.
+0   Success.
+1   Unknown error.
+2   Usage error.
+3   Understood failure.
+
+
+## 7.  INSTALLATION 
+
+The source has been know to compile on a wide variety of machines and compilers like BSD and System V Unix with GNU C, PC mahcines with  WatCom C or Turbo C, and ATARI ST machines with Sozobon C.  Any machine  that provides at least K&R C and a BSD CURSES library (as described by  Ken Arnolds's paper) should have no trouble getting AE to compile.
 
 To build AE on most unix-like systems, type
 
-	make
+    make
 
-The supplied makefile is configured for a BSD environment.  Some
-systems may require that the macros CC, CFLAGS, LD, LDFLAGS, and LIBS
-be configured.
+The supplied makefile is configured for a BSD environment.  Some systems may require that the macros CC, CFLAGS, LD, LDFLAGS, and LIBS be configured.
 
-The minimum Curses implementation supported is that defined by Kenneth 
-Arnold's paper "Screen Updating and Cursor Movement Optimization: A Library
-Package".  Some BSD Curses implementations have been noted to omit the 
-functions erasechar(), killchar(), and idlok().  For BSD systems with poor
-Curses implementations, alter the following macro:
+The minimum Curses implementation supported is that defined by Kenneth Arnold's paper "Screen Updating and Cursor Movement Optimization: A Library Package".  Some BSD Curses implementations have been noted to omit the  functions erasechar(), killchar(), and idlok().  For BSD systems with poor Curses implementations, alter the following macro:
 
-	CFLAGS = -O -DBADCURSES
+    CFLAGS = -O -DBADCURSES
 
 For a System V environment alter the following macros to:
 
-	CFLAGS = -O
-	LIBS = -lcurses
+    CFLAGS = -O
+    LIBS = -lcurses
 
-To build AE on systems that have POSIX.1 or System V termios library,
-modify the CFLAGS macro to
+To build AE on systems that have POSIX.1 or System V termios library, modify the CFLAGS macro to
 
-	CFLAGS = -O -DTERMIOS=1
+    CFLAGS = -O -DTERMIOS=1
 
-If the constants CHUNK or CONFIG are not defined by CFLAGS then
-the defaults used are
+If the constants CHUNK or CONFIG are not defined by CFLAGS then the defaults used are
 
-	CHUNK	= 8096L
-	CONFIG	= "ae.rc"
+    CHUNK   = 8096L
+    CONFIG  = "ae.rc"
 
-CHUNK is the size by which the buffer is expanded when the buffer
-becomes full while inserting text.  CONFIG is the name of the default 
-configuration file.  The name chosen aims to satisfy both unix and 
-personal systems.  Unix affectionados may want to reconfigure this 
-to ".aerc".
+CHUNK is the size by which the buffer is expanded when the buffer becomes full while inserting text.  CONFIG is the name of the default  configuration file.  The name chosen aims to satisfy both unix and  personal systems.  Unix affectionados may want to reconfigure this  to ".aerc".
 
-TERMIOS should be defined for systems that have POSIX.1 termios
-support (which is based on System V termios).  This has the affect of
-disabling the INTR, QUIT, and SUSP signals.  XON/XOFF is left
-unchanged.  If TERMIOS is not defined, then cbreak() and nocbreak()
-are used which do not disable the above mentioned signals.
+TERMIOS should be defined for systems that have POSIX.1 termios support (which is based on System V termios).  This has the affect of disabling the INTR, QUIT, and SUSP signals.  XON/XOFF is left unchanged.  If TERMIOS is not defined, then cbreak() and nocbreak() are used which do not disable the above mentioned signals.
 
-Most EBCDIC machines use block mode terminals.  This is a problem
-that has not been addressed and/or tested for.
+Most EBCDIC machines use block mode terminals.  This is a problem that has not been addressed and/or tested for.
 
 
-8.  BUGS
+## 8.  BUGS
 
 No known bugs.
 
 
-9.  REFERENCES
+## 9.  REFERENCES
 
-[Fin80]	Craig A. Finseth, "Theory and Practice of Text Editors or 
-	A Cookbook For An EMACS", TM-165, MIT Lab. for Computer 
-	Science
+[Fin80] Craig A. Finseth, "Theory and Practice of Text Editors or
+    A Cookbook For An EMACS", TM-165, MIT Lab. for Computer Science
 
-[KeP81]	Kernighan & Plauger, "Software Tools in Pascal", 
-	Addison-Wesley, 81, chapter 6
+[KeP81] Kernighan & Plauger, "Software Tools in Pascal", 
+    Addison-Wesley, 81, chapter 6
 
-[Mil86]	Eugene W. Myers & Webb Miller, "Row-replacement Algorithums
-	for Screen Editors", TR 86-19, Dept. of Compter Science, 
-	U. of Arizona
+[Mil86] Eugene W. Myers & Webb Miller, "Row-replacement Algorithums
+    for Screen Editors", TR 86-19, Dept. of Compter Science, U. of Arizona
 
-[MyM86]	Eugene W. Myers & Webb Miller, "A simple row-replacement 
-	method", TR 86-28, Dept. of Compter Science, U. of Arizona
+[MyM86] Eugene W. Myers & Webb Miller, "A simple row-replacement 
+    method", TR 86-28, Dept. of Compter Science, U. of Arizona
 
-[Mil87]	Webb Miller, "A Software Tools Sampler", Prentice Hall, 87
-	ISBN 0-13-822305-X, chapter 5
+[Mil87] Webb Miller, "A Software Tools Sampler", Prentice Hall, 87
+    ISBN 0-13-822305-X, chapter 5
 
-[net90]	"Editor 101/102" articles from comp.editors
+[net90] "Editor 101/102" articles from comp.editors
 
 
-10.  FILES
+## 10.  FILES
 
-ae.man		Manual.
-ae.rc		Default configuration file used by AE.
-mode.rc		Sample configuration for modual style.
-modeless.rc	Sample configuration for modeless style (ansi cursor keys).
+    ae.rc           Default configuration file used by AE.
+    mode.rc         Sample configuration for modual style.
+    modeless.rc     Sample configuration for modeless style (ANSI cursor keys).
 
 
-11.  NOTICES
+## 11.  NOTICES
 
 Copyright 1993, 1993 by Anthony Howe.  All rights reserved.  No warranty.
 
