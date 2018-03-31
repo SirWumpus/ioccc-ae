@@ -8,7 +8,7 @@
 
 #include <ctype.h>
 #include <stdio.h>
-#include <sys\types.h>
+#include <sys/types.h>
 #include "header.h"
 #include "key.h"
 
