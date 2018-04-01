@@ -1,5 +1,5 @@
 ae - Anthony's Editor July 93
-================================
+=============================
 
 ## 1.  SYNOPSIS
 
@@ -405,22 +405,23 @@ No known bugs.
 
 ## 9.  REFERENCES
 
-[Fin80] Craig A. Finseth, "Theory and Practice of Text Editors or
-    A Cookbook For An EMACS", TM-165, MIT Lab. for Computer Science
+* Craig A. Finseth, "Theory and Practice of Text Editors or A Cookbook For An EMACS",  
+  TM-165, MIT Lab. for Computer Science  
+  <https://dspace.mit.edu/handle/1721.1/15905>
 
-[KeP81] Kernighan & Plauger, "Software Tools in Pascal", 
-    Addison-Wesley, 81, chapter 6
+* Kernighan & Plauger, "Software Tools in Pascal",  
+  Addison-Wesley, 81, chapter 6
 
-[Mil86] Eugene W. Myers & Webb Miller, "Row-replacement Algorithums
-    for Screen Editors", TR 86-19, Dept. of Compter Science, U. of Arizona
+* Eugene W. Myers & Webb Miller, "Row-replacement Algorithms for Screen Editors",  
+  TR 86-19, Dept. of Computer Science, U. of Arizona
 
-[MyM86] Eugene W. Myers & Webb Miller, "A simple row-replacement 
-    method", TR 86-28, Dept. of Compter Science, U. of Arizona
+* Eugene W. Myers & Webb Miller, "A simple row-replacement method",  
+  TR 86-28, Dept. of Computer Science, U. of Arizona
 
-[Mil87] Webb Miller, "A Software Tools Sampler", Prentice Hall, 87
-    ISBN 0-13-822305-X, chapter 5
+* Webb Miller, "A Software Tools Sampler", Prentice Hall, 87  
+  ISBN 0-13-822305-X, chapter 5
 
-[net90] "Editor 101/102" articles from comp.editors
+* "Editor 101/102" articles from comp.editors
 
 
 ## 10.  FILES
