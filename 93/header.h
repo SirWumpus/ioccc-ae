@@ -32,11 +32,11 @@
 #define FILE_MODE	0
 #endif
 #endif /* ATARI_ST */
-
-#ifdef __WATCOMC__
-#ifdef MSDOS
-#define __MSDOS__	1
-#endif
+
+#ifdef __WATCOMC__
+#ifdef MSDOS
+#define __MSDOS__	1
+#endif
 #endif /* __WATCOMC__ */
 
 #ifdef __MSDOS__

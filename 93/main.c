@@ -176,7 +176,7 @@ char **argv;
 	refresh();
 	endwin();
 	putchar('\n');
-	return (0);
+	return (0);
 }
 
 #ifdef TERMIOS
