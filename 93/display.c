@@ -361,6 +361,12 @@ int ncols;
 			addch('.');
 		}
 	}
+	/* Write off the end of the line, curses should auto line wrap.
+	 * Using a newline would introduce a blank line after the ruler.
+	 * This wasn't required in 1993; suspect difference between
+	 * original BSD / SystemV curses and newer implementations.
+	 */
+	addch(' ');
 	standend();
 }
 
