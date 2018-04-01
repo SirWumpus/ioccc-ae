@@ -7,10 +7,10 @@
 #
 
 CC	= cc
-CFLAGS	= -O -DBSD=1
+CFLAGS	= -ansi -DCONFIG='".aerc"'
 
-LD	= cc 
-LDFLAGS = -O
+LD	= cc
+LDFLAGS =
 LIBS	= -lcurses -ltermcap
 
 CP	= cp
@@ -23,7 +23,7 @@ O	= .o
 OBJ	= command$(O) data$(O) display$(O) gap$(O) key$(O) main$(O)
 
 ae$(E) : $(OBJ)
-	$(LD) $(LDFLAGS) -o ae$(E) $(OBJ) $(LIBS) 
+	$(LD) $(LDFLAGS) -o ae$(E) $(OBJ) $(LIBS)
 
 header.h : key.h
 
