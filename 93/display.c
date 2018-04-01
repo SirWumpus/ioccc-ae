@@ -355,7 +355,7 @@ int ncols;
 			mvprintw(r, col - (col < 100 ? 2 : 3), "%d", col);
 			break;
 		case 5:
-			addch('5');
+			addch(':');
 			break;
 		default:
 			addch('.');
