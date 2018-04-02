@@ -1,5 +1,5 @@
 /*
- * header.h		
+ * header.h
  *
  * Anthony's Editor July 93
  *
@@ -17,8 +17,8 @@
 #endif /* __STDC__ */
 
 #ifdef ATARI_ST
-/* Atari's Sozobon C has ANSI-like libraries 
- * and headers but no prototypes. 
+/* Atari's Sozobon C has ANSI-like libraries
+ * and headers but no prototypes.
  */
 #include <stdlib.h>
 #include <stdarg.h>
@@ -100,7 +100,7 @@ extern char *strtok();
 /* Screen partitioning. */
 #define MSGLINE		0
 #define HELPLINE	1
-#undef  TEXTLINE	
+#undef  TEXTLINE
 
 #define NOMARK		-1
 
@@ -128,8 +128,8 @@ typedef struct t_region {
 #define GETBLOCK_ALLOC		(-3L)
 
 /*
- * Some compilers define size_t as a unsigned 16 bit number while 
- * t_point and off_t might be defined as a signed 32 bit number.  
+ * Some compilers define size_t as a unsigned 16 bit number while
+ * t_point and off_t might be defined as a signed 32 bit number.
  * malloc(), realloc(), fread(), and fwrite() take size_t parameters,
  * which means there will be some size limits because size_t is too
  * small of a type.
