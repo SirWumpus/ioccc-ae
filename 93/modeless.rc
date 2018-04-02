@@ -4,45 +4,45 @@ Anthony's Editor July 93
 Copyright 1993, 1993 by Anthony Howe.  All rights reserved.  No warranty.
 
 1:\
-File read and write\t\^R  \^W\t\tLeft, down, up, right\tarrow keys\n\
-Version, quit\t\t\^K\^V  \^C  \^K\^C\tWord left and right\t\^A  \^D\n\
-Macros\t\t\t\^KM\t\tPage down and up\t\^N  \^P\n\
-Help on and off\t\tF1\t\tFront and end of line\t\^F  \^E\n\
-Redraw\t\t\t\^L\t\tTop and bottom of file\t\^T  \^B\n\
-Insert \t\t\ttyped keys\tDelete left and right\tBACKSPACE \^X\n\
-Literal escape\t\t\^V\t\tBlock, cut, paste\tF2  F3  F4\n\
-Undo\t\t\t\^U\t\tInvert case\t\tF5\n
+File read and write     \^R  \^W          Left, down, up, right   arrows\n\
+Version, quit           \^K\^V  \^C  \^K\^C  Word left and right     \^A  \^D\n\
+Macros                  \^KM             Page down and up        \^N  \^P\n\
+Help on and off         F1              Front and end of line   \^F  \^E\n\
+Redraw                  \^L              Top and bottom of file  \^T  \^B\n\
+Insert                  type            Delete left and right   BACKSPACE \^X\n\
+Literal escape          \^V              Block, cut, paste       F2  F3  F4\n\
+Undo last               \^U              Invert case             F5\n
 
 #.help_off
-.literal	^V
-.cursor_up	^[[A
-.cursor_down	^[[B
-.cursor_left	^[[D
-.cursor_right	^[[C
-.page_up	^P
-.page_down	^N
-.word_left	^A
-.word_right	^D
-.line_left	^F
-.line_right	^E
-.file_top	^T
-.file_bottom	^B
-.delete_left	^H
-.delete_right	^X
-.help		^[f1
-.block		^[f2
-.cut		^[f3
-.paste		^[f4
-.flip_case	^[f5
-.undo		^U
-.file_read	^R
-.file_write	^W
-.redraw		^L
-.quit_ask	^C
-.quit		^K^C
-.quit		^K^X
-.show_version	^K^V
-.macro		^KM
+.literal        ^V
+.cursor_up      ^[[A
+.cursor_down    ^[[B
+.cursor_left    ^[[D
+.cursor_right   ^[[C
+.page_up        ^P
+.page_down      ^N
+.word_left      ^A
+.word_right     ^D
+.line_left      ^F
+.line_right     ^E
+.file_top       ^T
+.file_bottom    ^B
+.delete_left    ^H
+.delete_right   ^X
+.help           ^[[11~
+.block          ^[[12~
+.cut            ^[[13~
+.paste          ^[[14~
+.flip_case      ^[[15~
+.undo           ^U
+.file_read      ^R
+.file_write     ^W
+.redraw         ^L
+.quit_ask       ^C
+.quit           ^K^C
+.quit           ^K^X
+.show_version   ^K^V
+.macro          ^KM
 .macro_define
 .macro_define
 .macro_define
