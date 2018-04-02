@@ -227,7 +227,7 @@ extern t_msg message[];
 #ifdef TERMIOS
 extern void lineinput _((int));
 #else
-#define lineinput(bf)		(bf ? nocbreak() : cbreak())
+#define lineinput(bf)		(bf ? noraw() : raw())
 #endif /* TERMIOS */
 
 extern void fatal _((t_msg));

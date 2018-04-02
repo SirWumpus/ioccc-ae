@@ -382,18 +382,12 @@ For a System V environment alter the following macros to:
     CFLAGS = -O
     LIBS = -lcurses
 
-To build AE on systems that have POSIX.1 or System V termios library, modify the CFLAGS macro to
-
-    CFLAGS = -O -DTERMIOS=1
-
 If the constants CHUNK or CONFIG are not defined by CFLAGS then the defaults used are
 
     CHUNK   = 8096L
     CONFIG  = "ae.rc"
 
 CHUNK is the size by which the buffer is expanded when the buffer becomes full while inserting text.  CONFIG is the name of the default  configuration file.  The name chosen aims to satisfy both unix and  personal systems.  Unix affectionados may want to reconfigure this  to ".aerc".
-
-TERMIOS should be defined for systems that have POSIX.1 termios support (which is based on System V termios).  This has the affect of disabling the INTR, QUIT, and SUSP signals.  XON/XOFF is left unchanged.  If TERMIOS is not defined, then cbreak() and nocbreak() are used which do not disable the above mentioned signals.
 
 Most EBCDIC machines use block mode terminals.  This is a problem that has not been addressed and/or tested for.
 

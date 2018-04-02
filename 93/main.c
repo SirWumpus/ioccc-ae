@@ -179,47 +179,6 @@ char **argv;
 	return (0);
 }
 
-#ifdef TERMIOS
-#include <termios.h>
-
-/*
- *	Set the desired input mode.
- *
- *	FALSE enables immediate character processing (disable line processing
- *	and signals for INTR, QUIT, and SUSP).  TRUE enables line processing 
- *	and signals (disables immediate character processing).  In either 
- *	case flow control (XON/XOFF) is still active.  
- *
- *	If the termios function calls fail, then fall back on using 
- *	CURSES' cbreak()/nocbreak() functions; however signals will be
- *	still be in effect.
- */
-void
-lineinput(bf)
-int bf;
-{
-	int error;
-	struct termios term;
-	error = tcgetattr(fileno(stdin), &term) < 0;
-	if (!error) {
-		if (bf)
-			term.c_lflag |= ISIG | ICANON;
-		else
-			term.c_lflag &= ~(ISIG | ICANON);
-		error = tcsetattr(fileno(stdin), TCSANOW, &term) < 0;
-	}
-	/* Fall back on CURSES functions that do almost what we need if
-	 * either tcgetattr() or tcsetattr() fail.
-	 */
-	if (error) {
-		if (bf)
-			nocbreak();
-		else
-			cbreak();
-	}
-}
-#endif /* TERMIOS */
-
 void
 fatal(m)
 t_msg m;
