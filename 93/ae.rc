@@ -1,52 +1,70 @@
-Sample Configuration File 
-Modeless Interface with Stdscr Curses Function Keys
+Modual Interface Sample Configuration File
 Anthony's Editor July 93
 Copyright 1993, 1993 by Anthony Howe.  All rights reserved.  No warranty.
 
 1:\
-File read and write\t\^R  \^W\t\tLeft, down, up, right\tarrow keys\n\
-Version, quit\t\t\^K\^V  \^X  \^K\^X\tWord left and right\t\^Left  \^Right\n\
-Macros\t\t\t\^K\^M\t\tPage down and up\tPgUp   PgDn\n\
-Help on and off\t\tF1\t\tFront and end of line\tHome   End\n\
-Redraw\t\t\t\^L\t\tTop and bottom of file\t\^Home  \^End\n\
-Insert \t\t\ttyped keys\tDelete left and right\tBACKSPACE DEL\n\
-Literal escape\t\t\^V\t\tBlock, cut, paste\tF2  F3  F4\n\
-Undo\t\t\t\^U\t\tInvert case\t\tF5\n
+Left, down, up, right	h  j  k  l	Insert on, off, erase	i  ESC  ERASE\n\
+Word left and right	H  L		Literal escape		\^V\n\
+Page down and up	J  K		Delete left and right	X  x\n\
+Start and end of line	[  ]		Block, cut, paste	SPACE  C  P\n\
+Top and bottom of file	T  B		Invert case		~\n\
+Macros			M		File read and write	R  W\n\
+Redraw			r		Undo			u\n\
+Help on and off		?		Version, quit		V  q  Q\n
 
 #.help_off
+.stty_erase
+.show_version	V
+.show_version	:ver
+.macro		M
+.macro		:map
+.macro_define
+.macro_define
+.macro_define
+.macro_define
+.macro_define	D	\s]C
+.macro_define	dd	[\sjC
+.macro_define	A	]i
+.macro_define	a	li
+.macro_define	dw	\swC
+.macro_define	cw	dwi
+.macro_define	o	[ji\n^[ki
+.macro_define	O	[i\n^[ki
+.macro_define	y	CP
+.cursor_up	k
+.cursor_down	j
+.cursor_left	h
+.cursor_right	l
+.page_up	K
+.page_down	J
+.page_up	^B
+.page_down	^F
+.word_left	H
+.word_right	L
+.word_left	b
+.word_right	w
+.line_left	[
+.line_right	]
+.line_left	0
+.line_right	$
+.file_top	T
+.file_bottom	B
+.delete_left	X
+.delete_right	x
+.insert_enter	i
+.insert_exit	^[
 .literal	^V
-.cursor_up	^[H
-.cursor_down	^[P
-.cursor_left	^[K
-.cursor_right	^[M
-.page_up	^[I
-.page_down	^[Q
-.word_left	^[s
-.word_right	^[t
-.line_left	^[G
-.line_right	^[O
-.file_top	^[w
-.file_bottom	^[u
-.delete_left	^H
-.delete_right	^[S
-.help		^[;
-.block		^[<
-.cut		^[=
-.paste		^[>
-.flip_case	^[?
-.undo		^U
-.file_read	^R
-.file_write	^W
-.redraw		^L
-.quit_ask	^X
-.quit		^K^X
-.show_version	^K^V
-.macro		^K^M
-.macro_define
-.macro_define
-.macro_define
-.macro_define
-.macro_define
+.block		\s
+.cut		C
+.paste		P
+.flip_case	~
+.undo		u
+.help		?
+.file_write	W
+.file_read	R
+.redraw		r
+.quit_ask	q
+.quit		Q
 
 2:%s: Terminated successfully.\n
 3:%s: Unspecified error.\n
