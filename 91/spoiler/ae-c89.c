@@ -294,7 +294,7 @@ insert(void)
 {
 	int ch;
 	movegap();
-	while ((ch = getch()) != '\e') {
+	while ((ch = getch()) != '\e' && ch != '\f') {
 		if (ch == '\b') {
 			if (buf < gap) {
 				--gap;
