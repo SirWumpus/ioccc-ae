@@ -313,14 +313,31 @@ dispchar(col, ch, flag)
 int col, ch, flag;
 {
 	if (isprint(ch) || ch == '\t' || ch == '\n') {
+		if (flag) {
+			/* Handle tab expansion ourselves.  Differences
+			 * between historical Curses and NCurses 2021
+			 * WRT tab handling I can't suss just yet.
+			 *
+			 * Historical Curses addch() would handle tab
+			 * expansion as I recall while (current 2021)
+			 * NCurses does not by default it seems.
+			 */
+			if (ch == '\t') {
+				int t;
+				for (t = 8 - (col & 7); 0 < t; t--) {
+					addch(' ');
+				}
+			} else {
+				addch(ch);
+			}
+		}
 		col += ch == '\t' ? 8 - (col & 7) : 1;
-		if (flag)
-			addch(ch);
 	} else {
 		char *ctrl = printable(ch);
 		col += (int) strlen(ctrl);
-		if (flag)
+		if (flag) {
 			addstr(ctrl);
+		}
 	}
 	return (col);
 }
