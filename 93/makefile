@@ -7,7 +7,7 @@
 #
 
 CC	= cc
-CFLAGS	= -ansi -DCONFIG='".aerc"'
+CFLAGS	= -ansi -DCONFIG='".aerc"' -Os
 
 LD	= cc
 LDFLAGS =
@@ -21,6 +21,10 @@ E	=
 O	= .o
 
 OBJ	= command$(O) data$(O) display$(O) gap$(O) key$(O) main$(O)
+
+all: build
+
+build: ae$(E)
 
 ae$(E) : $(OBJ)
 	$(LD) $(LDFLAGS) -o ae$(E) $(OBJ) $(LIBS)
