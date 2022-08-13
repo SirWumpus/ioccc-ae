@@ -403,6 +403,12 @@ No known bugs.
   TM-165, MIT Lab. for Computer Science  
   <https://dspace.mit.edu/handle/1721.1/15905>
 
+* Craig A. Finseth, "Craft Of Text Editing", 1991  
+  Springer-Verlag, ISBN 0-387-97616-7, ISBN 3-3540-97616-7
+
+* Craig A. Finseth, "Craft Of Text Editing", 1999  
+  <http://www.finseth.com/craft/>
+
 * Kernighan & Plauger, "Software Tools in Pascal",  
   Addison-Wesley, 81, chapter 6
 
