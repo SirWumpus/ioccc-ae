@@ -1,4 +1,4 @@
-![AE Screen](./Ae_editor_in_Debian_Potato.png)
+![AE Screen](./ae_on_netbsd_with_default_keys.png)
 
 ae - Anthony's Editor
 =====================
