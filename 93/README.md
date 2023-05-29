@@ -387,7 +387,7 @@ If the constants CHUNK or CONFIG are not defined by CFLAGS then the defaults use
     CHUNK   = 8096L
     CONFIG  = "ae.rc"
 
-CHUNK is the size by which the buffer is expanded when the buffer becomes full while inserting text.  CONFIG is the name of the default  configuration file.  The name chosen aims to satisfy both unix and  personal systems.  Unix affectionados may want to reconfigure this  to ".aerc".
+CHUNK is the size by which the buffer is expanded when the buffer becomes full while inserting text.  CONFIG is the name of the default  configuration file.  The name chosen aims to satisfy both unix and  personal systems.  Unix affectionados may want to reconfigure this  to `.aerc`.
 
 Most EBCDIC machines use block mode terminals.  This is a problem that has not been addressed and/or tested for.
 
@@ -429,11 +429,12 @@ No known bugs.
     ae.rc           Default configuration file used by AE.
     mode.rc         Sample configuration for modual style.
     modeless.rc     Sample configuration for modeless style (ANSI cursor keys).
+    modeless.xterm  Sample configuration for modeless style (Xterm keys).
 
 
 ## 11.  NOTICES
 
-Copyright 1993, 2021 by Anthony Howe.  All rights reserved.  No warranty.
+Copyright 1993, 2023 by Anthony Howe.  All rights reserved.  No warranty.
 
 Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
 

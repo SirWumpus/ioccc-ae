@@ -1,0 +1,87 @@
+Sample Configuration File
+Modeless interface with more familiar key bindings for 2023.
+Assumes xterm / ANSI escape sequences.
+Copyright 1993, 2023 by Anthony Howe.  All rights reserved.  No warranty.
+
+1:\
+Help toggle\t\tF1\t\tLeft, down, up, right\tarrow keys\n\
+File read, write\tF2  F3\t\tWord left, right\t\^Left  \^Right\n\
+Quit, Version\t\t\^Q  \^K\^Q  \^K\^V\tPage up, down\t\tPgUp   PgDn\n\
+Macros, Redraw\t\t\^K\m \^Kr\t\tStart, end of line\tHome   End\n\
+Invert case\t\t\^T\t\tTop, bottom of file\t\^Home  \^End\n\
+Literal escape\t\t\^L\t\tDelete left, right\tBackspace Del\n\
+Undo\t\t\t\^Z\t\tBlock, cut, paste\t\^B  \^X  \^V\n\
+Insert \t\t\ttyped keys\n
+
+#.help_off
+.literal	^L
+.cursor_up	^[[A
+.cursor_down	^[[B
+.cursor_right	^[[C
+.cursor_left	^[[D
+.page_up	^[[5~
+.page_down	^[[6~
+.word_left	^[[1;5D
+.word_right	^[[1;5C
+.line_left	^[[1~
+.line_right	^[[4~
+.file_top	^[[1;5H
+.file_bottom	^[[1;5F
+.delete_left	^H
+.delete_right	^[[3~
+.help		^[OP
+.block		^B
+.cut		^X
+.paste		^V
+.undo		^Z
+.flip_case	^T
+.file_read	^[OQ
+.file_write	^[OR
+.redraw		^Kr
+.quit_ask	^Q
+.quit		^K^Q
+.show_version	^K^V
+.macro		^Km
+.macro_define
+.macro_define
+.macro_define
+.macro_define
+.macro_define
+
+2:%s: Terminated successfully.\n
+3:%s: Unspecified error.\n
+4:usage: %s [-f <config>] [file]\n
+5:%s: Failed to initialize the screen.\n
+6:%s: Problem with configuration file.\n
+7:%s: Failed to allocate required memory.\n
+8:Ok.
+9:An error occured.
+10:No more memory available.
+11:File \"%s\" is too big to load.
+12:Scrap is empty.  Nothing to paste.
+13:Failed to find file \"%s\".
+14:Failed to open file \"%s\".
+15:Failed to close file \"%s\".
+16:Failed to read file \"%s\".
+17:Failed to write file \"%s\".
+18:Not a portable POSIX file name.
+19:File \"%s\" %ld bytes.
+20:File \"%s\" %ld bytes saved.
+21:File \"%s\" %ld bytes read.
+22:File \"%s\" modified.
+23:Invalid control character or \\number not 0..255.
+24:No such macro defined.
+25:No more macro space.
+26:Interrupt.
+27:<< EOF >>
+28:Macro :
+29:File not saved.  Quit (y/n) ?
+30:[ Press a key to continue. ]
+31:Read file :
+32:Write file :
+33:Write block :
+34:\smore\s
+35:\sy\b
+36:\sn\b
+37:\sq\b
+38:Nothing to undo.
