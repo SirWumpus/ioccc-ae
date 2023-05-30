@@ -1,36 +1,44 @@
-Modual Interface Sample Configuration File
 Anthony's Editor July 93
-Copyright 1993, 1993 by Anthony Howe.  All rights reserved.  No warranty.
+Modual vi-like Interface Sample Configuration File
+Copyright 1993, 2023 by Anthony Howe.  All rights reserved.  No warranty.
 
 1:\
 Left, down, up, right	h  j  k  l	Insert on, off, erase	i  ESC  ERASE\n\
-Word left and right	H  L		Literal escape		\^V\n\
-Page down and up	J  K		Delete left and right	X  x\n\
-Start and end of line	[  ]		Block, cut, paste	SPACE  C  P\n\
-Top and bottom of file	T  B		Invert case		~\n\
-Macros			M		File read and write	R  W\n\
-Redraw			r		Undo			u\n\
-Help on and off		?		Version, quit		V  q  Q\n
+Word left, right	b  w		Delete left, right	X  x\n\
+Page down, up		\^F  \^B\t	Block, cut, paste	SPACE  C  P\n\
+Start, end of line	0  $		Undo			u\n\
+Top, bottom of file	1G  G		Invert case		~\n\
+Macros			:map		Literal escape		\^V\n\
+Redraw			\^R		File read, write	:r  :w\n\
+Toggle help		:h		Version, quit		V  q  Q\n
 
 #.help_off
 .stty_erase
 .show_version	V
 .show_version	:ver
-.macro		M
 .macro		:map
 .macro_define
 .macro_define
 .macro_define
 .macro_define
-.macro_define	D	\s]C
-.macro_define	dd	[\sjC
-.macro_define	A	]i
+.macro_define
+.macro_define
+.macro_define
+.macro_define
+.macro_define
+.macro_define
+.macro_define
+.macro_define	D	\s$v
+.macro_define	dd	0\sjv
+.macro_define	A	$i
 .macro_define	a	li
-.macro_define	dw	\swC
+.macro_define	dw	\swv
 .macro_define	cw	dwi
-.macro_define	o	[ji\n^[ki
-.macro_define	O	[i\n^[ki
-.macro_define	y	CP
+.macro_define	C	Di
+.macro_define	o	0ji\n^[ki
+.macro_define	O	0i\n^[ki
+.macro_define	y	vP
+.macro_define	p	lP
 .cursor_up	k
 .cursor_down	j
 .cursor_left	h
@@ -49,22 +57,27 @@ Help on and off		?		Version, quit		V  q  Q\n
 .line_right	$
 .file_top	T
 .file_bottom	B
+.file_top	1G
+.file_bottom	G
 .delete_left	X
 .delete_right	x
 .insert_enter	i
 .insert_exit	^[
 .literal	^V
 .block		\s
-.cut		C
+.cut		v
 .paste		P
 .flip_case	~
 .undo		u
-.help		?
+.help		:h
 .file_write	W
 .file_read	R
-.redraw		r
+.file_write	:w
+.file_read	:r
+.redraw		^R
 .quit_ask	q
 .quit		Q
+.quit		ZZ
 
 2:%s: Terminated successfully.\n
 3:%s: Unspecified error.\n

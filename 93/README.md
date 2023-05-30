@@ -22,26 +22,27 @@ Text files consist of lines of printable text or tab characters. A line can be o
 
 ## 4.  COMMANDS
 
-Two default configuration files are supplied.  One of them should be renamed to "ae.rc" and placed in the user's home directory.  The two supplied files are "mode.rc" and "modeless.rc" which configure the editor for either modual (VI-style) or modeless (EMACS-style) operation.
+Some default configuration files are supplied.  One of them should be renamed to `ae.rc` (Windows) or `.aerc` (Unix) and placed in the user's home directory.  The supplied files are `mode.rc`, `modeless.rc` (original), and `modeless.xterm` (revised) which configure the editor for either modual (VI-style) or modeless (EMACS-style) operation.
 
 
 ### 4.1.  MODUAL CONFIGURATION 
 
 #### 4.1.1.  SUPPORT
 
-    ?               Toggle help on/off.
-    M               Macro add, change, delete, or view.
-    r               Refresh the screen.
-    R W             Read and write file to and from the buffer.
+    :h              Toggle help on/off.
+    :map            Macro add, change, delete, or view.
+    ^R              Refresh the screen.
+    :r :w           Read and write file to and from the buffer.
     q Q             Quit with and without query.
     V               Display version.
 
 #### 4.1.2.  MOVEMENT
 
     h j k l         Left, down, up, right cursor movement.
-    H J K L         Word left, page down, page up, word right.
-    [ ]             Beginning and end of line.
-    T B             Top and bottom of file.
+    b w             Word left, right.
+    ^F ^B           Page down, page up.
+    0 $             Start, end of line.
+    1G G            Top, bottom of file.
 
 #### 4.1.3.  EDIT
 
@@ -49,20 +50,22 @@ Two default configuration files are supplied.  One of them should be renamed to 
     ^V              Next character typed will be treated as a literal.
     X x             Delete character left or under the cursor.
     SPACE           Toggle block on/off.
-    C               Cut block to scrap.
-    P               Paste scrap into buffer.
+    v               Cut block to scrap.
+    P               Paste scrap into buffer before the cursor.
     u               Undo last cut, delete, paste, read, insert, or undo.
-    ~               Invert case of letters.
+    ~               Invert case of letter and advance.
 
 #### 4.1.4.  MACROS
 
     a               Append after cursor.
     A               Append at the end of a line.
+    C               Change to end of line.
     cw              Change word.
     D               Delete from cursor to end of line.
     dd              Delete line.
     dw              Delete word.
     o O             Open line below or above.
+    p               Paste scrap into buffer after the cursor.
     y               Yank current block.
 
 
