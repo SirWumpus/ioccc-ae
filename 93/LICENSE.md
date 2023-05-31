@@ -1,4 +1,4 @@
-Copyright 1993, 2021 by Anthony Howe.  All rights reserved.  No warranty.
+Copyright 1993, 2023 by Anthony Howe.  All rights reserved.  No warranty.
 
 Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
 

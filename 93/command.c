@@ -1,9 +1,9 @@
 /*
- * command.c		
+ * command.c
  *
  * Anthony's Editor July 93
  *
- * Copyright 1993, 1993 by Anthony Howe.  All rights reserved.  No warranty.
+ * Copyright 1993, 2023 by Anthony Howe.  All rights reserved.  No warranty.
  */
 
 #include <ctype.h>
@@ -80,7 +80,7 @@ left()
 {
 	if (0 < point && iscrlf(--point) == 2)
 		--point;
-} 
+}
 
 void
 right()
@@ -134,7 +134,7 @@ wright()
 	t_point epoint = pos(ebuf);
 	while (isalnum(*ptr(point)) && point < epoint)
 		++point;
-	while (!isalnum(*ptr(point)) && point < epoint) 
+	while (!isalnum(*ptr(point)) && point < epoint)
 		++point;
 }
 
@@ -181,14 +181,17 @@ insert_mode()
 	while ((ch = getkey(key_mode)) != K_INSERT_EXIT) {
 		if (ch == K_STTY_ERASE) {
 			if (opoint < point) {
-				if (*--gap == '\n' 
+				if (*--gap == '\n'
 				&& buf < gap && gap[-1] == '\r')
 					--gap;
 				modified = TRUE;
 			}
+		} else if (ch == K_STTY_KILL) {
+			/* Discard current input.*/
+			gap -= point - opoint;
 		} else {
 			assert(gap <= egap);
-			if (gap == egap && !growgap(CHUNK)) 
+			if (gap == egap && !growgap(CHUNK))
 				break;
 			*gap++ = ch == K_LITERAL ? getliteral() : ch;
 			if (ch == '\r' && (gap < egap || growgap(CHUNK)))
@@ -250,7 +253,7 @@ writefile()
 		prompt(p_bwrite, temp, BUFSIZ);
 	}
 	(void) save(temp);
-	if (marker == NOMARK && filename[0] == '\0') 
+	if (marker == NOMARK && filename[0] == '\0')
 		strcpy(filename, temp);
 }
 
@@ -258,7 +261,7 @@ void
 help()
 {
 	textline = textline == HELPLINE ? -1 : HELPLINE;
-	/* When textline != HELPLINE, then redraw() will compute the 
+	/* When textline != HELPLINE, then redraw() will compute the
 	 * actual textline that follows the help text.
 	 */
 	redraw();
@@ -353,7 +356,7 @@ macro()
 				free(kp->lhs);
 				kp->lhs = kp->rhs = NULL;
 			}
-		} else if (encode(rhs) < 0) { 
+		} else if (encode(rhs) < 0) {
 			msg(m_badescape);
 		} else {
 			rhsoff = (size_t)(rhs - buf);
@@ -401,12 +404,12 @@ prt_macros()
 			if (kp->rhs != NULL) {
 				++used;
 				addch('{');
-				ptr = (unsigned char *) kp->lhs; 
-				for (; *ptr != '\0'; ++ptr) 
+				ptr = (unsigned char *) kp->lhs;
+				for (; *ptr != '\0'; ++ptr)
 					addstr(printable(*ptr));
 				addstr("}\t{");
-				ptr = (unsigned char *) kp->rhs; 
-				for (; *ptr != '\0'; ++ptr) 
+				ptr = (unsigned char *) kp->rhs;
+				for (; *ptr != '\0'; ++ptr)
 					addstr(printable(*ptr));
 				addstr("}\n");
 				(void) more(used);
@@ -442,7 +445,7 @@ int row;
 }
 
 /*
- * Flip the case of a region.  
+ * Flip the case of a region.
  */
 void
 flipcase()
@@ -479,7 +482,7 @@ size_t len;
 }
 
 /*
- * Return 1 if offset points to first-half of CR-LF; 
+ * Return 1 if offset points to first-half of CR-LF;
  * 2 if offset points to second-half of CR-LF; 0 otherwise.
  */
 int

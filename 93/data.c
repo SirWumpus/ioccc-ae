@@ -1,20 +1,20 @@
 /*
- * data.c		
+ * data.c
  *
  * Anthony's Editor July 93
  *
- * Copyright 1993, 1993 by Anthony Howe.  All rights reserved.  No warranty.
+ * Copyright 1993, 2023 by Anthony Howe.  All rights reserved.  No warranty.
  */
 
 #include "header.h"
 #include "key.h"
 
 int done;
-int modified; 
+int modified;
 int modeless;
 
-t_point point; 
-t_point page; 
+t_point point;
+t_point page;
 t_point epage;
 t_point marker = NOMARK;
 
@@ -73,6 +73,7 @@ t_keytable table[] = {
 t_keymap key_mode[] = {
 	{ K_INSERT_EXIT, NULL },
 	{ K_STTY_ERASE, NULL },
+	{ K_STTY_KILL, NULL },
 	{ K_LITERAL, NULL },
 	{ K_ERROR, NULL }
 };
@@ -111,7 +112,7 @@ t_msg m_interrupt = "26:Interrupt.";
 t_msg m_eof = "27:<< EOF >>";
 
 t_msg p_macro = "28:Macro :";
-t_msg p_notsaved = "29:File not saved.  Quit (y/n) ?"; 
+t_msg p_notsaved = "29:File not saved.  Quit (y/n) ?";
 t_msg p_press = "30:[ Press a key to continue. ]";
 t_msg p_read = "31:Read file :";
 t_msg p_write = "32:Write file :";

@@ -1,9 +1,9 @@
 /*
- * main.c		
+ * main.c
  *
  * Anthony's Editor July 93
  *
- * Copyright 1993, 1993 by Anthony Howe.  All rights reserved.  No warranty.
+ * Copyright 1993, 2023 by Anthony Howe.  All rights reserved.  No warranty.
  */
 
 #include <ctype.h>
@@ -46,7 +46,7 @@ char **argv;
 	char *ap, *config;
 
 	/* Find basename. */
-	prog_name = *argv; 
+	prog_name = *argv;
 	i = strlen(prog_name);
 	while (0 <= i && prog_name[i] != '\\' && prog_name[i] != '/')
 		--i;
@@ -89,7 +89,7 @@ char **argv;
 		fatal(f_config);
 
 	/* Determine if editor is modeless or not.
-	 * Define insert mode keys from the master table. 
+	 * Define insert mode keys from the master table.
 	 */
 	for (modeless = TRUE, kp = key_map; kp->code != K_ERROR; ++kp) {
 		switch (kp->code) {
@@ -103,8 +103,11 @@ char **argv;
 		case K_STTY_ERASE:
 			key_mode[1].lhs = kp->lhs;
 			break;
-		case K_LITERAL:
+		case K_STTY_KILL:
 			key_mode[2].lhs = kp->lhs;
+			break;
+		case K_LITERAL:
+			key_mode[3].lhs = kp->lhs;
 			break;
 		case K_HELP_OFF:
 			textline = 0;
@@ -149,7 +152,7 @@ char **argv;
 		input = getkey(key_map);
 		while (table[i].key != 0 && input != table[i].key)
 			++i;
-		if (table[i].func != NULL) 
+		if (table[i].func != NULL)
 			(*table[i].func)();
 		else if (modeless)
 			insert();
@@ -167,7 +170,7 @@ char **argv;
 #endif
 #ifdef __MSDOS__
 #endif
-#endif /* SIGINT */	
+#endif /* SIGINT */
 
 	if (scrap != NULL)
 		free(scrap);
@@ -210,7 +213,7 @@ va_dcl
 
 	va_start(args);
 	f = getmsg(va_arg(args, t_msg));
-	for (m = msgline; *f != '\0'; ) { 
+	for (m = msgline; *f != '\0'; ) {
 		if (*f == '%') {
 			switch (*++f) {
 			case 's':
@@ -275,7 +278,7 @@ t_msg m;
 		return (message[index]);
 	return (text+1);
 }
- 
+
 /*
  *	Convert a string to lower case.  Return the string pointer.
  */
@@ -302,7 +305,7 @@ const char *str;
 	if ((new = (char*) malloc(strlen(str)+1)) != NULL)
 		(void) strcpy(new, str);
 	return (new);
-}	
+}
 
 /*
  * Replace old with new characters.  If method
@@ -377,7 +380,7 @@ char *fn;
 	if ((fp = fopen(fn, "r")) != NULL)
 		return (fp);
 
-	if ((ptr = getenv("HOME")) != NULL 
+	if ((ptr = getenv("HOME")) != NULL
 	&& (buf = pathname(ptr, fn)) != NULL) {
 		fp = fopen(buf, "r");
 #ifdef EITHER_SLASH
@@ -389,7 +392,7 @@ char *fn;
 			return (fp);
 	}
 
-	if ((ptr = getenv("ETCDIR")) != NULL 
+	if ((ptr = getenv("ETCDIR")) != NULL
 	&& (buf = pathname(ptr, fn)) != NULL) {
 		fp = fopen(buf, "r");
 #ifdef EITHER_SLASH
@@ -407,7 +410,7 @@ char *fn;
 /*
  * Get an arbitrarily long line of text from a file.
  * The read is terminated when an unescaped newline is found.
- * The buffer that is passed back in ptr will be '\0' terminated.  
+ * The buffer that is passed back in ptr will be '\0' terminated.
  * If an error occurs, the contents of ptr will be undefined.
  */
 long
@@ -436,8 +439,8 @@ char **ptr;
 			buf[len] = '\0';
 			break;
 		}
-		escape = !escape && ch == '\\'; 
-			
+		escape = !escape && ch == '\\';
+
 		if (blen <= len) {
 			blen += BUFSIZ;
 			if ((new = (char*) realloc(buf, blen)) == NULL) {
@@ -455,7 +458,7 @@ char **ptr;
 	if (feof(fp)) {
 		free(buf);
 		return (GETBLOCK_EOF);
-	} 
+	}
 
 	buf[len++] = '\0';
 
@@ -485,7 +488,7 @@ char *buf;
 		case '^':
 			++fetch;
 			if (*fetch == '?') {
-				/* ^? equals ASCII DEL character. */ 
+				/* ^? equals ASCII DEL character. */
 				*store = 0x7f;
 			} else {
 				/* Non-ASCII dependant control key mapping. */
@@ -494,7 +497,7 @@ char *buf;
 				if ((ctrl = strchr(control, *fetch)) == NULL)
 					/* Not a control key mapping. */
 					return (-1);
-				*store = (char) (ctrl - control);	
+				*store = (char) (ctrl - control);
 			}
 			++fetch;
 			break;
@@ -505,7 +508,7 @@ char *buf;
 				/* Numeric escapes allow for
 				 *  octal	\0nnn
 				 *  hex		\0xnn
-				 *  decimal	\nnn 
+				 *  decimal	\nnn
 				 */
 				number = strtol(fetch, &fetch, 0);
 				if (number < 0 || 255 < number)

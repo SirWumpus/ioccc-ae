@@ -83,7 +83,7 @@ extern char *strtok();
 #endif
 
 #define VERSION		\
-"0:AE July 93.  Copyright 1993, 1993 by Anthony Howe.  No warranty."
+"0:AE July 93.  Copyright 1993, 2023 by Anthony Howe.  No warranty."
 
 #ifndef CONFIG
 #define CONFIG		"ae.rc"

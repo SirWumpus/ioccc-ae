@@ -14,6 +14,7 @@ Toggle help		:h		Version, quit		V  q  Q\n
 
 #.help_off
 .stty_erase
+.stty_kill
 .show_version	V
 .show_version	:ver
 .macro		:map
