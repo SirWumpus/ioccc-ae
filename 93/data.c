@@ -12,6 +12,7 @@
 int done;
 int modified;
 int modeless;
+int inserting;
 
 t_point point;
 t_point page;

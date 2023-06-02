@@ -161,12 +161,18 @@ void
 insert()
 {
 	assert(gap <= egap);
-	if (gap == egap && !growgap(CHUNK))
+	if (gap == egap && !growgap(CHUNK)) {
 		return;
+	}
+	if (!inserting){
+		undoset();
+		inserting = TRUE;
+	}
 	point = movegap(point);
 	*gap++ = input == K_LITERAL ? getliteral() : input;
-	if (input == '\r' && (gap < egap || growgap(CHUNK)))
+	if (input == '\r' && (gap < egap || growgap(CHUNK))) {
 		*gap++ = '\n';
+	}
 	modified = TRUE;
 	point = pos(egap);
 }
@@ -182,8 +188,9 @@ insert_mode()
 		if (ch == K_STTY_ERASE) {
 			if (opoint < point) {
 				if (*--gap == '\n'
-				&& buf < gap && gap[-1] == '\r')
+				&& buf < gap && gap[-1] == '\r') {
 					--gap;
+				}
 				modified = TRUE;
 			}
 		} else if (ch == K_STTY_KILL) {
@@ -191,11 +198,13 @@ insert_mode()
 			gap -= point - opoint;
 		} else {
 			assert(gap <= egap);
-			if (gap == egap && !growgap(CHUNK))
+			if (gap == egap && !growgap(CHUNK)) {
 				break;
+			}
 			*gap++ = ch == K_LITERAL ? getliteral() : ch;
-			if (ch == '\r' && (gap < egap || growgap(CHUNK)))
+			if (ch == '\r' && (gap < egap || growgap(CHUNK))) {
 				*gap++ = '\n';
+			}
 			modified = TRUE;
 		}
 		point = pos(egap);
@@ -207,10 +216,10 @@ void
 backsp()
 {
 	point = movegap(point);
-	undoset();
 	if (buf < gap) {
-		if (*--gap == '\n' && buf < gap && gap[-1] == '\r')
+		if (*--gap == '\n' && buf < gap && gap[-1] == '\r') {
 			--gap;
+		}
 		point = pos(egap);
 		modified = TRUE;
 	}
@@ -220,10 +229,10 @@ void
 delete()
 {
 	point = movegap(point);
-	undoset();
 	if (egap < ebuf) {
-		if (*egap++ == '\r' && egap < ebuf && *egap == '\n')
+		if (*egap++ == '\r' && egap < ebuf && *egap == '\n') {
 			++egap;
+		}
 		point = pos(egap);
 		modified = TRUE;
 	}
@@ -236,7 +245,8 @@ readfile()
 	prompt(p_read, temp, BUFSIZ);
 	(void) load(temp);
 	if (filename[0] == '\0') {
-		strcpy(filename, temp);
+		(void) strncpy(filename, temp, BUFSIZ);
+		inserting = FALSE;
 		modified = FALSE;
 	}
 }
@@ -276,8 +286,9 @@ block()
 void
 cut()
 {
-	if (marker == NOMARK || point == marker)
+	if (marker == NOMARK || point == marker) {
 		return;
+	}
 	if (scrap != NULL) {
 		free(scrap);
 		scrap = NULL;
@@ -293,6 +304,7 @@ cut()
 		msg(m_alloc);
 	} else {
 		undoset();
+		inserting = FALSE;
 		(void) memcpy(scrap, egap, nscrap * sizeof (t_char));
 		egap += nscrap;
 		block();
@@ -309,6 +321,7 @@ paste()
 	} else if (nscrap < egap-gap || growgap(nscrap)) {
 		point = movegap(point);
 		undoset();
+		inserting = FALSE;
 		memcpy(gap, scrap, nscrap * sizeof (t_char));
 		gap += nscrap;
 		point = pos(egap);

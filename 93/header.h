@@ -144,6 +144,7 @@ extern int done;		/* Quit flag. */
 extern int modified;		/* Text buffer modified flag. */
 extern int modeless;		/* Command-set style. */
 extern int msgflag;		/* True if msgline should be displayed. */
+extern int inserting;
 
 extern int row;			/* Cursor screen row */
 extern int col;			/* Cursor screen column. */
