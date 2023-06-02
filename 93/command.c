@@ -215,6 +215,10 @@ insert_mode()
 void
 backsp()
 {
+	if (marker != NOMARK && marker < point) {
+		cut();
+		return;
+	}
 	point = movegap(point);
 	if (buf < gap) {
 		if (*--gap == '\n' && buf < gap && gap[-1] == '\r') {
@@ -228,6 +232,10 @@ backsp()
 void
 delete()
 {
+	if (marker != NOMARK && point < marker) {
+		cut();
+		return;
+	}
 	point = movegap(point);
 	if (egap < ebuf) {
 		if (*egap++ == '\r' && egap < ebuf && *egap == '\n') {
