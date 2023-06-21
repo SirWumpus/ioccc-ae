@@ -7,7 +7,7 @@
 #
 
 CC	= cc
-CFLAGS	= -ansi -DCONFIG='".aerc"' -Os
+CFLAGS	= -DCONFIG='".aerc"' -Os
 
 LD	= cc
 LDFLAGS =

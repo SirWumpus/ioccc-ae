@@ -1,5 +1,5 @@
 /*
- * gap.c		
+ * gap.c
  *
  * Anthony's Editor July 93
  *
@@ -10,6 +10,7 @@
 #include <fcntl.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <unistd.h>
 #include "header.h"
 
 typedef struct t_undo {
@@ -22,7 +23,7 @@ typedef struct t_undo {
 static t_undo ubuf;
 
 /*
- *	Enlarge the gap by n characters.  
+ *	Enlarge the gap by n characters.
  *	Note that the position of the gap cannot change.
  */
 int
@@ -31,7 +32,7 @@ t_point n;
 {
 	t_char *new;
 	t_point buflen, newlen, xgap, xegap;
-	
+
 	assert(buf <= gap);
 	assert(gap <= egap);
 	assert(egap <= ebuf);
@@ -61,12 +62,12 @@ t_point n;
 		}
 	}
 
-	/* Relocate pointers in new buffer and append the new 
-	 * extension to the end of the gap. 
+	/* Relocate pointers in new buffer and append the new
+	 * extension to the end of the gap.
 	 */
 	buf = new;
-	gap = buf + xgap;	
-	ebuf = buf + buflen; 
+	gap = buf + xgap;
+	ebuf = buf + buflen;
 	egap = buf + newlen;
 	while (xegap < buflen--)
 		*--egap = *--ebuf;
@@ -168,7 +169,7 @@ char *fn;
 	}
 #endif /* DRIVE_COLON */
 	for (; *fn != '\0'; ++fn) {
-		if (!isalnum(*fn) && *fn != '.' && *fn != '_' && *fn != '-' 
+		if (!isalnum(*fn) && *fn != '.' && *fn != '_' && *fn != '-'
 #ifdef EITHER_SLASH
 		&& *fn != '/' && *fn != '\\')
 #else
@@ -208,7 +209,7 @@ char *fn;
 		/* When saving only a block of text, we'll move the gap
 		 * to the start of the block, and set the left-half to
 		 * zero length.  We should never see the error message
-		 * in the saved block of text. 
+		 * in the saved block of text.
 		 */
 		llen = 0;
 		lhalf = (t_char *) m_error;
