@@ -1,5 +1,5 @@
 /*
- * key.c		
+ * key.c
  *
  * Anthony's Editor July 93
  *
@@ -116,7 +116,7 @@ t_keymap **keys;
 			error = INITKEY_ALLOC;
 			goto error1;
 		}
-	
+
 		/* Strip \r\n from end of buffer. */
 		if ((token = strrchr(buf, '\n')) != NULL) {
 			if (buf < token && token[-1] == '\r')
@@ -127,18 +127,18 @@ t_keymap **keys;
 		if (ismsg(buf)) {
 			long index = strtol(buf, &token, 0);
 			(void) encode(token);
-			if (0 < index) 
+			if (0 < index)
 				message[index] = token+1;
 			continue;
 		}
-			
-		if (buf[0] != '.' 
+
+		if (buf[0] != '.'
 		|| (token = strtok(buf, blank)) == NULL
 		|| (kp = findikey(keywords, strlwr(token))) == NULL) {
 			free(buf);
 			continue;
 		}
-	
+
 		array[count].code = kp->code;
 		/* Determine lhs and rhs parameters. */
 		if ((token = strtok(NULL, "")) != NULL) {
@@ -361,7 +361,7 @@ t_keymap *keys;
 		if (K_BUFFER_LENGTH < record - buffer) {
 			record = buffer;
 			buffer[0] = '\0';
-			return (K_ERROR); 
+			return (K_ERROR);
 		}
 		/* Read and record one byte. */
 		*record++ = getliteral();
@@ -428,9 +428,9 @@ char *buf;
 
 /*
  * Pop and return a character off the input stack.  Return EOF if
- * the stack is empty.  If the end of an input string is reached, 
- * then free the node.  This will allow clean tail recursion that 
- * won't blow the stack.  
+ * the stack is empty.  If the end of an input string is reached,
+ * then free the node.  This will allow clean tail recursion that
+ * won't blow the stack.
  */
 static int
 ipop()
@@ -473,91 +473,39 @@ ismacro()
 /*
  * Field input.
  */
+
+typedef struct t_fld {
+	int row;
+	int col;
+	int key;
+	int echo;
+	int index;
+	int length;
+	char *buffer;
+} t_fld;
+
 typedef struct t_keyfield {
 	int code;
-	int (*func) _((void));
+	int (*func) _((t_fld *));
 } t_keyfield;
 
-static int fld_done _((void));
-static int fld_erase _((void));
-static int fld_kill _((void));
-static int fld_left _((void));
-static int fld_insert _((void));
-
-#define ERASE_KEY	0
-#define KILL_KEY	1
-
-static t_keyfield ktable[] = {
-	{ K_STTY_ERASE, fld_erase },
-	{ K_STTY_KILL, fld_kill },
-	{ '\r', fld_done },
-	{ '\n', fld_done },
-	{ '\b', fld_erase },
-	{ -1, fld_insert }
-};
-
-static int fld_row;
-static int fld_col;
-static int fld_key;
-static int fld_echo;
-static int fld_index;
-static int fld_length;
-static char *fld_buffer;
-
-#ifndef getmaxyx
-#define getmaxyx(w,r,c)		(r=LINES,c=COLS)
-#endif
-
-int
-getinput(buf, len, echoing)
-char *buf;
-int len, echoing;
-{
-	int first;
-	t_keyfield *k;
-	fld_buffer = buf;
-	fld_index = (int) strlen(fld_buffer);
-	fld_length = len < 0 ? COLS : len;
-	if (--fld_length < 1)
-		return (FALSE);
-	ktable[ERASE_KEY].code = erasechar();
-	ktable[KILL_KEY].code = killchar();	
-	fld_echo = echoing;
-	getyx(stdscr, fld_row, fld_col);
-	addstr(fld_buffer);
-	move(fld_row, fld_col);
-	for (first = TRUE;; first = FALSE) {
-		refresh();
-		fld_key = getliteral();
-		for (k = ktable; k->code != -1 && k->code != fld_key; ++k)
-			;
-		if (first && k->func == fld_insert)
-			fld_kill();
-		if (k->func != NULL && !(*k->func)()) {
-			fld_buffer[fld_index] = '\0';
-			break;
-		}
-	}
-	return (TRUE);
-}
-	
 static int
-fld_done()
+fld_done(t_fld *ignore)
 {
 	return (FALSE);
 }
 
 static int
-fld_left()
+fld_left(t_fld *fld)
 {
 	int row, col, max_row, max_col;
 	getyx(stdscr, row, col);
 	getmaxyx(stdscr, max_row, max_col);
-	if (0 < fld_index) {
-		--fld_index;
-		/* Assume that if 0 < fld_index then fld_row <= row 
-		 * and fld_col < col.  So when fld_index == 0, then
-		 * fld_row == row and fld_col == col. 
+	if (0 < fld->index) {
+		--fld->index;
+		/* Assume that if 0 < fld->index then fld->row <= row
+		 * and fld->col < col.  So when fld->index == 0, then
+		 * fld->row == row and fld->col == col.
 		 */
 		if (0 < col) {
 			--col;
@@ -572,42 +520,101 @@ fld_left()
 }
 
 static int
-fld_erase()
+fld_erase(t_fld *fld)
 {
 	int row, col;
-	if (0 < fld_index) {
-		fld_left();
+	if (0 < fld->index) {
+		fld_left(fld);
 		getyx(stdscr, row, col);
 		addch(' ');
 		move(row, col);
-		fld_buffer[fld_index] = '\0';
+		fld->buffer[fld->index] = '\0';
 	}
 	return (TRUE);
 }
 
 static int
-fld_kill()
+fld_kill(t_fld *fld)
 {
-	move(fld_row, fld_col);
-	while (0 < fld_index--)
+	move(fld->row, fld->col);
+	while (0 < fld->index--) {
 		addch(' ');
-	move(fld_row, fld_col);
-	fld_buffer[0] = '\0';
-	fld_index = 0;
+	}
+	move(fld->row, fld->col);
+	fld->buffer[0] = '\0';
+	fld->index = 0;
 	return (TRUE);
 }
-	
+
 static int
-fld_insert()
+fld_insert(t_fld *fld)
 {
-	if (fld_index < fld_length) {
-		if (!ISFUNCKEY(fld_key)) {
-			fld_buffer[fld_index++] = fld_key;
-			if (fld_echo)
-				addch(fld_key);
+	if (fld->index < fld->length) {
+		if (!ISFUNCKEY(fld->key)) {
+			fld->buffer[fld->index++] = fld->key;
+			if (fld->echo) {
+				addch(fld->key);
+			}
 		}
 	}
-	return (fld_index < fld_length);
+	return (fld->index < fld->length);
 }
 
+#define ERASE_KEY	0
+#define KILL_KEY	1
 
+static t_keyfield ktable[] = {
+	{ K_STTY_ERASE, fld_erase },
+	{ K_STTY_KILL, fld_kill },
+	{ '\r', fld_done },
+	{ '\n', fld_done },
+	{ '\b', fld_erase },
+	{ -1, fld_insert }
+};
+
+#ifndef getmaxyx
+#define getmaxyx(w,r,c)		(r=LINES,c=COLS)
+#endif
+
+int
+getinput(char *buf, int len, int echoing)
+{
+	t_fld fld;
+	t_keyfield *k;
+
+	fld.buffer = buf;
+	fld.index = (int) strlen(fld.buffer);
+	fld.length = len < 0 ? COLS : len;
+	if (--fld.length < 1) {
+		return (FALSE);
+	}
+	ktable[ERASE_KEY].code = erasechar();
+	ktable[KILL_KEY].code = killchar();
+	fld.echo = echoing;
+	getyx(stdscr, fld.row, fld.col);
+	addstr(fld.buffer);
+	move(fld.row, fld.col);
+	for (int first = TRUE; ; first = FALSE) {
+		refresh();
+		fld.key = getliteral();
+
+		/* Lookup which action to take. */
+		for (k = ktable; k->code != -1 && k->code != fld.key; ++k) {
+			;
+		}
+
+		/* The input buffer may already have a value, eg. the
+		 * current filename.  We can keep it by typing enter
+		 * or replace it by typing a character.
+		 */
+		if (first && k->func == fld_insert) {
+			fld_kill(&fld);
+		}
+
+		if (k->func != NULL && !(*k->func)(&fld)) {
+			fld.buffer[fld.index] = '\0';
+			break;
+		}
+	}
+	return (TRUE);
+}
