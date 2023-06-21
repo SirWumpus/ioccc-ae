@@ -9,27 +9,71 @@
 #include <ctype.h>
 #include "header.h"
 
-void prt_macros _((void));
-int yesno _((int));
-int more _((int));
-void prompt _((t_msg, char *, size_t));
+void
+prompt(t_msg m, char *buf, size_t len)
+{
+	standout();
+	mvaddstr(MSGLINE, 0, getmsg(m));
+	standend();
+	clrtoeol();
+	addch(' ');
+	refresh();
+	getinput(buf, len, TRUE);
+}
+
+int
+yesno(int flag)
+{
+	int ch;
+
+	addstr(getmsg(flag ? p_yes : p_no));
+	refresh();
+	ch = getliteral();
+	if (ch == '\r' || ch == '\n') {
+		return (flag);
+	}
+
+	return (ch == getmsg(p_yes)[1]);
+}
+
+/*
+ * Return true if more should continue.
+ */
+int
+more(int row)
+{
+	int ch;
+
+	if (0 < row % (LINES-1)) {
+		return (TRUE);
+	}
+	standout();
+	addstr(getmsg(p_more));
+	standend();
+	clrtoeol();
+	refresh();
+	ch = getliteral();
+	addch('\r');
+	clrtoeol();
+	return (ch != getmsg(p_quit)[1] && ch != getmsg(p_no)[1]);
+}
 
 void
-top()
+top(void)
 {
 	inserting = FALSE;
 	point = 0;
 }
 
 void
-bottom()
+bottom(void)
 {
 	inserting = FALSE;
 	epage = point = pos(ebuf);
 }
 
 void
-quit_ask()
+quit_ask(void)
 {
 	if (modified) {
 		standout();
@@ -43,29 +87,14 @@ quit_ask()
 	quit();
 }
 
-int
-yesno(flag)
-int flag;
-{
-	int ch;
-
-	addstr(getmsg(flag ? p_yes : p_no));
-	refresh();
-	ch = getliteral();
-	if (ch == '\r' || ch == '\n') {
-		return (flag);
-	}
-	return (ch == getmsg(p_yes)[1]);
-}
-
 void
-quit()
+quit(void)
 {
 	done = 1;
 }
 
 void
-redraw()
+redraw(void)
 {
 	int col;
 
@@ -80,7 +109,7 @@ redraw()
 }
 
 void
-left()
+left(void)
 {
 	inserting = FALSE;
 	if (0 < point && iscrlf(--point) == 2) {
@@ -89,7 +118,7 @@ left()
 }
 
 void
-right()
+right(void)
 {
 	inserting = FALSE;
 	if (point < pos(ebuf) && iscrlf(point++) == 1) {
@@ -98,7 +127,7 @@ right()
 }
 
 void
-up()
+up(void)
 {
 	inserting = FALSE;
 	point = lncolumn(upup(point), col);
@@ -108,7 +137,7 @@ up()
 }
 
 void
-down()
+down(void)
 {
 	inserting = FALSE;
 	point = lncolumn(dndn(point), col);
@@ -118,21 +147,21 @@ down()
 }
 
 void
-lnbegin()
+lnbegin(void)
 {
 	inserting = FALSE;
 	point = segstart(lnstart(point), point);
 }
 
 void
-lnend()
+lnend(void)
 {
 	point = dndn(point);
 	left();
 }
 
 void
-wleft()
+wleft(void)
 {
 	inserting = FALSE;
 	while (!isalnum(*ptr(--point)) && 0 < point) {
@@ -145,7 +174,7 @@ wleft()
 }
 
 void
-wright()
+wright(void)
 {
 	inserting = FALSE;
 	t_point epoint = pos(ebuf);
@@ -158,7 +187,7 @@ wright()
 }
 
 void
-pgdown()
+pgdown(void)
 {
 	inserting = FALSE;
 	page = point = upup(epage);
@@ -169,7 +198,7 @@ pgdown()
 }
 
 void
-pgup()
+pgup(void)
 {
 	int i = LINES;
 	inserting = FALSE;
@@ -180,7 +209,7 @@ pgup()
 }
 
 void
-insert()
+insert(void)
 {
 	point = movegap(point);
 	if (gap == egap && !growgap(CHUNK)) {
@@ -199,7 +228,7 @@ insert()
 }
 
 void
-insert_mode()
+insert_mode(void)
 {
 	int ch;
 	t_point opoint;
@@ -234,7 +263,7 @@ insert_mode()
 }
 
 void
-backsp()
+backsp(void)
 {
 	if (marker != NOMARK && marker < point) {
 		cut();
@@ -251,7 +280,7 @@ backsp()
 }
 
 void
-delete()
+delete(void)
 {
 	if (marker != NOMARK && point < marker) {
 		cut();
@@ -268,7 +297,7 @@ delete()
 }
 
 void
-readfile()
+readfile(void)
 {
 	temp[0] = '\0';
 	prompt(p_read, temp, BUFSIZ);
@@ -281,7 +310,7 @@ readfile()
 }
 
 void
-writefile()
+writefile(void)
 {
 	standout();
 	if (marker == NOMARK || point == marker) {
@@ -297,7 +326,7 @@ writefile()
 }
 
 void
-help()
+help(void)
 {
 	textline = textline == HELPLINE ? -1 : HELPLINE;
 	/* When textline != HELPLINE, then redraw() will compute the
@@ -307,13 +336,13 @@ help()
 }
 
 void
-block()
+block(void)
 {
 	marker = marker == NOMARK ? point : NOMARK;
 }
 
 void
-cut()
+cut(void)
 {
 	if (marker == NOMARK || point == marker) {
 		return;
@@ -343,7 +372,7 @@ cut()
 }
 
 void
-paste()
+paste(void)
 {
 	if (nscrap <= 0) {
 		msg(m_scrap);
@@ -359,13 +388,48 @@ paste()
 }
 
 void
-version()
+version(void)
 {
 	msg(m_version);
 }
 
 void
-macro()
+prt_macros(void)
+{
+	t_keymap *kp;
+	int used, total;
+	unsigned char *ptr;
+
+	erase();
+	scrollok(stdscr, TRUE);
+	for (used = total = 0, kp = key_map; kp->code != K_ERROR; ++kp) {
+		if (kp->code == K_MACRO_DEFINE) {
+			++total;
+			if (kp->rhs != NULL) {
+				++used;
+				addch('{');
+				ptr = (unsigned char *) kp->lhs;
+				for (; *ptr != '\0'; ++ptr) {
+					addstr(printable(*ptr));
+				}
+				addstr("}\t{");
+				ptr = (unsigned char *) kp->rhs;
+				for (; *ptr != '\0'; ++ptr) {
+					addstr(printable(*ptr));
+				}
+				addstr("}\n");
+				(void) more(used);
+			}
+		}
+	}
+	printw("\n%d/%d\n", used, total);
+	scrollok(stdscr, FALSE);
+	(void) more(-1);
+	redraw();
+}
+
+void
+macro(void)
 {
 	t_keymap *kp;
 	size_t buflen, rhsoff;
@@ -431,66 +495,11 @@ macro()
 	free(buf);
 }
 
-void
-prt_macros()
-{
-	t_keymap *kp;
-	int used, total;
-	unsigned char *ptr;
-
-	erase();
-	scrollok(stdscr, TRUE);
-	for (used = total = 0, kp = key_map; kp->code != K_ERROR; ++kp) {
-		if (kp->code == K_MACRO_DEFINE) {
-			++total;
-			if (kp->rhs != NULL) {
-				++used;
-				addch('{');
-				ptr = (unsigned char *) kp->lhs;
-				for (; *ptr != '\0'; ++ptr)
-					addstr(printable(*ptr));
-				addstr("}\t{");
-				ptr = (unsigned char *) kp->rhs;
-				for (; *ptr != '\0'; ++ptr)
-					addstr(printable(*ptr));
-				addstr("}\n");
-				(void) more(used);
-			}
-		}
-	}
-	printw("\n%d/%d\n", used, total);
-	scrollok(stdscr, FALSE);
-	(void) more(-1);
-	redraw();
-}
-
-/*
- * Return true if more should continue.
- */
-int
-more(row)
-int row;
-{
-	int ch;
-
-	if (0 < row % (LINES-1))
-		return (TRUE);
-	standout();
-	addstr(getmsg(p_more));
-	standend();
-	clrtoeol();
-	refresh();
-	ch = getliteral();
-	addch('\r');
-	clrtoeol();
-	return (ch != getmsg(p_quit)[1] && ch != getmsg(p_no)[1]);
-}
-
 /*
  * Flip the case of a region.
  */
 void
-flipcase()
+flipcase(void)
 {
 	t_char *p;
 	t_region r;
@@ -504,23 +513,9 @@ flipcase()
 			modified = TRUE;
 		}
 	}
-	if (marker == NOMARK)
+	if (marker == NOMARK) {
 		right();
-}
-
-void
-prompt(m, buf, len)
-t_msg m;
-char *buf;
-size_t len;
-{
-	standout();
-	mvaddstr(MSGLINE, 0, getmsg(m));
-	standend();
-	clrtoeol();
-	addch(' ');
-	refresh();
-	getinput(buf, len, TRUE);
+	}
 }
 
 /*
@@ -528,10 +523,9 @@ size_t len;
  * 2 if offset points to second-half of CR-LF; 0 otherwise.
  */
 int
-iscrlf(offset)
-register t_point offset;
+iscrlf(t_point offset)
 {
-	register t_char *p;
+	t_char *p;
 
 	p = ptr(offset);
 	if (*p == '\r') {
