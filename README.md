@@ -1,4 +1,4 @@
-![AE Screen](./ae_on_netbsd_with_default_keys.png)
+![AE Screen](./ae_modeless_xterm_75.png)
 
 ae - Anthony's Editor
 =====================
