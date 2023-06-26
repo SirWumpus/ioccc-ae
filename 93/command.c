@@ -17,12 +17,14 @@ void prompt _((t_msg, char *, size_t));
 void
 top()
 {
+	inserting = FALSE;
 	point = 0;
 }
 
 void
 bottom()
 {
+	inserting = FALSE;
 	epage = point = pos(ebuf);
 }
 
@@ -34,8 +36,9 @@ quit_ask()
 		mvaddstr(MSGLINE, 0, getmsg(p_notsaved));
 		standend();
 		clrtoeol();
-		if (!yesno(FALSE))
+		if (!yesno(FALSE)) {
 			return;
+		}
 	}
 	quit();
 }
@@ -49,8 +52,9 @@ int flag;
 	addstr(getmsg(flag ? p_yes : p_no));
 	refresh();
 	ch = getliteral();
-	if (ch == '\r' || ch == '\n')
+	if (ch == '\r' || ch == '\n') {
 		return (flag);
+	}
 	return (ch == getmsg(p_yes)[1]);
 }
 
@@ -78,36 +82,45 @@ redraw()
 void
 left()
 {
-	if (0 < point && iscrlf(--point) == 2)
+	inserting = FALSE;
+	if (0 < point && iscrlf(--point) == 2) {
 		--point;
+	}
 }
 
 void
 right()
 {
-	if (point < pos(ebuf) && iscrlf(point++) == 1)
+	inserting = FALSE;
+	if (point < pos(ebuf) && iscrlf(point++) == 1) {
 		++point;
+	}
 }
 
 void
 up()
 {
+	inserting = FALSE;
 	point = lncolumn(upup(point), col);
-	if (iscrlf(point) == 2)
+	if (iscrlf(point) == 2) {
 		--point;
+	}
 }
 
 void
 down()
 {
+	inserting = FALSE;
 	point = lncolumn(dndn(point), col);
-	if (iscrlf(point) == 2)
+	if (iscrlf(point) == 2) {
 		--point;
+	}
 }
 
 void
 lnbegin()
 {
+	inserting = FALSE;
 	point = segstart(lnstart(point), point);
 }
 
@@ -121,29 +134,37 @@ lnend()
 void
 wleft()
 {
-	while (!isalnum(*ptr(--point)) && 0 < point)
+	inserting = FALSE;
+	while (!isalnum(*ptr(--point)) && 0 < point) {
 		;
-	while (isalnum(*ptr(--point)) && 0 <= point)
+	}
+	while (isalnum(*ptr(--point)) && 0 <= point) {
 		;
+	}
 	++point;
 }
 
 void
 wright()
 {
+	inserting = FALSE;
 	t_point epoint = pos(ebuf);
-	while (isalnum(*ptr(point)) && point < epoint)
+	while (isalnum(*ptr(point)) && point < epoint) {
 		++point;
-	while (!isalnum(*ptr(point)) && point < epoint)
+	}
+	while (!isalnum(*ptr(point)) && point < epoint) {
 		++point;
+	}
 }
 
 void
 pgdown()
 {
+	inserting = FALSE;
 	page = point = upup(epage);
-	while (textline < row--)
+	while (textline < row--) {
 		down();
+	}
 	epage = pos(ebuf);
 }
 
@@ -151,6 +172,7 @@ void
 pgup()
 {
 	int i = LINES;
+	inserting = FALSE;
 	while (textline < --i) {
 		page = upup(page);
 		up();
@@ -160,7 +182,7 @@ pgup()
 void
 insert()
 {
-	assert(gap <= egap);
+	point = movegap(point);
 	if (gap == egap && !growgap(CHUNK)) {
 		return;
 	}
@@ -168,7 +190,6 @@ insert()
 		undoset();
 		inserting = TRUE;
 	}
-	point = movegap(point);
 	*gap++ = input == K_LITERAL ? getliteral() : input;
 	if (input == '\r' && (gap < egap || growgap(CHUNK))) {
 		*gap++ = '\n';
