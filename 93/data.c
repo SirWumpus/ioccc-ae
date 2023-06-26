@@ -30,7 +30,6 @@ t_char *egap;
 t_point nscrap;
 t_char *scrap;
 
-int count;
 int input;
 int msgflag;
 char msgline[BUFSIZ];
