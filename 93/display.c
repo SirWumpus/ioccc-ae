@@ -1,5 +1,5 @@
 /*
- * display.c		
+ * display.c
  *
  * Anthony's Editor July 93
  *
@@ -21,7 +21,7 @@ static int dispchar();
 
 /*
  * Reverse scan for start of logical line containing offset.
- * 
+ *
  *	offset <= 0	return	0
  *	0 < offset	return	0 <= lnstart(offset) <= offset
  */
@@ -122,7 +122,7 @@ t_point start, finish;
 	t_point scan = segstart(start, finish);
 	for (;;) {
 		p = ptr(scan);
-		if (ebuf <= p || COLS <= c) 
+		if (ebuf <= p || COLS <= c)
 			break;
 		++scan;
 		if (*p == '\n')
@@ -141,7 +141,7 @@ t_point off;
 {
 	t_point curr = lnstart(off);
 	t_point seg = segstart(curr, off);
-	if (curr < seg) 
+	if (curr < seg)
 		off = segstart(curr, seg-1);
 	else
 		off = segstart(lnstart(curr-1), curr-1);
@@ -197,7 +197,7 @@ dispfull()
 	int i, j;
 	t_char *p;
 	t_region r;
-	
+
 	move(textline, 0);
 	i = textline;
 	j = 0;
@@ -209,30 +209,31 @@ dispfull()
 			col = j;
 		}
 		p = ptr(epage);
-		if (LINES <= i || ebuf <= p)
+		if (LINES <= i || ebuf <= p) {
 			break;
+		}
 		if (iscrlf(epage) != 1) {
 			if (marker != NOMARK) {
 				if (point != epage
-				&& r.left <= epage && epage <= r.right)
+				&& r.left <= epage && epage <= r.right) {
 					standout();
-				else
+				} else {
 					standend();
+				}
 			}
 			j = dispchar(j, (int) *p, TRUE);
 		}
 		if (*p == '\n' || COLS <= j) {
-			j -= COLS;
-			if (j < 0)
-				j = 0;
+			j = 0;
 			++i;
 		}
 		++epage;
 	}
 	standend();
-	clrtobot();
-	if (++i < LINES)
+	if (++i < LINES) {
 		mvaddstr(i, 0, getmsg(m_eof));
+		clrtobot();
+	}
 }
 
 /*
@@ -244,7 +245,7 @@ dispcursor()
 	int i, j;
 	t_char *p;
 	t_point pt;
-	
+
 	i = textline;
 	j = 0;
 	pt = page;
@@ -260,9 +261,7 @@ dispcursor()
 		if (iscrlf(pt) != 1)
 			j = dispchar(j, (int) *p, FALSE);
 		if (*p == '\n' || COLS <= j) {
-			j -= COLS;
-			if (j < 0)
-				j = 0;
+			j = 0;
 			++i;
 		}
 		++pt;
@@ -274,7 +273,7 @@ static int
 dispframe()
 {
 	int i, flag = FALSE;
-	
+
 	/* Re-frame the screen with the screen line containing the point
 	 * as the first line, when point < page.  Handles the cases of a
 	 * backward scroll or moving to the top of file.  pgup() will
@@ -397,13 +396,13 @@ unsigned ch;
 {
 	static char buf[5];
 	static char *mapping[] = {
-		"^?", 
-		"^@", "^A", "^B", "^C", "^D", "^E", "^F", "^G", 
-		"^H", "^I", "^J", "^K", "^L", "^M", "^N", "^O", 
-		"^P", "^Q", "^R", "^S", "^T", "^U", "^V", "^W", 
+		"^?",
+		"^@", "^A", "^B", "^C", "^D", "^E", "^F", "^G",
+		"^H", "^I", "^J", "^K", "^L", "^M", "^N", "^O",
+		"^P", "^Q", "^R", "^S", "^T", "^U", "^V", "^W",
 		"^X", "^Y", "^Z", "^[", "^\\", "^]", "^^", "^_"
 	};
-	if (ch == 0x7f) 
+	if (ch == 0x7f)
 		return (mapping[0]);
 	if (0 <= ch && ch < 32)
 		return (mapping[ch+1]);
