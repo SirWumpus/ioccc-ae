@@ -478,7 +478,6 @@ typedef struct t_fld {
 	int row;
 	int col;
 	int key;
-	int echo;
 	int index;
 	int length;
 	char *buffer;
@@ -552,9 +551,7 @@ fld_insert(t_fld *fld)
 	if (fld->index < fld->length) {
 		if (!ISFUNCKEY(fld->key)) {
 			fld->buffer[fld->index++] = fld->key;
-			if (fld->echo) {
-				addch(fld->key);
-			}
+			addch(fld->key);
 		}
 	}
 	return (fld->index < fld->length);
@@ -577,10 +574,39 @@ static t_keyfield ktable[] = {
 #endif
 
 int
-getinput(char *buf, int len, int echoing)
+getnext(t_fld *fld)
+{
+	t_keyfield *k;
+
+	fld->key = getliteral();
+
+	/* Lookup which action to take. */
+	for (k = ktable; k->code != -1 && k->code != fld->key; ++k) {
+		;
+	}
+
+	/* The input buffer may already have a value, eg. the
+	 * current filename.  We can keep it by typing enter
+	 * or replace it by typing a character.
+	 */
+	if (fld->index <= 0 && k->func == fld_insert) {
+		fld_kill(fld);
+	}
+
+	if (k->func != NULL && !(*k->func)(fld)) {
+		/* End input. */
+		fld->buffer[fld->index] = '\0';
+		return FALSE;
+	}
+
+	/* Continue input. */
+	return TRUE;
+}
+
+int
+getinput(char *buf, int len)
 {
 	t_fld fld;
-	t_keyfield *k;
 
 	fld.buffer = buf;
 	fld.index = (int) strlen(fld.buffer);
@@ -590,31 +616,14 @@ getinput(char *buf, int len, int echoing)
 	}
 	ktable[ERASE_KEY].code = erasechar();
 	ktable[KILL_KEY].code = killchar();
-	fld.echo = echoing;
+
 	getyx(stdscr, fld.row, fld.col);
 	addstr(fld.buffer);
 	move(fld.row, fld.col);
-	for (int first = TRUE; ; first = FALSE) {
+
+	do {
 		refresh();
-		fld.key = getliteral();
+	} while (getnext(&fld));
 
-		/* Lookup which action to take. */
-		for (k = ktable; k->code != -1 && k->code != fld.key; ++k) {
-			;
-		}
-
-		/* The input buffer may already have a value, eg. the
-		 * current filename.  We can keep it by typing enter
-		 * or replace it by typing a character.
-		 */
-		if (first && k->func == fld_insert) {
-			fld_kill(&fld);
-		}
-
-		if (k->func != NULL && !(*k->func)(&fld)) {
-			fld.buffer[fld.index] = '\0';
-			break;
-		}
-	}
 	return (TRUE);
 }

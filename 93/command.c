@@ -10,7 +10,7 @@
 #include "header.h"
 
 void
-prompt(t_msg m, char *buf, size_t len)
+promptmsg(t_msg m)
 {
 	standout();
 	mvaddstr(MSGLINE, 0, getmsg(m));
@@ -18,7 +18,13 @@ prompt(t_msg m, char *buf, size_t len)
 	clrtoeol();
 	addch(' ');
 	refresh();
-	getinput(buf, len, TRUE);
+}
+
+void
+prompt(t_msg m, char *buf, size_t len)
+{
+	promptmsg(m);
+	getinput(buf, len);
 }
 
 int

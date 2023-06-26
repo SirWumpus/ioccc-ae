@@ -102,7 +102,7 @@ extern t_keymap *findkey _((t_keymap *, char *));
 extern t_keyinit *findikey _((t_keyinit *, char *));
 extern int getliteral _((void));
 extern int getkey _((t_keymap *));
-extern int getinput _((char *, int, int));
+extern int getinput _((char *, int));
 extern int ismacro _((void));
 
 #endif /* __key_h__ */
