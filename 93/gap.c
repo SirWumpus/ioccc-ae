@@ -23,6 +23,42 @@ typedef struct t_undo {
 static t_undo ubuf;
 
 /*
+ *	The following assertions must be maintained.
+ *
+ *	o  buf <= gap <= egap <= ebuf
+ *		If gap == egap then the buffer is full.
+ *
+ *	o  point = ptr(here) and point < gap or egap <= point
+ *
+ *	o  page <= here < epage
+ *
+ *	o  0 <= here <= pos(ebuf) <= BUF
+ *
+ *
+ *	Memory representation of the file:
+ *
+ *		low	buf  -->+----------+
+ *				|  front   |
+ *				| of file  |
+ *			gap  -->+----------+<-- character not in file
+ *				|   hole   |
+ *			egap -->+----------+<-- character in file
+ *				|   back   |
+ *				| of file  |
+ *		high	ebuf -->+----------+<-- character not in file
+ *
+ *
+ *	point & gap
+ *
+ *	The Point is the current cursor position while the Gap is the
+ *	position where the last edit operation took place. The Gap is
+ *	ment to be the cursor but to avoid shuffling characters while
+ *	the cursor moves it is easier to just move a pointer and when
+ *	something serious has to be done then you move the Gap to the
+ *	Point.
+ */
+
+/*
  *	Enlarge the gap by n characters.
  *	Note that the position of the gap cannot change.
  */
