@@ -474,15 +474,6 @@ ismacro()
  * Field input.
  */
 
-typedef struct t_fld {
-	int row;
-	int col;
-	int key;
-	int index;
-	int length;
-	char *buffer;
-} t_fld;
-
 typedef struct t_keyfield {
 	int code;
 	int (*func) _((t_fld *));
@@ -546,11 +537,12 @@ fld_kill(t_fld *fld)
 }
 
 static int
-fld_insert(t_fld *fld)
+fld_append(t_fld *fld)
 {
 	if (fld->index < fld->length) {
 		if (!ISFUNCKEY(fld->key)) {
 			fld->buffer[fld->index++] = fld->key;
+			fld->buffer[fld->index] = '\0';
 			addch(fld->key);
 		}
 	}
@@ -566,7 +558,7 @@ static t_keyfield ktable[] = {
 	{ '\r', fld_done },
 	{ '\n', fld_done },
 	{ '\b', fld_erase },
-	{ -1, fld_insert }
+	{ -1, fld_append }
 };
 
 #ifndef getmaxyx
@@ -589,7 +581,7 @@ getnext(t_fld *fld)
 	 * current filename.  We can keep it by typing enter
 	 * or replace it by typing a character.
 	 */
-	if (fld->index <= 0 && k->func == fld_insert) {
+	if (fld->index <= 0 && k->func == fld_append) {
 		fld_kill(fld);
 	}
 
@@ -604,20 +596,25 @@ getnext(t_fld *fld)
 }
 
 int
-getinput(char *buf, int len)
+getinput(char *buf, size_t size)
 {
 	t_fld fld;
 
 	fld.buffer = buf;
-	fld.index = (int) strlen(fld.buffer);
-	fld.length = len < 0 ? COLS : len;
-	if (--fld.length < 1) {
-		return (FALSE);
+	fld.index = strlen(fld.buffer);
+
+	/* promptmsg() will have already positioned the cursor. */
+	getyx(stdscr, fld.row, fld.col);
+	fld.length = COLS - fld.col - 1;
+
+	/* Enough functional field input space? */
+	if (fld.length <= fld.index || fld.length < MIN_FIELD_WIDTH || size <= fld.length) {
+		return FALSE;
 	}
+
 	ktable[ERASE_KEY].code = erasechar();
 	ktable[KILL_KEY].code = killchar();
 
-	getyx(stdscr, fld.row, fld.col);
 	addstr(fld.buffer);
 	move(fld.row, fld.col);
 

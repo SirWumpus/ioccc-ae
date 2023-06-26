@@ -96,13 +96,25 @@ typedef struct t_keyinit {
 	int (*fn) _((t_keymap *));
 } t_keyinit;
 
+typedef struct t_fld {
+	int row;
+	int col;
+	int key;
+	size_t index;
+	size_t length;
+	char *buffer;
+} t_fld;
+
+#define MIN_FIELD_WIDTH 10
+
 extern int initkey _((char *, t_keymap **));
 extern void finikey _((t_keymap *));
 extern t_keymap *findkey _((t_keymap *, char *));
 extern t_keyinit *findikey _((t_keyinit *, char *));
 extern int getliteral _((void));
 extern int getkey _((t_keymap *));
-extern int getinput _((char *, int));
+extern int getinput _((char *, size_t));
+extern int getnext _((t_fld *));
 extern int ismacro _((void));
 
 #endif /* __key_h__ */
