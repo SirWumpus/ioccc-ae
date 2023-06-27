@@ -577,7 +577,6 @@ inc_search(void)
 {
 	int ch;
 	t_fld fld;
-	t_char *pt;
 
 	promptmsg(p_inc_search);
 	getyx(stdscr, fld.row, fld.col);
@@ -589,6 +588,7 @@ inc_search(void)
 
 	/* Move the gap out of the way of forward searching. */
 	point = movegap(point);
+	marker = point;
 
 	for (;;) {
 		if (!getnext(&fld)) {
@@ -601,6 +601,9 @@ inc_search(void)
 
 		inc_next();
 		display(dispfull);
+		if (marker != NOMARK) {
+			point = marker;
+		}
 
 		/* Redraw prompt and current search input.*/
 		promptmsg(p_inc_search);
