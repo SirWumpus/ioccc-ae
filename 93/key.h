@@ -68,10 +68,15 @@
 #define K_STTY_KILL	(-136)
 #define K_COUNT		(-137)
 
-#define K_MAX_CODES	38
+/* Incremental search. */
+#define K_INC_SEARCH	(-138)
+#define K_INC_NEXT	(-139)
+#define K_INC_PREV	(-140)
 
-/* 
- * Function error codes. 
+#define K_MAX_CODES	41
+
+/*
+ * Function error codes.
  */
 #define INITKEY_OK	0
 #define INITKEY_OPEN	1
@@ -79,7 +84,7 @@
 #define INITKEY_ERROR	3
 
 /*
- * ASCII Control Codes 
+ * ASCII Control Codes
  */
 #undef CTRL
 #define CTRL(x)		((x) & 0x1f)

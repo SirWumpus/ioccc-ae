@@ -33,7 +33,7 @@ Some default configuration files are supplied.  One of them should be renamed to
     :map            Macro add, change, delete, or view.
     ^R              Refresh the screen.
     :r :w           Read and write file to and from the buffer.
-    q Q             Quit with and without query.
+    q Q ZZ          Quit with and without query.
     V               Display version.
 
 #### 4.1.2.  MOVEMENT
@@ -43,6 +43,7 @@ Some default configuration files are supplied.  One of them should be renamed to
     ^F ^B           Page down, page up.
     0 $             Start, end of line.
     1G G            Top, bottom of file.
+    I n             Incremental search, next match.
 
 #### 4.1.3.  EDIT
 
@@ -88,6 +89,7 @@ Some default configuration files are supplied.  One of them should be renamed to
     ^F ^E           Front and end of line.
     ^N ^P           Next and previous page.
     ^T ^B           Top and bottom of file.
+    ^@ ^G           Incremental search, next match.
 
 
 #### 4.2.3.  EDIT
@@ -199,6 +201,10 @@ A literal escape begins with a backslash and is followed by any character that d
 * `.word_right <string>`  
   Move the cursor to start of the previous or next word. A word is defined as a sequence of alpha and/or numeric characters.
 
+* `.inc_search <string>`
+* `.inc_next <string>`
+  Incremental search.  `.inc_search` starts a new search, as characters are typed, the cursor advances and block selection highlights any matching text.  Press `Enter` or `Esc` to end input.  `.inc_next` advances to the next matching pattern.
+
 
 ### 5.1.3.  EDIT
 
@@ -209,7 +215,7 @@ A literal escape begins with a backslash and is followed by any character that d
 
 * `.delete_left <string>`
 * `.delete_right <string>`  
-  Delete character to the left or right of the cursor.
+  Delete character to the left or right of the cursor.  Can cut a selected block.
 
 * `.insert_enter <string>`
 * `.insert_exit <string>`  

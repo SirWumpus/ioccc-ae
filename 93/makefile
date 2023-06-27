@@ -7,7 +7,7 @@
 #
 
 CC	= cc
-CFLAGS	= -DCONFIG='".aerc"' -Os
+CFLAGS	= -DCONFIG='".aerc"' -O0 -g
 
 LD	= cc
 LDFLAGS =
@@ -20,7 +20,7 @@ RM	= rm
 E	=
 O	= .o
 
-OBJ	= command$(O) data$(O) display$(O) gap$(O) key$(O) main$(O)
+OBJ	= search$O command$(O) data$(O) display$(O) gap$(O) key$(O) main$(O)
 
 all: build
 
@@ -49,8 +49,11 @@ key$(O): key.c header.h
 main$(O): main.c header.h
 	$(CC) $(CFLAGS) -c main.c
 
+search$(O): search.h search.c
+	$(CC) $(CFLAGS) -c search.c
+
 clean:
-	-$(RM) $(OBJ) ae$(E)
+	-$(RM) $(OBJ) ae$(E) *.core
 
 install:
 	-$(MV) ae$(E) $(HOME)/bin/$(HOSTNAME)

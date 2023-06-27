@@ -1,4 +1,4 @@
-Sample Configuration File 
+Sample Configuration File
 Modeless Interface with ANSI Function Keys
 Anthony's Editor July 93
 Copyright 1993, 1993 by Anthony Howe.  All rights reserved.  No warranty.
@@ -42,7 +42,14 @@ Undo last               \^U              Invert case             F5\n
 .quit           ^K^C
 .quit           ^K^X
 .show_version   ^K^V
+.inc_search	^@
+.inc_next	^G
 .macro          ^KM
+.macro_define
+.macro_define
+.macro_define
+.macro_define
+.macro_define
 .macro_define
 .macro_define
 .macro_define

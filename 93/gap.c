@@ -140,9 +140,9 @@ t_point offset;
  */
 t_char *
 ptr(offset)
-register t_point offset;
+t_point offset;
 {
-	register t_char *cp;
+	t_char *cp;
 
 	if (offset < 0)
 		return (buf);
@@ -159,9 +159,9 @@ register t_point offset;
  */
 t_point
 pos(cp)
-register t_char *cp;
+t_char *cp;
 {
-	register t_point offset;
+	t_point offset;
 
 	offset = (t_point)(cp - buf);
 	if (cp < buf)

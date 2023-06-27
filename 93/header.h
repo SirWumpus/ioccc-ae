@@ -207,6 +207,7 @@ extern t_msg m_slots;
 extern t_msg m_interrupt;
 extern t_msg m_eof;
 extern t_msg m_undo;
+extern t_msg m_no_match;
 
 /* Prompts */
 extern t_msg p_macro;
@@ -219,6 +220,7 @@ extern t_msg p_yes;
 extern t_msg p_no;
 extern t_msg p_quit;
 extern t_msg p_more;
+extern t_msg p_inc_search;
 
 extern t_msg message[];
 
@@ -296,5 +298,9 @@ extern void wright _((void));
 extern void writefile _((void));
 extern void flipcase _((void));
 extern int iscrlf _((t_point));
+
+extern void inc_search _((void));
+extern void inc_next _((void));
+extern void inc_prev _((void));
 
 #endif /* __header_h__ */

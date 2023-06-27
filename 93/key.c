@@ -69,6 +69,9 @@ t_keyinit keywords[] = {
 	{ K_REDRAW, ".redraw", k_default },
 	{ K_SHOW_VERSION, ".show_version", k_default },
 	{ K_LITERAL, ".literal", k_default },
+	{ K_INC_SEARCH, ".inc_search", k_default },
+	{ K_INC_NEXT, ".inc_next", k_default },
+	{ K_INC_PREV, ".inc_prev", k_default },
 	{ K_ERROR, NULL, NULL }
 };
 
@@ -557,6 +560,7 @@ static t_keyfield ktable[] = {
 	{ K_STTY_KILL, fld_kill },
 	{ '\r', fld_done },
 	{ '\n', fld_done },
+	{ '\e', fld_done },
 	{ '\b', fld_erase },
 	{ -1, fld_append }
 };

@@ -8,8 +8,8 @@ Word left, right	b  w		Delete left, right	X  x\n\
 Page down, up		\^F  \^B\t	Block, cut, paste	SPACE  v  P\n\
 Start, end of line	0  $		Undo			u\n\
 Top, bottom of file	1G  G		Invert case		~\n\
-Macros			:map		Literal escape		\^V\n\
-Redraw			\^R		File read, write	:r  :w\n\
+Macros, redraw		:map  \^R	Literal escape		\^V\n\
+Inc. search, next	I  n		File read, write	:r  :w\n\
 Toggle help		:h		Version, quit		V  q  Q\n
 
 #.help_off
@@ -18,8 +18,6 @@ Toggle help		:h		Version, quit		V  q  Q\n
 .show_version	V
 .show_version	:ver
 .macro		:map
-.macro_define
-.macro_define
 .macro_define
 .macro_define
 .macro_define
@@ -66,6 +64,7 @@ Toggle help		:h		Version, quit		V  q  Q\n
 .insert_exit	^[
 .literal	^V
 .block		\s
+.block		^^
 .cut		v
 .paste		P
 .flip_case	~
@@ -79,6 +78,11 @@ Toggle help		:h		Version, quit		V  q  Q\n
 .quit_ask	q
 .quit		Q
 .quit		ZZ
+.inc_search	I
+.inc_next	n
+
+# Not implemented yet.
+#.inc_prev	N
 
 2:%s: Terminated successfully.\n
 3:%s: Unspecified error.\n

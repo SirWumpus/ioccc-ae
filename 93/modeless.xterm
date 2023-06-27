@@ -11,7 +11,7 @@ Macros, Redraw\t\t\^K\m \^Kr\t\tStart, end of line\tHome   End\n\
 Invert case\t\t\^T\t\tTop, bottom of file\t\^Home  \^End\n\
 Literal escape\t\t\^L\t\tDelete left, right\tBackspace Del\n\
 Undo\t\t\t\^Z\t\tBlock, cut, paste\t\^B  \^X  \^V\n\
-Insert \t\t\ttyped keys\n
+Inc. search, next\t\^@  \^N\t\tInsert \t\t\ttyped keys\n
 
 #.help_off
 .literal	^L
@@ -31,6 +31,7 @@ Insert \t\t\ttyped keys\n
 .delete_right	^[[3~
 .help		^[OP
 .block		^B
+.block		^^
 .cut		^X
 .paste		^V
 .undo		^Z
@@ -38,15 +39,27 @@ Insert \t\t\ttyped keys\n
 .file_read	^[OQ
 .file_write	^[OR
 .redraw		^Kr
+.redraw		^R
 .quit_ask	^Q
 .quit		^K^Q
 .show_version	^K^V
+.inc_search	^@
+.inc_next	^N
 .macro		^Km
 .macro_define
 .macro_define
 .macro_define
 .macro_define
 .macro_define
+.macro_define
+.macro_define
+.macro_define
+.macro_define
+.macro_define
+
+# Not implemented yet.
+#.inc_prev	^P
+
 
 2:%s: Terminated successfully.\n
 3:%s: Unspecified error.\n

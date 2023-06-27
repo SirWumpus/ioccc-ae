@@ -8,6 +8,9 @@
 
 #include <ctype.h>
 #include "header.h"
+#include "search.h"
+
+Pattern pat;
 
 void
 promptmsg(t_msg m)
@@ -544,4 +547,65 @@ iscrlf(t_point offset)
 			return (2);
 	}
 	return (0);
+}
+
+void
+inc_next(void)
+{
+	t_char *p;
+	long offset;
+
+	p = ptr(point);
+	offset = sunday_search(&pat, p, ebuf-p);
+	if (0 <= offset) {
+		/* Highlight text from marker to end of match. */
+		marker = point + offset;
+		point = marker + pat.length;
+	} else {
+		marker = NOMARK;
+		msg(m_no_match);
+	}
+}
+
+void
+inc_prev(void)
+{
+}
+
+void
+inc_search(void)
+{
+	int ch;
+	t_fld fld;
+	t_char *pt;
+
+	promptmsg(p_inc_search);
+	getyx(stdscr, fld.row, fld.col);
+
+	temp[0] = '\0';
+	fld.index = 0;
+	fld.buffer = temp;
+	fld.length = COLS - fld.col;
+
+	/* Move the gap out of the way of forward searching. */
+	point = movegap(point);
+
+	for (;;) {
+		if (!getnext(&fld)) {
+			break;
+		}
+
+		/* Updated pattern with next input key. */
+		sunday_fini(&pat);
+		sunday_init(&pat, fld.buffer, 0);
+
+		inc_next();
+		display(dispfull);
+
+		/* Redraw prompt and current search input.*/
+		promptmsg(p_inc_search);
+		addstr(temp);
+		getyx(stdscr, fld.row, fld.col);
+		refresh();
+	}
 }
