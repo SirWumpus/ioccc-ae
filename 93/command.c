@@ -556,7 +556,7 @@ inc_next(void)
 	long offset;
 
 	p = ptr(point);
-	offset = sunday_search(&pat, p, ebuf-p);
+	offset = sunday_search(&pat, p, egap == ebuf ? gap-p : ebuf-p);
 	if (0 <= offset) {
 		/* Highlight text from marker to end of match. */
 		marker = point + offset;
@@ -586,8 +586,13 @@ inc_search(void)
 	fld.buffer = temp;
 	fld.length = COLS - fld.col;
 
-	/* Move the gap out of the way of forward searching. */
-	point = movegap(point);
+	/* If the gap is at the start or end of file, then it is
+	 * already out of the way.  No need to move anything.
+	 */
+	if (buf < gap && egap < ebuf) {
+		/* Move the gap out of the way of forward searching. */
+		point = movegap(point);
+	}
 	marker = point;
 
 	for (;;) {

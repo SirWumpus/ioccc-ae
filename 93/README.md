@@ -31,9 +31,9 @@ Some default configuration files are supplied.  One of them should be renamed to
 
     :h              Toggle help on/off.
     :map            Macro add, change, delete, or view.
-    ^R              Refresh the screen.
     :r :w           Read and write file to and from the buffer.
     q Q ZZ          Quit with and without query.
+    ^R              Refresh the screen.
     V               Display version.
 
 #### 4.1.2.  MOVEMENT
