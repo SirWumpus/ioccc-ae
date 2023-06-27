@@ -27,9 +27,9 @@ static int dispchar();
  */
 t_point
 lnstart(offset)
-register t_point offset;
+t_point offset;
 {
-	register int ch;
+	int ch;
 
 	/* Make sure that offset maps to a buffer location. */
 	if (offset <= 0)
@@ -64,10 +64,10 @@ register t_point offset;
  */
 t_point
 lnnext(off)
-register t_point off;
+t_point off;
 {
-	register int ch;
-	register t_char *p;
+	int ch;
+	t_char *p;
 
 	/* Set up sentinal. */
 	ch = ebuf[-1];

@@ -286,7 +286,7 @@ char *
 strlwr(str)
 char *str;
 {
-	register char *s;
+	char *s;
 	for (s = str; *s != '\0'; ++s)
 		if (isupper(*s))
 			*s = tolower(*s);
@@ -318,8 +318,8 @@ strrep(str, old, new, method)
 char *str;
 int old, new, method;
 {
-	register char *ptr = str;
-	register int direction = 1;
+	char *ptr = str;
+	int direction = 1;
 
 	if (method == 0) {
 		/* All occurences. */
