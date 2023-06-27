@@ -15,14 +15,14 @@ filename    The name of a existing or new file to edit.
 
 ## 3.  DESCRIPTION
 
-AE is a simple full screen text editor that can be configured for either a modual (VI-style interface) or a modeless (EMACS-style interface).
+AE is a simple full screen text editor that can be configured for either a modal (VI-style interface) or a modeless (EMACS-style interface).
 
 Text files consist of lines of printable text or tab characters. A line can be of arbitary length and is delimited by either a newline or the end of file.  Carriage return is mapped to newline on input and ignored on output. Carriage returns already in the file are preserved.  Tab stops are every eight columns.
 
 
 ## 4.  COMMANDS
 
-Some default configuration files are supplied.  One of them should be renamed to `ae.rc` (Windows) or `.aerc` (Unix) and placed in the user's home directory.  The supplied files are `mode.rc`, `modeless.rc` (original), and `modeless.xterm` (revised) which configure the editor for either modual (VI-style) or modeless (EMACS-style) operation.
+Some default configuration files are supplied.  One of them should be renamed to `ae.rc` (Windows) or `.aerc` (Unix) and placed in the user's home directory.  The supplied files are `mode.rc`, `modeless.rc` (original), and `modeless.xterm` (revised) which configure the editor for either modal (VI-style) or modeless (EMACS-style) operation.
 
 
 ### 4.1.  MODUAL CONFIGURATION 
@@ -219,7 +219,7 @@ A literal escape begins with a backslash and is followed by any character that d
 
 * `.insert_enter <string>`
 * `.insert_exit <string>`  
-  Enter and exit insert mode.  The use of `.insert_enter` denotes a modual user interface.  Insert mode does not perform macro expansion.
+  Enter and exit insert mode.  The use of `.insert_enter` denotes a modal user interface.  Insert mode does not perform macro expansion.
 
 * `.literal <string>`  
   Next character entered is treated as a literal.
@@ -436,7 +436,7 @@ No known bugs.
 ## 10.  FILES
 
     ae.rc           Default configuration file used by AE.
-    mode.rc         Sample configuration for modual style.
+    mode.rc         Sample configuration for modal style.
     modeless.rc     Sample configuration for modeless style (ANSI cursor keys).
     modeless.xterm  Sample configuration for modeless style (Xterm keys).
 
