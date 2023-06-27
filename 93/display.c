@@ -199,6 +199,7 @@ dispfull()
 	t_region r;
 
 	move(textline, 0);
+	clrtobot();
 	i = textline;
 	j = 0;
 	epage = page;
@@ -232,7 +233,6 @@ dispfull()
 	standend();
 	if (++i < LINES) {
 		mvaddstr(i, 0, getmsg(m_eof));
-		clrtobot();
 	}
 }
 
