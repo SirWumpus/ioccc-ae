@@ -25,7 +25,7 @@ Text files consist of lines of printable text or tab characters. A line can be o
 Some default configuration files are supplied.  One of them should be renamed to `ae.rc` (Windows) or `.aerc` (Unix) and placed in the user's home directory.  The supplied files are `mode.rc`, `modeless.rc` (original), and `modeless.xterm` (revised) which configure the editor for either modal (VI-style) or modeless (EMACS-style) operation.
 
 
-### 4.1.  MODUAL CONFIGURATION 
+### 4.1.  MODAL CONFIGURATION 
 
 #### 4.1.1.  SUPPORT
 
@@ -40,6 +40,7 @@ Some default configuration files are supplied.  One of them should be renamed to
 
     h j k l         Left, down, up, right cursor movement.
     b w             Word left, right.
+    H L             Page top, bottom.
     ^F ^B           Page down, page up.
     0 $             Start, end of line.
     1G G            Top, bottom of file.
@@ -192,6 +193,10 @@ A literal escape begins with a backslash and is followed by any character that d
 * `.line_left <string>`
 * `.line_right <string>`  
   Move to the beginning or end of the line.
+
+* `.page_top <string>`
+* `.page_bottom <string>`  
+  First or last line of the page (screen).
 
 * `.page_up <string>`
 * `.page_down <string>`  

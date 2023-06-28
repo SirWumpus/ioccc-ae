@@ -53,6 +53,8 @@ t_keyinit keywords[] = {
 	{ K_WORD_RIGHT, ".word_right", k_default },
 	{ K_LINE_LEFT, ".line_left", k_default },
 	{ K_LINE_RIGHT, ".line_right", k_default },
+	{ K_PAGE_TOP, ".page_top", k_default },
+	{ K_PAGE_BOTTOM, ".page_bottom", k_default },
 	{ K_FILE_TOP, ".file_top", k_default },
 	{ K_FILE_BOTTOM, ".file_bottom", k_default },
 	{ K_HELP, ".help", k_default },

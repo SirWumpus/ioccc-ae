@@ -196,6 +196,21 @@ wright(void)
 }
 
 void
+pgtop(void)
+{
+	inserting = FALSE;
+	point = page;
+}
+
+void
+pgbottom(void)
+{
+	inserting = FALSE;
+	point = epage-1;
+	lnbegin();
+}
+
+void
 pgdown(void)
 {
 	inserting = FALSE;

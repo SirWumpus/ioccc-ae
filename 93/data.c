@@ -48,6 +48,8 @@ t_keytable table[] = {
 	{ K_PAGE_DOWN, pgdown, dispfull },
 	{ K_LINE_LEFT, lnbegin, dispcursor },
 	{ K_LINE_RIGHT, lnend, dispcursor },
+	{ K_PAGE_TOP, pgtop, dispcursor },
+	{ K_PAGE_BOTTOM, pgbottom, dispcursor },
 	{ K_FILE_TOP, top, dispfull },
 	{ K_FILE_BOTTOM, bottom, dispfull },
 	{ K_FLIP_CASE, flipcase, dispfull },

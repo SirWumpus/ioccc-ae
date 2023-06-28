@@ -21,10 +21,14 @@ Inc. search, next\t\^@  \^N\t\tInsert \t\t\ttyped keys\n
 .cursor_left	^[[D
 .page_up	^[[5~
 .page_down	^[[6~
+.page_top	^[[1;2A
+.page_bottom	^[[1;2B
 .word_left	^[[1;5D
 .word_right	^[[1;5C
 .line_left	^[[1~
 .line_right	^[[4~
+.line_left	^[[1;2D
+.line_right	^[[1;2C
 .file_top	^[[1;5H
 .file_bottom	^[[1;5F
 .delete_left	^H

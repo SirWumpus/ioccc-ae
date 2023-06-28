@@ -283,6 +283,8 @@ extern void lnbegin _((void));
 extern void lnend _((void));
 extern void macro _((void));
 extern void paste _((void));
+extern void pgtop _((void));
+extern void pgbottom _((void));
 extern void pgdown _((void));
 extern void pgup _((void));
 extern void quit _((void));

@@ -73,7 +73,10 @@
 #define K_INC_NEXT	(-139)
 #define K_INC_PREV	(-140)
 
-#define K_MAX_CODES	41
+#define K_PAGE_TOP	(-141)
+#define K_PAGE_BOTTOM	(-142)
+
+#define K_MAX_CODES	43
 
 /*
  * Function error codes.
