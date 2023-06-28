@@ -122,14 +122,17 @@ The parameters <string> and <character> can be any text other than whitspace (bl
 
 The sequence ^? represents ASCII DEL (0x7f).  The following escape constants are recognised:
 
-    backspace       \b
-    formfeed        \f
-    newline         \n
-    return          \r
+    backspace       \b          ^H
+    formfeed        \f          ^L
+    newline         \n          ^J
+    return          \r          ^M
+    escape          \e          ^[
+    tab             \t          ^I
     space           \s
-    tab             \t
 
-Also numeric escapes are possible.  The value represented must be between 0 and 255 inclusive.
+Several of the above control characters tend to be used for input and cannot be remmapped.  Many terminal emulators may also map CR to LF or LF to CR.  See also the `stty(1)` input settings and special keys as those will have precedence.  It is sometimes possible to use these keys in combination with a prefix, eg. `^K^I` if the need arises.
+
+Numeric escapes are possible.  The value represented must be between 0 and 255 inclusive.
 
     decimal         \ddd
     octal           \0ooo
