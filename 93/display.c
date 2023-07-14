@@ -344,6 +344,7 @@ int col, ch, flag;
 static void
 dispmsg()
 {
+	int r, c;
 	standout();
 	move(MSGLINE, 0);
 	if (msgflag) {
@@ -354,8 +355,12 @@ dispmsg()
 	} else {
 		printw(getmsg(m_file), filename, pos(ebuf));
 	}
+	/* Pad remainder of row with standout spaces, clrtoeol() does not. */
+	getyx(stdscr, r, c);
+	for ( ; c < COLS; c++){
+		addch(' ');
+	}
 	standend();
-	clrtoeol();
 }
 
 void
