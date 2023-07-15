@@ -53,11 +53,13 @@ horspool_init(Pattern *pp, const unsigned char *pattern, unsigned max_err)
 	}
 
 	for (k = 0; k <= max_err; k++) {
-		for (i = 0; i < sizeof (*pp->bm); i++)
+		for (i = 0; i < (sizeof (*pp->bm) / sizeof (**pp->bm)); i++) {
 			pp->bm[k][i] = pp->length;
+		}
 		pp->bm[k][pattern[m - k]] = pp->length - k;
-		for (i = 0; i < m - k; i++)
+		for (i = 0; i < m - k; i++) {
 			pp->bm[k][pattern[i]] = m - k - i;
+		}
 	}
 
 	return 0;
@@ -135,10 +137,12 @@ sunday_init(Pattern *pp, const unsigned char *pattern, unsigned max_err)
 	}
 
 	for (k = 0; k <= max_err; k++) {
-		for (i = 0; i < sizeof (*pp->qs); i++)
+		for (i = 0; i < (sizeof (*pp->qs) / sizeof (**pp->qs)); i++) {
 			pp->qs[k][i] = pp->length + 1 - k;
-		for (i = 0; i < pp->length - k; i++)
+		}
+		for (i = 0; i < pp->length - k; i++) {
 			pp->qs[k][pattern[i]] = pp->length - i - k;
+		}
 	}
 
 	return 0;

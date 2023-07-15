@@ -52,8 +52,11 @@ main$(O): main.c header.h
 search$(O): search.h search.c
 	$(CC) $(CFLAGS) -c search.c
 
+search$(E): search.h search.c
+	$(CC) $(CFLAGS) -DTEST -o$*$(E) search.c
+
 clean:
-	-$(RM) $(OBJ) ae$(E) *.core
+	-$(RM) $(OBJ) ae$(E) search$(E) *.core
 
 install:
 	-$(MV) ae$(E) $(HOME)/bin/$(HOSTNAME)
