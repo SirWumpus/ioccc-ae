@@ -184,7 +184,7 @@ void (*fn) _((void));
 		dispfull();
 	else if (fn != NULL)
 		(*fn)();
-	move(row, col);
+	move(cur_row, cur_col);
 	refresh();
 }
 
@@ -206,8 +206,8 @@ dispfull()
 	getregion(&r);
 	for (;;) {
 		if (point == epage) {
-			row = i;
-			col = j;
+			cur_row = i;
+			cur_col = j;
 		}
 		p = ptr(epage);
 		if (LINES <= i || ebuf <= p) {
@@ -251,8 +251,8 @@ dispcursor()
 	pt = page;
 	for (;;) {
 		if (point == pt) {
-			row = i;
-			col = j;
+			cur_row = i;
+			cur_col = j;
 			break;
 		}
 		p = ptr(pt);

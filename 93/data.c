@@ -19,7 +19,7 @@ t_point page;
 t_point epage;
 t_point marker = NOMARK;
 
-int row, col;
+int cur_row, cur_col;
 int textline = HELPLINE;
 
 t_char *buf;

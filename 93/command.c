@@ -139,7 +139,7 @@ void
 up(void)
 {
 	inserting = FALSE;
-	point = lncolumn(upup(point), col);
+	point = lncolumn(upup(point), cur_col);
 	if (iscrlf(point) == 2) {
 		--point;
 	}
@@ -149,7 +149,7 @@ void
 down(void)
 {
 	inserting = FALSE;
-	point = lncolumn(dndn(point), col);
+	point = lncolumn(dndn(point), cur_col);
 	if (iscrlf(point) == 2) {
 		--point;
 	}
@@ -215,7 +215,7 @@ pgdown(void)
 {
 	inserting = FALSE;
 	page = point = upup(epage);
-	while (textline < row--) {
+	while (textline < cur_row--) {
 		down();
 	}
 	epage = pos(ebuf);

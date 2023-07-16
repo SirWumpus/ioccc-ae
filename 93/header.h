@@ -146,8 +146,8 @@ extern int modeless;		/* Command-set style. */
 extern int msgflag;		/* True if msgline should be displayed. */
 extern int inserting;
 
-extern int row;			/* Cursor screen row */
-extern int col;			/* Cursor screen column. */
+extern int cur_row;		/* Cursor screen row */
+extern int cur_col;		/* Cursor screen column. */
 extern int textline;		/* First screen line used for text. */
 
 extern t_point point;		/* Cursor offset in text buffer. */
