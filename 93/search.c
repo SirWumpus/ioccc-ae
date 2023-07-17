@@ -142,7 +142,9 @@ sunday_init(Pattern *pp, const unsigned char *pattern, unsigned max_err)
 		}
 		for (i = 0; i < pp->length - k; i++) {
 			pp->qs[k][pattern[i]] = pp->length - i - k;
+			DEBUG("e=%ld ch='%c' delta=%lu", k, pattern[i], pp->qs[k][pattern[i]]);
 		}
+		DEBUG("e=%ld ch=* delta=%lu", k, pp->qs[k][0]);
 	}
 
 	return 0;
