@@ -1,0 +1,9 @@
+search for "return"
+nothing on this line
+return trailing text
+leading return trailing
+leading text return
+1 error  retXrn
+2 errors rXtXrn
+3 errors rXtXrX
+some text ret urn
