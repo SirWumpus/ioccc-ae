@@ -5,7 +5,7 @@ Copyright 1993, 2023 by Anthony Howe.  All rights reserved.  No warranty.
 1:\
 Left, down, up, right	h  j  k  l	Insert on, off, erase	i  ESC  ERASE\n\
 Word left, right	b  w		Delete left, right	X  x\n\
-Page top, bottom	H  L		Block, cut, paste, undo	SPACE  v  P  u\n\
+Page top, bottom, mid	H  L  M		Block, cut, paste, undo	SPACE  v  P  u\n\
 Page down, up		\^F  \^B\t	Start, end of line	0  $\n\
 Top, bottom of file	1G  G		Invert case		~\n\
 Macros, redraw		:map  \^R	Literal escape		\^V\n\
@@ -54,6 +54,7 @@ Toggle help		:h		Version, quit		V  q  Q\n
 .line_right	$
 .page_top	H
 .page_bottom	L
+.page_middle	M
 .file_top	T
 .file_bottom	B
 .file_top	1G

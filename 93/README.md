@@ -40,7 +40,7 @@ Some default configuration files are supplied.  One of them should be renamed to
 
     h j k l         Left, down, up, right cursor movement.
     b w             Word left, right.
-    H L             Page top, bottom.
+    H L M           Page top, bottom, middle.
     ^F ^B           Page down, page up.
     0 $             Start, end of line.
     1G G            Top, bottom of file.
@@ -198,8 +198,9 @@ A literal escape begins with a backslash and is followed by any character that d
   Move to the beginning or end of the line.
 
 * `.page_top <string>`
+* `.page_middle <string>`
 * `.page_bottom <string>`  
-  First or last line of the page (screen).
+  First, middle, or last line of the page (screen).
 
 * `.page_up <string>`
 * `.page_down <string>`  

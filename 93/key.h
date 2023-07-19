@@ -75,8 +75,9 @@
 
 #define K_PAGE_TOP	(-141)
 #define K_PAGE_BOTTOM	(-142)
+#define K_PAGE_MIDDLE	(-143)
 
-#define K_MAX_CODES	43
+#define K_MAX_CODES	44
 
 /*
  * Function error codes.

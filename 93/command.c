@@ -211,6 +211,17 @@ pgbottom(void)
 }
 
 void
+pgmiddle(void)
+{
+	int middle = (LINES - textline) / 2 + textline;
+	inserting = FALSE;
+	point = page;
+	for (cur_row = textline; cur_row < middle; cur_row++) {
+		down();
+	}
+}
+
+void
 pgdown(void)
 {
 	inserting = FALSE;

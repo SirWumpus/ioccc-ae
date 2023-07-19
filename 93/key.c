@@ -49,6 +49,7 @@ t_keyinit keywords[] = {
 	{ K_CURSOR_RIGHT, ".cursor_right", k_default },
 	{ K_PAGE_UP, ".page_up", k_default },
 	{ K_PAGE_DOWN, ".page_down", k_default },
+	{ K_PAGE_MIDDLE, ".page_middle", k_default },
 	{ K_WORD_LEFT, ".word_left", k_default },
 	{ K_WORD_RIGHT, ".word_right", k_default },
 	{ K_LINE_LEFT, ".line_left", k_default },
