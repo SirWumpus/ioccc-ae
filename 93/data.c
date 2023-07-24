@@ -131,7 +131,7 @@ t_msg p_quit = "37: q\b";
 t_msg m_undo = "38:Nothing to undo.";
 
 t_msg p_inc_search = "39:Incremental :";
-t_msg m_no_match = "40:No match.\a";
+t_msg m_no_match = "40:No match.";
 
 t_msg message[41];
 

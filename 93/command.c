@@ -10,7 +10,8 @@
 #include "header.h"
 #include "search.h"
 
-Pattern pat;
+static Pattern pat;
+static t_point start_point = NOMARK;		/* Point at start a search. */
 
 void
 promptmsg(t_msg m)
@@ -587,9 +588,22 @@ inc_next(void)
 		/* Highlight text from marker to end of match. */
 		marker = point + offset;
 		point = marker + pat.length;
-	} else {
+	} else if (point <= start_point || marker == NOMARK) {
+		/* Match not found, restore original point. */
+		point = start_point;
+		start_point = NOMARK;
 		marker = NOMARK;
 		msg(m_no_match);
+		beep();
+	} else {
+		/* Wrap search to the start of the buffer.  Clear marker
+		 * to avoid multiple wrap-arounds (and seg.fault).  If
+		 * the wrap-around sets marker again then a match was
+		 * found, possibly a previous match.
+		 */
+		marker = NOMARK;
+		point = 0;
+		inc_next();
 	}
 }
 
@@ -620,6 +634,9 @@ inc_search(void)
 		point = movegap(point);
 	}
 	marker = point;
+
+	/* Where the search started, in case we wrap aorund. */
+	start_point = point;
 
 	for (;;) {
 		if (!getnext(&fld)) {
