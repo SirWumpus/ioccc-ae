@@ -178,7 +178,6 @@ char **argv;
 	move(LINES-1, 0);
 	refresh();
 	endwin();
-	putchar('\n');
 	return (0);
 }
 
