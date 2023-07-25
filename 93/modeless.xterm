@@ -4,14 +4,13 @@ Assumes xterm / ANSI escape sequences.
 Copyright 1993, 2023 by Anthony Howe.  All rights reserved.  No warranty.
 
 1:\
-Help toggle\t\tF1\t\tLeft, down, up, right\tarrow keys\n\
-File read, write\tF2  F3\t\tWord left, right\t\^Left  \^Right\n\
-Quit, Version\t\t\^Q  \^K\^Q  \^K\^V\tPage up, down\t\tPgUp   PgDn\n\
-Macros, Redraw\t\t\^K\m \^Kr\t\tStart, end of line\tHome   End\n\
+Help, file read, write\tF1  F2  F3\tLeft, down, up, right\tarrow keys\n\
+Quit, Version\t\t\^Q  \^K\^Q  \^K\^V\tWord left, right\t\^Left  \^Right\n\
+Macros, Redraw\t\t\^K\m \^Kr\t\tPage up, down\t\t PgUp   PgDn\n\
+Literal escape\t\t\^L\t\tStart, end of line\t Home   End\n\
 Invert case\t\t\^T\t\tTop, bottom of file\t\^Home  \^End\n\
-Literal escape\t\t\^L\t\tDelete left, right\tBackspace Del\n\
-Undo\t\t\t\^Z\t\tBlock, cut, paste\t\^B  \^X  \^V\n\
-Inc. search, next\t\^@  \^N\t\tInsert \t\t\ttyped keys\n
+Inc. search, next\t\^@  \^N\t\tDelete left, right\tBackspace Del\n\
+Page top, bot, mid\tS-Up  S-Dn  \^_\tBlock, cut, paste, undo\t\^B  \^X  \^V  \^Z\n
 
 #.help_off
 .literal	^L
@@ -23,6 +22,7 @@ Inc. search, next\t\^@  \^N\t\tInsert \t\t\ttyped keys\n
 .page_down	^[[6~
 .page_top	^[[1;2A
 .page_bottom	^[[1;2B
+.page_middle	^_
 .word_left	^[[1;5D
 .word_right	^[[1;5C
 .line_left	^[[1~
