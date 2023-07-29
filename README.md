@@ -1,4 +1,4 @@
-![AE Screen](./ae_modeless_xterm_75.png)
+![AE xterm bindings](./ae_modeless_xterm.png)
 
 ae - Anthony's Editor
 =====================
@@ -34,6 +34,7 @@ After, `ae` grew with additional commands, like block cut/paste, inline help, ma
 * The C Users Journal, November 1993, pg 121  
   <http://ftp.math.utah.edu/pub/tex/bib/toc/cccuj.html#11(11):November:1993>
 
+![AE modal bindings](./ae_modal.png)
 
 ### Rant
 
