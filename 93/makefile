@@ -3,22 +3,42 @@
 #
 # Anthony's Editor July 93
 #
-# Copyright 1993, 1993 by Anthony Howe.  All rights reserved.  No warranty.
+# Copyright 1993, 2023 by Anthony Howe.  All rights reserved.  No warranty.
 #
 
+.POSIX :
+
+.SUFFIXES :
+O = .o
+E =
+.SUFFIXES : .c .i $O
+
 CC	= cc
+#CFLAGS	= -DCONFIG='".aerc"' -Os
+
+# Debug build
 CFLAGS	= -DCONFIG='".aerc"' -O0 -g
 
 LD	= cc
 LDFLAGS =
+
+# Cygwin
+#LIBS	= -lcurses
+
+# NetBSD
 LIBS	= -lcurses -ltermcap
 
-CP	= cp
-MV	= mv
-RM	= rm
+.c$O :
+	${CC} ${CFLAGS} ${CPPFLAGS} -c $<
 
-E	=
-O	= .o
+$O$E :
+	$(LD) $(LDFLAGS) $(CC_E)$*$E $*$O $(LIBS)
+
+.c$E :
+	$(CC) $(CFLAGS) ${CPPFLAGS} $(LDFLAGS) $(CC_E)$*$E $< $(LIBS)
+
+.c.i:
+	${CC} -E ${CPPFLAGS} $*.c >$*.i
 
 OBJ	= search$O command$(O) data$(O) display$(O) gap$(O) key$(O) main$(O)
 
@@ -31,7 +51,7 @@ ae$(E) : $(OBJ)
 
 header.h : key.h
 
-command$(O): command.c header.h
+command$(O): search.h header.h command.c
 	$(CC) $(CFLAGS) -c command.c
 
 data$(O): data.c header.h
@@ -56,8 +76,16 @@ search$(E): search.h search.c
 	$(CC) $(CFLAGS) -DTEST -o$*$(E) search.c
 
 clean:
-	-$(RM) $(OBJ) ae$(E) search$(E) *.core
+	-rm -f $(OBJ) *.core
 
-install:
-	-$(MV) ae$(E) $(HOME)/bin/$(HOSTNAME)
+distclean: clean
+	-rm -f ae$(E) search$(E)
 
+install: build
+	install -d ${HOME}/bin
+	install -p -s -m 0755 ae$E ${HOME}/bin
+	install -p -m 0400 mode.rc ${HOME}/.aerc
+	@echo
+	@echo "Default configuration ~/.aerc is the modal vi style (most portable)."
+	@echo "Copy modeless.xterm to ~/.aerc and edit to taste for an emacs style."
+	@echo
