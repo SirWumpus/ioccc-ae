@@ -82,8 +82,12 @@ extern char *strtok();
 #define const
 #endif
 
+#ifndef TAG
+#define TAG		"AE July 93"
+#endif
+
 #define VERSION		\
-"0:AE July 93.  Copyright 1993, 2023 by Anthony Howe.  No warranty."
+"0:" TAG "  Copyright 1993, 2023 by Anthony Howe.  No warranty."
 
 #ifndef CONFIG
 #define CONFIG		"ae.rc"

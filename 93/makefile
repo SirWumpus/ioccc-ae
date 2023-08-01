@@ -13,11 +13,13 @@ O = .o
 E =
 .SUFFIXES : .c .i $O
 
+TAG	:= $$(git tag -l | sed -n '/^ae93-/p' | sort -n | tail -n1)
+
 CC	= cc
-#CFLAGS	= -DCONFIG='".aerc"' -Os
+#CFLAGS	= -DCONFIG='".aerc"' -DTAG="\"${TAG}\"" -Os
 
 # Debug build
-CFLAGS	= -DCONFIG='".aerc"' -O0 -g
+CFLAGS	= -DCONFIG='".aerc"' -DTAG="\"${TAG}\"" -O0 -g
 
 LD	= cc
 LDFLAGS =

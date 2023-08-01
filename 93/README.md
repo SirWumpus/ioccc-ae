@@ -1,23 +1,25 @@
-ae - Anthony's Editor July 93
-=============================
+ae - Anthony's Editor
+=====================
 
 ## 1.  SYNOPSIS
 
-    ae [-f config_file]  [filename]
+    ae [-f config_file] [filename]
 
 
 ## 2.  OPERANDS
 
-config_file     The pathname of an AE configuration file.  The pathname may be absolute, relative the current directory, or relative the user's home directory.
+* `config_file`  
+  The pathname of an AE configuration file.  The pathname may be absolute, relative the current directory, or relative the user's home directory.
 
-filename    The name of a existing or new file to edit.
+* `filename`  
+  The name of a existing or new file to edit.
 
 
 ## 3.  DESCRIPTION
 
 AE is a simple full screen text editor that can be configured for either a modal (VI-style interface) or a modeless (EMACS-style interface).
 
-Text files consist of lines of printable text or tab characters. A line can be of arbitary length and is delimited by either a newline or the end of file.  Carriage return is mapped to newline on input and ignored on output. Carriage returns already in the file are preserved.  Tab stops are every eight columns.
+Text files consist of lines of printable text or tab characters. A line can be of arbitrary length and is delimited by either a newline or the end of file.  Carriage return is mapped to newline on input and ignored on output.  Carriage returns already in the file are preserved.  Tab stops are every eight columns.
 
 
 ## 4.  COMMANDS
@@ -113,9 +115,9 @@ No pre-defined macros.
 
 It is possible to redefine copies of the sample configuration files in order to support key-bindings and text messages of the user's choice.   The user can define an interface similar to either Vi or Emacs, and  support multibyte key sequences.  The text messages can be rephrased or translated into any 8-bit character set.  
 
-The configuration file layout is fairly simple.  All keywords begin on a line starting with a period (.).  Messages begin with a message number followed by a colon (:) and end with the first unescaped newline. Invalid keywords and messages are ignored.
+The configuration file layout is fairly simple.  All keywords begin on a line starting with a period, eg. .help.  Messages begin with a message number followed by a colon and end with the first unescaped newline.  Invalid keywords and messages are ignored.
 
-The parameters <string> and <character> can be any text other than whitspace (blank, tab, carriage-return, and newline).  It is possible to specify control keys by prefixing the following characters with a caret (^):
+The parameters <string> and <character> can be any text other than whitespace (blank, tab, carriage-return, and newline).  It is possible to specify control keys by prefixing the following characters with a caret, eg. ^H :
 
     @ a b c d e f g h i j k l m n o 
     p q r s t u v w x y z [ \ ] ^ _
@@ -130,7 +132,7 @@ The sequence ^? represents ASCII DEL (0x7f).  The following escape constants are
     tab             \t          ^I
     space           \s
 
-Several of the above control characters tend to be used for input and cannot be remmapped.  Many terminal emulators may also map CR to LF or LF to CR.  See also the `stty(1)` input settings and special keys as those will have precedence.  It is sometimes possible to use these keys in combination with a prefix, eg. `^K^I` if the need arises.
+Several of the above control characters tend to be used for input and cannot be remapped.  Many terminal emulators (putty, kitty) may also map CR to LF or LF to CR.  See also the `stty(1)` input settings and special keys as those will have precedence.  It is sometimes possible to use these keys in combination with a prefix, eg. `^K^I` if the need arises.
 
 Numeric escapes are possible.  The value represented must be between 0 and 255 inclusive.
 
@@ -168,7 +170,7 @@ A literal escape begins with a backslash and is followed by any character that d
 
 * `.macro_define`
 * `.macro_define <lhs string> <rhs string>`  
-  The first case reserves space for one macro definition that may be defined during the edit session.  The other case will  actually define a macro, where the left-hand-side, when typed will push onto an input stack the right-hand-side.  Either case may be used as many times as desired (memory permiting). Macros may be nested.
+  The first case reserves space for one macro definition that may be defined during the edit session.  The other case will  actually define a macro, where the left-hand-side, when typed will push onto an input stack the right-hand-side.  Either case may be used as many times as desired (memory permitting). Macros may be nested.
 
 * `.quit <string>`
 * `.quit_ask <string>`  
@@ -241,7 +243,7 @@ A literal escape begins with a backslash and is followed by any character that d
   Undo last cut, delete, insert, paste, read, or undo.
 
 * `.flip_case <string>`  
-  Invert the case of letters from lower to upper and visa-versa. When no region is selected, the cursor will advance right one  character position.
+  Invert the case of letters from lower to upper and visa-versa.  When no region is selected, the cursor will advance right one  character position.
 
 
 ## 5.2.  MESSAGES
@@ -250,7 +252,7 @@ Each message has the form:
 
     number : text
 
-Long messages can be continued by escaping the newline with a backslash (\\). The first unescaped newline terminates the message text and is not included as part of the text.
+Long messages can be continued by escaping the newline with a backslash (\\).  The first unescaped newline terminates the message text and is not included as part of the text.
 
 The following is a list of messages:
 
@@ -258,7 +260,7 @@ The following is a list of messages:
   Help text. See the sample configuration files for an example.
 
 * `2:%s: Terminated successfully.\n`  
-  Exit succesfully.  %s is the program name.
+  Exit successfully.  %s is the program name.
 
 * `3:%s: Unspecified error.\n`  
   Exit due to an unknown error.  %s is the program name.
@@ -282,7 +284,7 @@ The following is a list of messages:
 * `8:Ok.`  
   No error.
   
-* `9:An unknown error occured.`  
+* `9:An unknown error occurred.`  
   Internal error.
 
 * `10:No more memory available.`  
@@ -334,7 +336,7 @@ The following is a list of messages:
   All the macro space, allocated in the configuration file, is currently being used.
 
 * `26:Interrupt.`  
-  An interrupt occured.
+  An interrupt occurred.
 
 * `27:<< EOF >>`  
   End of file marker.
@@ -372,6 +374,12 @@ The following is a list of messages:
 * `38:Nothing to undo.`  
   An attempt was made to undo a change when the buffer had not yet been modified.
 
+* `39:Incremental :`
+  Incremental search input.
+
+* `40:No match.`
+  No match found from wrap-around incremental search.
+
 
 ## 6.  EXIT STATUS
 
@@ -383,15 +391,15 @@ The following is a list of messages:
 
 ## 7.  INSTALLATION 
 
-The source has been know to compile on a wide variety of machines and compilers like BSD and System V Unix with GNU C, PC mahcines with  WatCom C or Turbo C, and ATARI ST machines with Sozobon C.  Any machine  that provides at least K&R C and a BSD CURSES library (as described by  Ken Arnolds's paper) should have no trouble getting AE to compile.
+The source has been know to compile on a wide variety of machines and compilers like BSD and System V Unix with GNU C, PC machines with  WatCom C or Turbo C, and ATARI ST machines with Sozobon C.  Any machine  that provides at least K&R C and a BSD CURSES library (as described by  Ken Arnolds's paper) should have no trouble getting AE to compile.
 
 To build AE on most unix-like systems, type
 
     make
 
-The supplied makefile is configured for a BSD environment.  Some systems may require that the macros CC, CFLAGS, LD, LDFLAGS, and LIBS be configured.
+The supplied makefile is configured for a BSD environment.  Some systems may require that the macros `CC`, `CFLAGS`, `LD`, `LDFLAGS`, and `LIBS` be configured.
 
-The minimum Curses implementation supported is that defined by Kenneth Arnold's paper "Screen Updating and Cursor Movement Optimization: A Library Package".  Some BSD Curses implementations have been noted to omit the  functions erasechar(), killchar(), and idlok().  For BSD systems with poor Curses implementations, alter the following macro:
+The minimum Curses implementation supported is that defined by Kenneth Arnold's paper "Screen Updating and Cursor Movement Optimization: A Library Package".  Some BSD Curses implementations have been noted to omit the  functions `erasechar()`, `killchar()`, and `idlok()`.  For BSD systems with poor Curses implementations, alter the following macro:
 
     CFLAGS = -O -DBADCURSES
 
@@ -405,7 +413,7 @@ If the constants CHUNK or CONFIG are not defined by CFLAGS then the defaults use
     CHUNK   = 8096L
     CONFIG  = "ae.rc"
 
-CHUNK is the size by which the buffer is expanded when the buffer becomes full while inserting text.  CONFIG is the name of the default  configuration file.  The name chosen aims to satisfy both unix and  personal systems.  Unix affectionados may want to reconfigure this  to `.aerc`.
+CHUNK is the size by which the buffer is expanded when the buffer becomes full while inserting text.  CONFIG is the name of the default  configuration file.  The name chosen aims to satisfy both unix and  personal systems.  Unix aficionados may want to reconfigure this  to `.aerc`.
 
 Most EBCDIC machines use block mode terminals.  This is a problem that has not been addressed and/or tested for.
 
@@ -440,22 +448,3 @@ No known bugs.
   ISBN 0-13-822305-X, chapter 5
 
 * "Editor 101/102" articles from comp.editors
-
-
-## 10.  FILES
-
-    ae.rc           Default configuration file used by AE.
-    mode.rc         Sample configuration for modal style.
-    modeless.rc     Sample configuration for modeless style (ANSI cursor keys).
-    modeless.xterm  Sample configuration for modeless style (Xterm keys).
-
-
-## 11.  NOTICES
-
-Copyright 1993, 2023 by Anthony Howe.  All rights reserved.  No warranty.
-
-Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
-
-1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDERS AND CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
