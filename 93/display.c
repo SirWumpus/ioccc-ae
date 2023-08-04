@@ -105,7 +105,7 @@ t_point start, finish;
 			start = scan;
 		}
 		++scan;
-		c += *p == '\t' ? 8 - (c & 7) : 1;
+		c += *p == '\t' ? TABSTOP(c) : 1;
 	}
 	return (c < COLS ? start : finish);
 }
@@ -127,7 +127,7 @@ t_point start, finish;
 		++scan;
 		if (*p == '\n')
 			break;
-		c += *p == '\t' ? 8 - (c & 7) : 1;
+		c += *p == '\t' ? TABSTOP(c) : 1;
 	}
 	return (p < ebuf ? scan : pos(ebuf));
 }
@@ -169,7 +169,7 @@ int column;
 	int c = 0;
 	t_char *p;
 	while ((p = ptr(offset)) < ebuf && *p != '\n' && c < column) {
-		c += *p == '\t' ? 8 - (c & 7) : 1;
+		c += *p == '\t' ? TABSTOP(c) : 1;
 		++offset;
 	}
 	return (offset);
@@ -323,14 +323,14 @@ int col, ch, flag;
 			 */
 			if (ch == '\t') {
 				int t;
-				for (t = 8 - (col & 7); 0 < t; t--) {
+				for (t = TABSTOP(col); 0 < t; t--) {
 					addch(' ');
 				}
 			} else {
 				addch(ch);
 			}
 		}
-		col += ch == '\t' ? 8 - (col & 7) : 1;
+		col += ch == '\t' ? TABSTOP(col) : 1;
 	} else {
 		char *ctrl = printable(ch);
 		col += (int) strlen(ctrl);

@@ -106,6 +106,9 @@ extern char *strtok();
 #define HELPLINE	1
 #undef  TEXTLINE
 
+#define TABWIDTH	8
+#define TABSTOP(col)	(TABWIDTH - ((col) & (TABWIDTH-1)))
+
 #define NOMARK		-1
 
 typedef long SSIZE_T;			/* ssize_t not defined all systems. */
