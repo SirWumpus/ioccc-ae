@@ -84,10 +84,65 @@ t_keymap key_mode[] = {
 	{ K_ERROR, NULL }
 };
 
+t_keymap key_vi[] = {
+	{ K_CURSOR_LEFT,	"h" },
+	{ K_CURSOR_RIGHT,	"l" },
+	{ K_CURSOR_DOWN,	"j" },
+	{ K_CURSOR_UP,		"k" },
+	{ K_WORD_LEFT,		"b" },
+	{ K_WORD_RIGHT,		"w" },
+	{ K_PAGE_UP,		"\x02" },	/* ^B */
+	{ K_PAGE_DOWN,		"\x06" },	/* ^F */
+	{ K_LINE_LEFT,		"0" },
+	{ K_LINE_RIGHT,		"$" },
+	{ K_PAGE_TOP,		"H" },
+	{ K_PAGE_BOTTOM,	"L" },
+	{ K_PAGE_MIDDLE,	"M" },
+	{ K_FILE_TOP,		"1G" },
+	{ K_FILE_BOTTOM,	"G" },
+	{ K_FLIP_CASE,		"~" },
+	{ K_DELETE_LEFT,	"X" },
+	{ K_DELETE_RIGHT,	"x" },
+	{ K_BLOCK,		"\x1e" },	/* ^^ */
+	{ K_CUT,		"v" },
+	{ K_PASTE,		"P" },
+	{ K_UNDO,		"u" },
+	{ K_FILE_READ,		":r" },
+	{ K_FILE_WRITE,		":w" },
+	{ K_INSERT_ENTER,	"i" },
+	{ K_INSERT_EXIT,	"\e" },		/* ^[ */
+	{ K_INC_SEARCH,		"I" },
+	{ K_INC_NEXT,		"n" },
+	{ K_QUIT_ASK,		"q" },
+	{ K_QUIT,		"Q" },
+	{ K_LITERAL,		"\x16" },	/* ^V */
+	{ K_REDRAW,		"\x12" },	/* ^R */
+	{ K_HELP,		":h" },
+/*	{ K_HELP_OFF,		NULL }, */
+	{ K_SHOW_VERSION,	":ver" },
+	{ K_MACRO,		":map" },
+	{ K_MACRO_DEFINE,	NULL },
+	{ K_MACRO_DEFINE,	NULL },
+	{ K_MACRO_DEFINE,	NULL },
+	{ K_MACRO_DEFINE,	NULL },
+	{ K_MACRO_DEFINE,	NULL },
+	{ K_ERROR,		NULL }
+};
+
+t_msg m_help = "1:"
+"Left, down, up, right	h  j  k  l	Insert on, off, erase	i  ESC  ERASE\n"
+"Word left, right	b  w		Delete left, right	X  x\n"
+"Page top, bottom, mid	H  L  M		Block, cut, paste, undo	^^  v  P  u\n"
+"Page down, up		^F  ^B\t	Start, end of line	0  $\n"
+"Top, bottom of file	1G  G		Invert case		~\n"
+"Macros, redraw		:map  ^R	Literal escape		^V\n"
+"Inc. search, next	I  n		File read, write	:r  :w\n"
+"Toggle help		:h		Version, quit		:ver  q  Q\n"
+;
+
 t_keymap *key_map;
 
 t_msg m_version = VERSION;
-t_msg m_help = "1:";
 
 t_msg f_ok = "2:%s: Terminated successfully.\n";
 t_msg f_error = "3:%s: Unspecified error.\n";

@@ -181,6 +181,7 @@ extern char *prog_name;		/* Name used to invoke editor. */
 extern t_keytable table[];	/* Command jump table. */
 extern t_keymap *key_map;	/* Command key mappings. */
 extern t_keymap key_mode[];	/* Key mappings used in insert_mode() */
+extern t_keymap key_vi[];	/* Default keys when no .aerc found. */
 
 /* fatal() messages. */
 extern t_msg f_ok;		/* EXIT_OK */

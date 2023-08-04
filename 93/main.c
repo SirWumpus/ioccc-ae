@@ -48,8 +48,9 @@ char **argv;
 	/* Find basename. */
 	prog_name = *argv;
 	i = strlen(prog_name);
-	while (0 <= i && prog_name[i] != '\\' && prog_name[i] != '/')
+	while (0 <= i && prog_name[i] != '\\' && prog_name[i] != '/') {
 		--i;
+	}
 	prog_name += i+1;
 
 	/* Parse options. */
@@ -83,10 +84,12 @@ char **argv;
 		}
 	}
 
-	if (initscr() == NULL)
+	if (initscr() == NULL) {
 		fatal(f_initscr);
-	if (initkey(config, &key_map) != INITKEY_OK)
-		fatal(f_config);
+	}
+	if (initkey(config, &key_map) != INITKEY_OK) {
+		key_map = key_vi;
+	}
 
 	/* Determine if editor is modeless or not.
 	 * Define insert mode keys from the master table.
@@ -125,8 +128,9 @@ char **argv;
 		strcpy(filename, *argv);
 		modified = FALSE;
 	}
-	if (!growgap(CHUNK))
+	if (!growgap(CHUNK)) {
 		fatal(f_alloc);
+	}
 
 	top();
 	i = msgflag;
@@ -135,27 +139,32 @@ char **argv;
 
 	/* Disable recognition of user interrupt. */
 #ifdef SIGQUIT
-	if (signal(SIGQUIT, SIG_IGN) == SIG_ERR)
+	if (signal(SIGQUIT, SIG_IGN) == SIG_ERR) {
 		fatal(f_error);
+	}
 #endif
 #ifdef SIGINT
-	if (signal(SIGINT, SIG_IGN) == SIG_ERR)
+	if (signal(SIGINT, SIG_IGN) == SIG_ERR) {
 		fatal(f_error);
+	}
 #endif
 #ifdef ATARI_ST
 	old_sigint = (void (*)()) Setexc(0x102, sigint);
-	if (setjmp(ignore) != 0)
+	if (setjmp(ignore) != 0) {
 		msg(m_interrupt);
+	}
 #endif
 	while (!done) {
 		i = 0;
 		input = getkey(key_map);
-		while (table[i].key != 0 && input != table[i].key)
+		while (table[i].key != 0 && input != table[i].key) {
 			++i;
-		if (table[i].func != NULL)
+		}
+		if (table[i].func != NULL) {
 			(*table[i].func)();
-		else if (modeless)
+		} else if (modeless) {
 			insert();
+		}
 		display(table[i].disp);
 	}
 
@@ -172,9 +181,12 @@ char **argv;
 #endif
 #endif /* SIGINT */
 
-	if (scrap != NULL)
+	if (scrap != NULL) {
 		free(scrap);
-	finikey(key_map);
+	}
+	if (key_map != key_vi) {
+		finikey(key_map);
+	}
 	move(LINES-1, 0);
 	refresh();
 	endwin();
