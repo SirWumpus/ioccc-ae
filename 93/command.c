@@ -644,8 +644,7 @@ inc_search(void)
 		}
 
 		/* Updated pattern with next input key. */
-		sunday_fini(&pat);
-		sunday_init(&pat, fld.buffer, 0);
+		sunday_init(&pat, fld.buffer);
 
 		inc_next();
 		display(dispfull);
