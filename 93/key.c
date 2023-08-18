@@ -623,8 +623,6 @@ getinput(char *buf, size_t size)
 	ktable[KILL_KEY].code = killchar();
 
 	addstr(fld.buffer);
-	move(fld.row, fld.col);
-
 	do {
 		refresh();
 	} while (getnext(&fld));
