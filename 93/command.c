@@ -7,9 +7,13 @@
  */
 
 #include <ctype.h>
+#include <regex.h>
 #include "header.h"
 #include "search.h"
 
+static regex_t ere;
+static int ere_ready;
+static int ere_anchor_only;
 static Pattern pat;
 static t_point start_point = NOMARK;		/* Point at start a search. */
 
@@ -416,7 +420,7 @@ paste(void)
 		point = movegap(point);
 		undoset();
 		inserting = FALSE;
-		memcpy(gap, scrap, nscrap * sizeof (t_char));
+		(void) memcpy(gap, scrap, nscrap * sizeof (t_char));
 		gap += nscrap;
 		point = pos(egap);
 		modified = TRUE;
@@ -577,20 +581,90 @@ iscrlf(t_point offset)
 }
 
 void
-inc_next(void)
+match_next(void)
 {
 	t_char *p;
-	long offset;
+	off_t offset;
+	size_t length;
+	static size_t prev_match_length = 0;
 
+	inserting = FALSE;
+
+	/* Current cursor point. */
 	p = ptr(point);
-	offset = sunday_search(&pat, p, egap == ebuf ? gap-p : ebuf-p);
+	if (p == ebuf) {
+		/* Wrap around from end of buffer. */
+		point = 0;
+		p = buf;
+	} else if (prev_match_length == 0 && (ere_anchor_only == '$' || (point == 0 && ere_anchor_only == '^'))) {
+		/* Allows /^/ or /$/ to advance to start or end of next
+		 * line respectively.  The RE /^$/, ^pat/, /pat$/, and
+		 * /^pat$/ are fine.
+		 *
+		 * Note special cases:
+		 *
+		 * - CRLF newlines
+		 *
+		 *	Pattern /^/
+		 *	-----------
+		 *      BOFtext\r\n\r\nterminated\r\nEOF
+		 *         ^       ^   ^             ^
+		 *      BOFtext\r\n\r\nnot terminatedEOF
+		 *         ^       ^   ^
+		 *
+		 *	Pattern /$/
+		 *	-----------
+		 *	BOFtext\r\n\r\nterminated\r\nEOF
+		 *               ^   ^             ^ ^
+		 *	BOFtext\r\n\r\nnot terminatedEOF
+		 *               ^   ^               ^
+		 *
+		 * - LF newlines
+		 *
+		 *	Pattern /^/
+		 *	-----------
+		 *      BOFtext\n\nterminated\nEOF
+		 *         ^     ^ ^           ^
+		 *      BOFtext\n\nnot terminatedEOF
+		 *         ^     ^ ^
+		 *
+		 *	Pattern /$/
+		 *	-----------
+		 *	BOFtext\n\nterminated\nEOF
+		 *             ^ ^           ^ ^
+		 *	BOFtext\n\nnot terminatedEOF
+		 *             ^ ^               ^
+		 */
+		p = ptr(++point);
+	}
+
+	/* Find next match. */
+	if (ere_ready) {
+		regmatch_t matches[1];
+		if (regexec(&ere, p, 1, matches, 0) == REG_NOMATCH) {
+			offset = -1;
+		} else {
+			offset = matches[0].rm_so;
+			length = matches[0].rm_eo - offset;
+			prev_match_length = length;
+		}
+	} else if (0 < pat.length) {
+		offset = sunday_search(&pat, p, egap == ebuf ? gap-p : ebuf-p);
+		length = pat.length;
+	} else {
+		start_point = NOMARK;
+		msg(m_no_pattern);
+		beep();
+		return;
+	}
+
 	if (0 <= offset) {
 		/* Highlight text from marker to end of match. */
 		marker = point + offset;
-		point = marker + pat.length;
+		point = marker + length;
 	} else if (point <= start_point || marker == NOMARK) {
-		/* Match not found, restore original point. */
-		point = start_point;
+		/* Match not found. */
+		prev_match_length = ~0;
 		start_point = NOMARK;
 		marker = NOMARK;
 		msg(m_no_match);
@@ -601,14 +675,15 @@ inc_next(void)
 		 * the wrap-around sets marker again then a match was
 		 * found, possibly a previous match.
 		 */
+		prev_match_length = ~0;
 		marker = NOMARK;
 		point = 0;
-		inc_next();
+		match_next();
 	}
 }
 
 void
-inc_prev(void)
+match_prev(void)
 {
 }
 
@@ -618,6 +693,8 @@ inc_search(void)
 	int ch;
 	t_fld fld;
 
+	regfree(&ere);
+	ere_ready = FALSE;
 	promptmsg(p_inc_search);
 	getyx(stdscr, fld.row, fld.col);
 
@@ -646,7 +723,7 @@ inc_search(void)
 		/* Updated pattern with next input key. */
 		sunday_init(&pat, fld.buffer);
 
-		inc_next();
+		match_next();
 		display(dispfull);
 		if (marker != NOMARK) {
 			point = marker;
@@ -657,5 +734,44 @@ inc_search(void)
 		addstr(temp);
 		getyx(stdscr, fld.row, fld.col);
 		refresh();
+	}
+}
+
+void
+regex_search(void)
+{
+	regfree(&ere);
+	ere_ready = FALSE;
+
+	for (temp[0] = '\0'; ; ) {
+		prompt(p_search, temp, BUFSIZ);
+		if (*temp == '\0') {
+			break;
+		}
+		if (regcomp(&ere, temp, REG_EXTENDED|REG_NEWLINE) == 0) {
+			if (temp[1] == '\0') {
+				/* Single character pattern, eg. /^/ /$/ /./ */
+				ere_anchor_only = temp[0];
+			} else {
+				ere_anchor_only = -1;
+			}
+
+			/* If the gap is at the start or end of file, then it is
+			 * already out of the way.  No need to move anything.
+			 */
+			if (buf < gap && egap < ebuf) {
+				/* Move the gap out of the way of forward searching. */
+				point = movegap(point);
+			}
+			marker = point;
+
+			/* Where the search started, in case we wrap aorund. */
+			start_point = point;
+
+			ere_ready = TRUE;
+			match_next();
+			break;
+		}
+		beep();
 	}
 }

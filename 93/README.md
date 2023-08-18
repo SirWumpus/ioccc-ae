@@ -213,8 +213,12 @@ A literal escape begins with a backslash and is followed by any character that d
   Move the cursor to start of the previous or next word. A word is defined as a sequence of alpha and/or numeric characters.
 
 * `.inc_search <string>`
-* `.inc_next <string>`
-  Incremental search.  `.inc_search` starts a new search, as characters are typed, the cursor advances and block selection highlights any matching text.  Press `Enter` or `Esc` to end input.  `.inc_next` advances to the next matching pattern.
+* `.match_next <string>`
+  `.inc_search` starts a new incremental search, as characters are typed, the cursor advances and block selection highlights any matching text.  Press `Enter` or `Esc` to end input.  `.match_next` advances to the next matching pattern.
+
+* `.regex_search <string>`
+* `.match_next <string>`
+  `.regex_search` starts a new extended regular expression search.  On match the cursor advances and block selection highlights the matching text.  Press `Enter` or `Esc` to end input.  `.match_next` advances to the next matching pattern.
 
 
 ### 5.1.3.  EDIT

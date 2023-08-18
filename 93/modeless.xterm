@@ -9,7 +9,7 @@ Quit, Version\t\t\^Q  \^K\^Q  \^K\^V\tWord left, right\t\^Left  \^Right\n\
 Macros, Redraw\t\t\^K\m \^Kr\t\tPage up, down\t\t PgUp   PgDn\n\
 Literal escape\t\t\^L\t\tStart, end of line\t Home   End\n\
 Invert case\t\t\^T\t\tTop, bottom of file\t\^Home  \^End\n\
-Inc. search, next\t\^@  \^N\t\tDelete left, right\tBackspace Del\n\
+Ere, inc. find, next\t\^\\  \^@  \^N\tDelete left, right\tBackspace Del\n\
 Page top, bot, mid\tS-Up  S-Dn  \^_\tBlock, cut, paste, undo\t\^B  \^X  \^V  \^Z\n
 
 #.help_off
@@ -47,8 +47,9 @@ Page top, bot, mid\tS-Up  S-Dn  \^_\tBlock, cut, paste, undo\t\^B  \^X  \^V  \^Z
 .quit_ask	^Q
 .quit		^K^Q
 .show_version	^K^V
+.regex_search	^\\
 .inc_search	^@
-.inc_next	^N
+.match_next	^N
 .macro		^Km
 .macro_define
 .macro_define
@@ -62,7 +63,7 @@ Page top, bot, mid\tS-Up  S-Dn  \^_\tBlock, cut, paste, undo\t\^B  \^X  \^V  \^Z
 .macro_define
 
 # Not implemented yet.
-#.inc_prev	^P
+#.match_prev	^P
 
 
 2:%s: Terminated successfully.\n

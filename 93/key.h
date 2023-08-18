@@ -70,14 +70,16 @@
 
 /* Incremental search. */
 #define K_INC_SEARCH	(-138)
-#define K_INC_NEXT	(-139)
-#define K_INC_PREV	(-140)
+#define K_MATCH_NEXT	(-139)
+#define K_MATCH_PREV	(-140)
 
 #define K_PAGE_TOP	(-141)
 #define K_PAGE_BOTTOM	(-142)
 #define K_PAGE_MIDDLE	(-143)
 
-#define K_MAX_CODES	44
+#define K_REGEX_SEARCH	(-144)
+
+#define K_MAX_CODES	45
 
 /*
  * Function error codes.

@@ -73,8 +73,9 @@ t_keyinit keywords[] = {
 	{ K_SHOW_VERSION, ".show_version", k_default },
 	{ K_LITERAL, ".literal", k_default },
 	{ K_INC_SEARCH, ".inc_search", k_default },
-	{ K_INC_NEXT, ".inc_next", k_default },
-	{ K_INC_PREV, ".inc_prev", k_default },
+	{ K_REGEX_SEARCH, ".regex_search", k_default },
+	{ K_MATCH_NEXT, ".match_next", k_default },
+	{ K_MATCH_PREV, ".match_prev", k_default },
 	{ K_ERROR, NULL, NULL }
 };
 

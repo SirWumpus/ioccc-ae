@@ -70,9 +70,10 @@ t_keytable table[] = {
 	{ K_QUIT_ASK, quit_ask, NULL },
 	{ K_SHOW_VERSION, version, dispfull },
 	{ K_MACRO, macro, dispfull },
+	{ K_REGEX_SEARCH, regex_search, dispfull },
 	{ K_INC_SEARCH, inc_search, dispfull },
-	{ K_INC_NEXT, inc_next, dispfull },
-	{ K_INC_PREV, inc_prev, dispfull },
+	{ K_MATCH_NEXT, match_next, dispfull },
+	{ K_MATCH_PREV, match_prev, dispfull },
 	{ 0, NULL, dispfull }
 };
 
@@ -111,14 +112,17 @@ t_keymap key_vi[] = {
 	{ K_FILE_WRITE,		":w" },
 	{ K_INSERT_ENTER,	"i" },
 	{ K_INSERT_EXIT,	"\e" },		/* ^[ */
+	{ K_REGEX_SEARCH,	"/" },
 	{ K_INC_SEARCH,		"I" },
-	{ K_INC_NEXT,		"n" },
+	{ K_MATCH_NEXT,		"n" },
 	{ K_QUIT_ASK,		"q" },
 	{ K_QUIT,		"Q" },
 	{ K_LITERAL,		"\x16" },	/* ^V */
 	{ K_REDRAW,		"\x12" },	/* ^R */
 	{ K_HELP,		":h" },
 /*	{ K_HELP_OFF,		NULL }, */
+	{ K_STTY_ERASE,		"\x7f" },	/* ^? */
+	{ K_STTY_ERASE,		"\b" },		/* ^H */
 	{ K_SHOW_VERSION,	":ver" },
 	{ K_MACRO,		":map" },
 	{ K_MACRO_DEFINE,	NULL },
@@ -136,7 +140,7 @@ t_msg m_help = "1:"
 "Page down, up		^F  ^B\t	Start, end of line	0  $\n"
 "Top, bottom of file	1G  G		Invert case		~\n"
 "Macros, redraw		:map  ^R	Literal escape		^V\n"
-"Inc. search, next	I  n		File read, write	:r  :w\n"
+"Ere, inc. find, next	/  I  n		File read, write	:r  :w\n"
 "Toggle help		:h		Version, quit		:ver  q  Q\n"
 ;
 
@@ -187,7 +191,9 @@ t_msg m_undo = "38:Nothing to undo.";
 
 t_msg p_inc_search = "39:Incremental :";
 t_msg m_no_match = "40:No match.";
+t_msg p_search = "41:ERE pattern:";
+t_msg m_no_pattern = "42:No search pattern.";
 
-t_msg message[41];
+t_msg message[43];
 
 /* end */

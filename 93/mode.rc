@@ -9,7 +9,7 @@ Page top, bottom, mid	H  L  M		Block, cut, paste, undo	SPACE  v  P  u\n\
 Page down, up		\^F  \^B\t	Start, end of line	0  $\n\
 Top, bottom of file	1G  G		Invert case		~\n\
 Macros, redraw		:map  \^R	Literal escape		\^V\n\
-Inc. search, next	I  n		File read, write	:r  :w\n\
+Ere, inc. find, next	/  I  n		File read, write	:r  :w\n\
 Toggle help		:h		Version, quit		V  q  Q\n
 
 #.help_off
@@ -79,11 +79,12 @@ Toggle help		:h		Version, quit		V  q  Q\n
 .quit_ask	q
 .quit		Q
 .quit		ZZ
+.regex_search	/
 .inc_search	I
-.inc_next	n
+.match_next	n
 
 # Not implemented yet.
-#.inc_prev	N
+#.match_prev	N
 
 2:%s: Terminated successfully.\n
 3:%s: Unspecified error.\n

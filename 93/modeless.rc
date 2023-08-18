@@ -43,7 +43,7 @@ Undo last               \^U              Invert case             F5\n
 .quit           ^K^X
 .show_version   ^K^V
 .inc_search	^@
-.inc_next	^G
+.match_next	^G
 .macro          ^KM
 .macro_define
 .macro_define
