@@ -79,9 +79,10 @@ t_keytable table[] = {
 
 t_keymap key_mode[] = {
 	{ K_INSERT_EXIT, NULL },
-	{ K_STTY_ERASE, NULL },
 	{ K_STTY_KILL, NULL },
 	{ K_LITERAL, NULL },
+	{ K_STTY_ERASE, "\b" },
+	{ K_STTY_ERASE, "\x7f" },
 	{ K_ERROR, NULL }
 };
 
@@ -120,9 +121,6 @@ t_keymap key_vi[] = {
 	{ K_LITERAL,		"\x16" },	/* ^V */
 	{ K_REDRAW,		"\x12" },	/* ^R */
 	{ K_HELP,		":h" },
-/*	{ K_HELP_OFF,		NULL }, */
-	{ K_STTY_ERASE,		"\x7f" },	/* ^? */
-	{ K_STTY_ERASE,		"\b" },		/* ^H */
 	{ K_SHOW_VERSION,	":ver" },
 	{ K_MACRO,		":map" },
 	{ K_MACRO_DEFINE,	NULL },

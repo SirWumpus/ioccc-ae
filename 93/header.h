@@ -234,15 +234,6 @@ extern t_msg p_search;
 
 extern t_msg message[];
 
-/*
- *
- */
-#ifdef TERMIOS
-extern void lineinput _((int));
-#else
-#define lineinput(bf)		(bf ? noraw() : raw())
-#endif /* TERMIOS */
-
 extern void fatal _((t_msg));
 extern void msg _((t_msg, ...));
 extern char *getmsg _((t_msg));

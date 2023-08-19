@@ -557,16 +557,15 @@ fld_append(t_fld *fld)
 	return (fld->index < fld->length);
 }
 
-#define ERASE_KEY	0
-#define KILL_KEY	1
+#define KILL_KEY	0
 
 static t_keyfield ktable[] = {
-	{ K_STTY_ERASE, fld_erase },
 	{ K_STTY_KILL, fld_kill },
+	{ '\x7f', fld_erase },		/* ^? */
+	{ '\b', fld_erase },		/* ^H */
 	{ '\r', fld_done },
 	{ '\n', fld_done },
 	{ '\e', fld_done },
-	{ '\b', fld_erase },
 	{ -1, fld_append }
 };
 
@@ -621,7 +620,6 @@ getinput(char *buf, size_t size)
 		return FALSE;
 	}
 
-	ktable[ERASE_KEY].code = erasechar();
 	ktable[KILL_KEY].code = killchar();
 
 	addstr(fld.buffer);

@@ -33,6 +33,7 @@ char **argv;
 	int i;
 	t_keymap *kp;
 	char *ap, *config;
+	static char killkey[2];
 
 	/* Find basename. */
 	prog_name = *argv;
@@ -92,14 +93,8 @@ char **argv;
 			kp->code = K_DISABLED;
 			key_mode[0].lhs = kp->lhs;
 			break;
-		case K_STTY_ERASE:
-			key_mode[1].lhs = kp->lhs;
-			break;
-		case K_STTY_KILL:
-			key_mode[2].lhs = kp->lhs;
-			break;
 		case K_LITERAL:
-			key_mode[3].lhs = kp->lhs;
+			key_mode[2].lhs = kp->lhs;
 			break;
 		case K_HELP_OFF:
 			textline = 0;
@@ -107,9 +102,11 @@ char **argv;
 		}
 	}
 
+	raw();
 	noecho();
-	lineinput(FALSE);
 	idlok(stdscr, TRUE);
+	killkey[0] = killchar();
+	key_mode[1].lhs = killkey;
 
 	if (0 < argc) {
 		(void) load(*argv);
