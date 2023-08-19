@@ -10,17 +10,6 @@
 #include <errno.h>
 #include "header.h"
 
-static int intsig = FALSE;
-
-#ifdef SIGINT
-static void
-sigint(sig)
-int sig;
-{
-	intsig = TRUE;
-}
-#endif
-
 #ifdef ATARI_ST
 #include <setjmp.h>
 

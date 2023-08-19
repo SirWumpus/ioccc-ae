@@ -344,7 +344,10 @@ int col, ch, flag;
 static void
 dispmsg()
 {
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-but-set-variable"
 	int r, c;
+#pragma GCC diagnostic pop
 	standout();
 	move(MSGLINE, 0);
 	if (msgflag) {
@@ -367,7 +370,10 @@ void
 ruler(ncols)
 int ncols;
 {
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-but-set-variable"
 	int r, c, col;
+#pragma GCC diagnostic pop
 	getyx(stdscr, r, c);
 	standout();
 	for (col = 1; col <= ncols; ++col) {

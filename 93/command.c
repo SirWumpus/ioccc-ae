@@ -110,7 +110,10 @@ quit(void)
 void
 redraw(void)
 {
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-but-set-variable"
 	int col;
+#pragma GCC diagnostic pop
 
 	clear();
 	if (textline != HELPLINE) {
@@ -641,7 +644,8 @@ match_next(void)
 	/* Find next match. */
 	if (ere_ready) {
 		regmatch_t matches[1];
-		if (regexec(&ere, p, 1, matches, 0) == REG_NOMATCH) {
+		/* REG_NOTBOL allows /^/ to advane to start of next line. */
+		if (regexec(&ere, (char *)p, 1, matches, point == 0 ? 0 : REG_NOTBOL) == REG_NOMATCH) {
 			offset = -1;
 		} else {
 			offset = matches[0].rm_so;
@@ -649,7 +653,7 @@ match_next(void)
 			prev_match_length = length;
 		}
 	} else if (0 < pat.length) {
-		offset = sunday_search(&pat, p, egap == ebuf ? gap-p : ebuf-p);
+		offset = sunday_search(&pat, (char *)p, egap == ebuf ? gap-p : ebuf-p);
 		length = pat.length;
 	} else {
 		start_point = NOMARK;
@@ -690,7 +694,6 @@ match_prev(void)
 void
 inc_search(void)
 {
-	int ch;
 	t_fld fld;
 
 	regfree(&ere);

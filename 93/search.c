@@ -28,7 +28,7 @@ static int debug;
  * http://alg.csie.ncnu.edu.tw/course/StringMatching/Quick%20Searching.ppt
  */
 int
-sunday_init(Pattern *pp, const unsigned char *pattern)
+sunday_init(Pattern *pp, const char *pattern)
 {
 	int i;
 
@@ -39,8 +39,8 @@ sunday_init(Pattern *pp, const unsigned char *pattern)
 		pp->qs[i] = pp->length + 1;
 	}
 	for (i = 0; i < pp->length; i++) {
-		pp->qs[pattern[i]] = pp->length - i;
-		DEBUG("ch='%c' delta=%lu", pattern[i], pp->qs[pattern[i]]);
+		pp->qs[(int)pattern[i]] = pp->length - i;
+		DEBUG("ch='%c' delta=%lu", pattern[i], pp->qs[(int)pattern[i]]);
 	}
 	DEBUG("ch=* delta=%lu", pp->qs[0]);
 
@@ -48,7 +48,7 @@ sunday_init(Pattern *pp, const unsigned char *pattern)
 }
 
 long
-sunday_search(Pattern *pp, const unsigned char *str, size_t len)
+sunday_search(Pattern *pp, const char *str, size_t len)
 {
 	long offset = 0;
 
@@ -59,12 +59,12 @@ sunday_search(Pattern *pp, const unsigned char *str, size_t len)
 	 * handled specially.
 	 */
 	while (offset + pp->length <= len) {
-		INFO("off=%ld str=\"%s\" delta=%lu", offset, str+offset, pp->qs[str[offset + pp->length]]);
+		INFO("off=%ld str=\"%s\" delta=%lu", offset, str+offset, pp->qs[(int)str[offset + pp->length]]);
 		if (memcmp(str + offset, pp->pattern, pp->length) == 0) {
 			INFO("return offset=%ld", offset);
 			return offset;
 		}
-		offset += pp->qs[str[offset + pp->length]];
+		offset += pp->qs[(int)str[offset + pp->length]];
 	}
 
 	INFO("return -1 no match");

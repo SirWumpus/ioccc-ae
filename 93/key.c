@@ -29,9 +29,6 @@ static int k_itself _((t_keymap *));
 static int k_kill _((t_keymap *));
 static int k_token _((t_keymap *));
 static t_keymap *growkey _((t_keymap *, size_t));
-static int ipush _((char *));
-static int ipop _((void));
-static void iflush _((void));
 
 t_keyinit keywords[] = {
 	{ K_INSERT_ENTER, ".insert_enter", k_default },
@@ -79,6 +76,66 @@ t_keyinit keywords[] = {
 	{ K_ERROR, NULL, NULL }
 };
 
+/*
+ * Return true if a new input string was pushed onto the stack,
+ * else false if there was no more memory for the stack.
+ */
+static int
+ipush(buf)
+char *buf;
+{
+	t_input *new;
+
+	new = (t_input *) malloc(sizeof (t_input) + strlen (buf));
+	if (new == NULL)
+		return (FALSE);
+	(void) strcpy(new->buf, buf);
+	new->ptr = new->buf;
+	new->next = istack;
+	istack = new;
+	return (TRUE);
+}
+
+/*
+ * Pop and return a character off the input stack.  Return EOF if
+ * the stack is empty.  If the end of an input string is reached,
+ * then free the node.  This will allow clean tail recursion that
+ * won't blow the stack.
+ */
+static int
+ipop()
+{
+	int ch;
+	t_input *node;
+
+	if (istack == NULL)
+		return (EOF);
+	ch = (unsigned) *istack->ptr++;
+	if (*istack->ptr == '\0') {
+		node = istack;
+		istack = istack->next;
+		free(node);
+	}
+	return (ch);
+}
+
+#ifdef UNUSED
+/*
+ * Flush the entire input stack.
+ */
+static void
+iflush()
+{
+	t_input *node;
+
+	while (istack != NULL) {
+		node = istack;
+		istack = istack->next;
+		free(node);
+	}
+}
+#endif
+
 int
 ismsg(str)
 char *str;
@@ -105,7 +162,7 @@ t_keymap **keys;
 	t_keyinit *kp;
 	t_keymap *array;
 	size_t len, count;
-	char *buf, *token, *lhs, *rhs;
+	char *buf, *token;
 
 	*keys = NULL;
 	if ((fp = openrc(fn)) == NULL)
@@ -337,16 +394,15 @@ char *token;
  *
  */
 static t_keymap *
-growkey(array, len)
-t_keymap *array;
-size_t len;
+growkey(t_keymap *array, size_t len)
 {
-	t_keymap *new;
-	if (len == 0)
+	if (len == 0) {
 		return (NULL);
+	}
 	len *= sizeof (t_keymap);
-	if (array == NULL)
+	if (array == NULL) {
 		return ((t_keymap *) malloc(len));
+	}
 	return ((t_keymap *) realloc(array, len));
 }
 
@@ -413,64 +469,6 @@ getliteral()
 	return (ch);
 }
 
-/*
- * Return true if a new input string was pushed onto the stack,
- * else false if there was no more memory for the stack.
- */
-static int
-ipush(buf)
-char *buf;
-{
-	t_input *new;
-
-	new = (t_input *) malloc(sizeof (t_input) + strlen (buf));
-	if (new == NULL)
-		return (FALSE);
-	(void) strcpy(new->buf, buf);
-	new->ptr = new->buf;
-	new->next = istack;
-	istack = new;
-	return (TRUE);
-}
-
-/*
- * Pop and return a character off the input stack.  Return EOF if
- * the stack is empty.  If the end of an input string is reached,
- * then free the node.  This will allow clean tail recursion that
- * won't blow the stack.
- */
-static int
-ipop()
-{
-	int ch;
-	t_input *node;
-
-	if (istack == NULL)
-		return (EOF);
-	ch = (unsigned) *istack->ptr++;
-	if (*istack->ptr == '\0') {
-		node = istack;
-		istack = istack->next;
-		free(node);
-	}
-	return (ch);
-}
-
-/*
- * Flush the entire input stack.
- */
-static void
-iflush()
-{
-	t_input *node;
-
-	while (istack != NULL) {
-		node = istack;
-		istack = istack->next;
-		free(node);
-	}
-}
-
 int
 ismacro()
 {
@@ -495,7 +493,10 @@ fld_done(t_fld *ignore)
 static int
 fld_left(t_fld *fld)
 {
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-but-set-variable"
 	int row, col, max_row, max_col;
+#pragma GCC diagnostic pop
 	getyx(stdscr, row, col);
 	getmaxyx(stdscr, max_row, max_col);
 	if (0 < fld->index) {
