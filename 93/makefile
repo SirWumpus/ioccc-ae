@@ -16,10 +16,10 @@ E =
 TAG	:= $$(git tag -l | sed -n '/^ae93-/p' | sort -n | tail -n1)
 
 CC	= cc
-#CFLAGS	= -DCONFIG='".aerc"' -DTAG="\"${TAG}\"" -Wall -Os
+#CFLAGS	= -DTAG="\"${TAG}\"" -Wall -Os
 
 # Debug build
-CFLAGS	= -DCONFIG='".aerc"' -DTAG="\"${TAG}\"" -Wall -O0 -g
+CFLAGS	= -DTAG="\"${TAG}\"" -Wall -O0 -g
 
 LD	= cc
 LDFLAGS =

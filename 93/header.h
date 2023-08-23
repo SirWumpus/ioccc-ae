@@ -90,7 +90,13 @@ extern char *strtok();
 "0:" TAG "  Copyright 1993, 2023 by Anthony Howe.  No warranty."
 
 #ifndef CONFIG
-#define CONFIG		"ae.rc"
+# ifdef __unix__
+#  define CONFIG		".aerc"
+# elif __MSDOS__
+#  define CONFIG		"ae.rc"
+# else
+#  error "Add -DCONFIG='\"ae.comf\"' to makefile CFLAGS."
+# endif
 #endif /* CONFIG */
 
 #ifndef CHUNK
