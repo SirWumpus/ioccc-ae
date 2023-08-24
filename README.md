@@ -31,7 +31,8 @@ After, `ae` grew with additional commands, like block cut/paste, inline help, ma
   ISBN 0-471-57805-3.
 * Dale Scheetz, The Debian Linux User's Guide, Linux Press, 1997, pg 192.  
   ISBN 0-9659575-0-0.
-* The C Users Journal, November 1993, pg 121  
+* The C Users Journal , November 1993, pg 121, ISSN: 0898-9788  
+  <https://dl.acm.org/doi/10.5555/169969.169987>
   <http://ftp.math.utah.edu/pub/tex/bib/toc/cccuj.html#11(11):November:1993>
 
 ![AE modal bindings](./ae_modal_75.png)
