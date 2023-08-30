@@ -12,7 +12,6 @@
 int done;
 int modified;
 int modeless;
-int inserting;
 
 t_point point;
 t_point page;
@@ -55,7 +54,7 @@ t_keytable table[] = {
 	{ K_FILE_BOTTOM, bottom, dispfull },
 	{ K_FLIP_CASE, flipcase, dispfull },
 	{ K_DELETE_LEFT, backsp, dispfull },
-	{ K_DELETE_RIGHT, delete, dispfull },
+	{ K_DELETE_RIGHT, del_right, dispfull },
 	{ K_INSERT_ENTER, insert_mode, dispfull },
 	{ K_LITERAL, insert, dispfull },
 	{ K_BLOCK, block, dispfull },
@@ -164,10 +163,10 @@ t_msg m_close = "15:Failed to close file \"%s\".";
 t_msg m_read = "16:Failed to read file \"%s\".";
 t_msg m_write = "17:Failed to write file \"%s\".";
 t_msg m_badname = "18:Not a portable POSIX file name.";
-t_msg m_file = "19:File \"%s\" %ld bytes.";
-t_msg m_saved = "20:File \"%s\" %ld bytes saved.";
-t_msg m_loaded = "21:File \"%s\" %ld bytes read.";
-t_msg m_modified = "22:File \"%s\" modified.";
+t_msg m_file = "19:\"%s\" %ldB %c";
+t_msg m_saved = "20:\"%s\" %ldB saved.";
+t_msg m_loaded = "21:\"%s\" %ldB read.";
+/* t_msg m_modified = "22:File \"%s\" modified."; */
 t_msg m_badescape = "23:Invalid control character or \\number not 0..255.";
 t_msg m_nomacro = "24:No such macro defined.";
 t_msg m_slots = "25:No more macro space.";

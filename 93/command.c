@@ -11,11 +11,13 @@
 #include "header.h"
 #include "search.h"
 
+static int editing;
 static regex_t ere;
 static int ere_ready;
 static int ere_anchor_only;
 static Pattern pat;
 static t_point start_point = NOMARK;		/* Point at start a search. */
+
 
 void
 promptmsg(t_msg m)
@@ -75,14 +77,14 @@ more(int row)
 void
 top(void)
 {
-	inserting = FALSE;
+	editing = FALSE;
 	point = 0;
 }
 
 void
 bottom(void)
 {
-	inserting = FALSE;
+	editing = FALSE;
 	epage = point = pos(ebuf);
 }
 
@@ -128,7 +130,7 @@ redraw(void)
 void
 left(void)
 {
-	inserting = FALSE;
+	editing = FALSE;
 	if (0 < point && iscrlf(--point) == 2) {
 		--point;
 	}
@@ -137,7 +139,7 @@ left(void)
 void
 right(void)
 {
-	inserting = FALSE;
+	editing = FALSE;
 	if (point < pos(ebuf) && iscrlf(point++) == 1) {
 		++point;
 	}
@@ -146,7 +148,7 @@ right(void)
 void
 up(void)
 {
-	inserting = FALSE;
+	editing = FALSE;
 	point = lncolumn(upup(point), cur_col);
 	if (iscrlf(point) == 2) {
 		--point;
@@ -156,7 +158,7 @@ up(void)
 void
 down(void)
 {
-	inserting = FALSE;
+	editing = FALSE;
 	point = lncolumn(dndn(point), cur_col);
 	if (iscrlf(point) == 2) {
 		--point;
@@ -166,7 +168,7 @@ down(void)
 void
 lnbegin(void)
 {
-	inserting = FALSE;
+	editing = FALSE;
 	point = segstart(lnstart(point), point);
 }
 
@@ -180,7 +182,7 @@ lnend(void)
 void
 wleft(void)
 {
-	inserting = FALSE;
+	editing = FALSE;
 	while (!isalnum(*ptr(--point)) && 0 < point) {
 		;
 	}
@@ -193,7 +195,7 @@ wleft(void)
 void
 wright(void)
 {
-	inserting = FALSE;
+	editing = FALSE;
 	t_point epoint = pos(ebuf);
 	while (isalnum(*ptr(point)) && point < epoint) {
 		++point;
@@ -206,14 +208,14 @@ wright(void)
 void
 pgtop(void)
 {
-	inserting = FALSE;
+	editing = FALSE;
 	point = page;
 }
 
 void
 pgbottom(void)
 {
-	inserting = FALSE;
+	editing = FALSE;
 	point = epage-1;
 	lnbegin();
 }
@@ -222,7 +224,7 @@ void
 pgmiddle(void)
 {
 	int middle = (LINES - textline) / 2 + textline;
-	inserting = FALSE;
+	editing = FALSE;
 	point = page;
 	for (cur_row = textline; cur_row < middle; cur_row++) {
 		down();
@@ -232,7 +234,7 @@ pgmiddle(void)
 void
 pgdown(void)
 {
-	inserting = FALSE;
+	editing = FALSE;
 	page = point = upup(epage);
 	while (textline < cur_row--) {
 		down();
@@ -244,7 +246,7 @@ void
 pgup(void)
 {
 	int i = LINES;
-	inserting = FALSE;
+	editing = FALSE;
 	while (textline < --i) {
 		page = upup(page);
 		up();
@@ -258,9 +260,9 @@ insert(void)
 	if (gap == egap && !growgap(CHUNK)) {
 		return;
 	}
-	if (!inserting){
+	if (!editing){
 		undoset();
-		inserting = TRUE;
+		editing = TRUE;
 	}
 	*gap++ = input == K_LITERAL ? getliteral() : input;
 	if (input == '\r' && (gap < egap || growgap(CHUNK))) {
@@ -314,6 +316,10 @@ backsp(void)
 	}
 	point = movegap(point);
 	if (buf < gap) {
+		if (!editing){
+			undoset();
+			editing = TRUE;
+		}
 		if (*--gap == '\n' && buf < gap && gap[-1] == '\r') {
 			--gap;
 		}
@@ -323,7 +329,7 @@ backsp(void)
 }
 
 void
-delete(void)
+del_right(void)
 {
 	if (marker != NOMARK && point < marker) {
 		cut();
@@ -331,6 +337,10 @@ delete(void)
 	}
 	point = movegap(point);
 	if (egap < ebuf) {
+		if (!editing){
+			undoset();
+			editing = TRUE;
+		}
 		if (*egap++ == '\r' && egap < ebuf && *egap == '\n') {
 			++egap;
 		}
@@ -347,7 +357,7 @@ readfile(void)
 	(void) load(temp);
 	if (filename[0] == '\0') {
 		(void) strncpy(filename, temp, BUFSIZ);
-		inserting = FALSE;
+		editing = FALSE;
 		modified = FALSE;
 	}
 }
@@ -390,10 +400,8 @@ cut(void)
 	if (marker == NOMARK || point == marker) {
 		return;
 	}
-	if (scrap != NULL) {
-		free(scrap);
-		scrap = NULL;
-	}
+	free(scrap);
+	scrap = NULL;
 	if (point < marker) {
 		(void) movegap(point);
 		nscrap = marker - point;
@@ -405,12 +413,12 @@ cut(void)
 		msg(m_alloc);
 	} else {
 		undoset();
-		inserting = FALSE;
+		editing = FALSE;
 		(void) memcpy(scrap, egap, nscrap * sizeof (t_char));
 		egap += nscrap;
-		block();
 		point = pos(egap);
 		modified = TRUE;
+		marker = NOMARK;
 	}
 }
 
@@ -419,10 +427,11 @@ paste(void)
 {
 	if (nscrap <= 0) {
 		msg(m_scrap);
+		beep();
 	} else if (nscrap < egap-gap || growgap(nscrap)) {
 		point = movegap(point);
 		undoset();
-		inserting = FALSE;
+		editing = FALSE;
 		(void) memcpy(gap, scrap, nscrap * sizeof (t_char));
 		gap += nscrap;
 		point = pos(egap);
@@ -591,7 +600,7 @@ match_next(void)
 	size_t length;
 	static size_t prev_match_length = 0;
 
-	inserting = FALSE;
+	editing = FALSE;
 
 	/* Current cursor point. */
 	p = ptr(point);

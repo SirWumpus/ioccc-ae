@@ -353,10 +353,8 @@ dispmsg()
 	if (msgflag) {
 		addstr(msgline);
 		msgflag = FALSE;
-	} else if (modified) {
-		printw(getmsg(m_modified), filename);
 	} else {
-		printw(getmsg(m_file), filename, pos(ebuf));
+		printw(getmsg(m_file), filename, pos(ebuf), modified ? '*' : ' ');
 	}
 	/* Pad remainder of row with standout spaces, clrtoeol() does not. */
 	getyx(stdscr, r, c);

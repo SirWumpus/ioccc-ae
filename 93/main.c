@@ -167,9 +167,7 @@ char **argv;
 #endif
 #endif /* SIGINT */
 
-	if (scrap != NULL) {
-		free(scrap);
-	}
+	free(scrap);
 	if (key_map != key_vi) {
 		finikey(key_map);
 	}

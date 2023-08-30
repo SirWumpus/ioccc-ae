@@ -70,7 +70,7 @@ extern char *strtok();
 
 #ifdef BADCURSES
 #define erasechar()	'\b'
-#define killchar()	CTRL('x')
+#define killchar()	CTRL('u')
 #define idlok(w,f)	OK
 #endif /* BADCURSES */
 
@@ -95,7 +95,7 @@ extern char *strtok();
 # elif __MSDOS__
 #  define CONFIG		"ae.rc"
 # else
-#  error "Add -DCONFIG='\"ae.comf\"' to makefile CFLAGS."
+#  error "Add -DCONFIG='\"ae.conf\"' to makefile CFLAGS."
 # endif
 #endif /* CONFIG */
 
@@ -157,7 +157,6 @@ extern int done;		/* Quit flag. */
 extern int modified;		/* Text buffer modified flag. */
 extern int modeless;		/* Command-set style. */
 extern int msgflag;		/* True if msgline should be displayed. */
-extern int inserting;
 
 extern int cur_row;		/* Cursor screen row */
 extern int cur_col;		/* Cursor screen column. */
@@ -280,7 +279,7 @@ extern void backsp _((void));
 extern void block _((void));
 extern void bottom _((void));
 extern void cut _((void));
-extern void delete _((void));
+extern void del_right _((void));
 extern void down _((void));
 extern void help _((void));
 extern void insert _((void));
