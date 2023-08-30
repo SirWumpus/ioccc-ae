@@ -152,8 +152,8 @@ A literal escape begins with a backslash and is followed by any character that d
 
 ### 5.1.1.  SUPPORT
 
-* `.file_read <string>`
-* `.file_write <string>`  
+* `.file_read <string>`  
+  `.file_write <string>`  
   Read or write a file to or from a buffer.
 
 * `.help <string>`  
@@ -168,12 +168,12 @@ A literal escape begins with a backslash and is followed by any character that d
 * `.macro <string>`  
   Define a macro during an edit session.  The user will be prompted for an input line consisting of zero, one, or two `<strings>` separated by whitespace. Pressing <return> at the prompt, with no input strings, will display the current set of macros definitions and how many slots have been used versus the total number of slots available. One string entered will remove the macro defined to have that string as the left-hand-side.   Two input strings defines a macro, where the first string, when typed, pushes the second string onto an input stack. Macros may be nested.  It is only possible to delete or change macros that appear in the listing of currently defined macros. All other key-bindings cannot be redefined during an edit session.
 
-* `.macro_define`
-* `.macro_define <lhs string> <rhs string>`  
+* `.macro_define`  
+  `.macro_define <lhs string> <rhs string>`  
   The first case reserves space for one macro definition that may be defined during the edit session.  The other case will  actually define a macro, where the left-hand-side, when typed will push onto an input stack the right-hand-side.  Either case may be used as many times as desired (memory permitting). Macros may be nested.
 
-* `.quit <string>`
-* `.quit_ask <string>`  
+* `.quit <string>`  
+  `.quit_ask <string>`  
   Exit the editor.
 
 * `.redraw <string>`  
@@ -185,63 +185,59 @@ A literal escape begins with a backslash and is followed by any character that d
 
 ### 5.1.2.  CURSOR MOTION
 
-* `.cursor_up <string>`
-* `.cursor_down <string>`
-* `.cursor_left <string>`
-* `.cursor_right <string>`  
+* `.cursor_up <string>`  
+  `.cursor_down <string>`  
+  `.cursor_left <string>`  
+  `.cursor_right <string>`  
   Cursor motion in four directions.  Typically the arrow keys.
 
-* `.file_top <string>`
-* `.file_bottom <string>`  
+* `.file_top <string>`  
+  `.file_bottom <string>`  
   Move to the top and bottom of the file buffer.
 
-* `.line_left <string>`
-* `.line_right <string>`  
+* `.line_left <string>`  
+  `.line_right <string>`  
   Move to the beginning or end of the line.
 
-* `.page_top <string>`
-* `.page_middle <string>`
-* `.page_bottom <string>`  
+* `.page_top <string>`  
+  `.page_middle <string>`  
+  `.page_bottom <string>`  
   First, middle, or last line of the page (screen).
 
-* `.page_up <string>`
-* `.page_down <string>`  
+* `.page_up <string>`  
+  `.page_down <string>`  
   Previous or next screen full of text.
 
-* `.word_left <string>`
-* `.word_right <string>`  
+* `.word_left <string>`  
+  `.word_right <string>`  
   Move the cursor to start of the previous or next word. A word is defined as a sequence of alpha and/or numeric characters.
 
-* `.inc_search <string>`
-* `.match_next <string>`
+* `.match_next <string>`  
+  `.inc_search <string>`  
   `.inc_search` starts a new incremental search, as characters are typed, the cursor advances and block selection highlights any matching text.  Press `Enter` or `Esc` to end input.  `.match_next` advances to the next matching pattern.
 
-* `.regex_search <string>`
-* `.match_next <string>`
+* `.match_next <string>`  
+  `.regex_search <string>`  
   `.regex_search` starts a new extended regular expression search.  On match the cursor advances and block selection highlights the matching text.  Press `Enter` or `Esc` to end input.  `.match_next` advances to the next matching pattern.
 
 
 ### 5.1.3.  EDIT
 
-* `.block <string>`
-* `.cut <string>`
-* `.paste <string>`  
+* `.block <string>`  
+  `.cut <string>`  
+  `.paste <string>`  
   Block on/off toggle, cut block, and paste before.
 
-* `.delete_left <string>`
-* `.delete_right <string>`  
+* `.delete_left <string>`  
+  `.delete_right <string>`  
   Delete character to the left or right of the cursor.  Can cut a selected block.
 
-* `.insert_enter <string>`
-* `.insert_exit <string>`  
+* `.insert_enter <string>`  
+  `.insert_exit <string>`  
   Enter and exit insert mode.  The use of `.insert_enter` denotes a modal user interface.  Insert mode does not perform macro expansion.
 
 * `.literal <string>`  
   Next character entered is treated as a literal.
-
-* `.stty_erase`
-* `.stty_kill`  
-  Declare that the terminal's values for the erase and kill characters should be used in insert mode to backspace-erase, or discard and restart input.
 
 * `.undo <string>`  
   Undo last cut, delete, insert, paste, read, or undo.
@@ -378,19 +374,19 @@ The following is a list of messages:
 * `38:Nothing to undo.`  
   An attempt was made to undo a change when the buffer had not yet been modified.
 
-* `39:Incremental :`
+* `39:Incremental :`  
   Incremental search input.
 
-* `40:No match.`
+* `40:No match.`  
   No match found from wrap-around incremental search.
 
 
 ## 6.  EXIT STATUS
 
-0   Success.
-1   Unknown error.
-2   Usage error.
-3   Understood failure.
+0   Success.  
+1   Unknown error.  
+2   Usage error.  
+3   Understood failure.  
 
 
 ## 7.  INSTALLATION 
