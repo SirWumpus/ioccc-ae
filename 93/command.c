@@ -63,14 +63,8 @@ more(int row)
 	if (0 < row % (LINES-1)) {
 		return (TRUE);
 	}
-	standout();
-	addstr(getmsg(p_more));
-	standend();
-	clrtoeol();
-	refresh();
+	promptmsg(getmsg(p_more));
 	ch = getliteral();
-	addch('\r');
-	clrtoeol();
 	return (ch != getmsg(p_quit)[1] && ch != getmsg(p_no)[1]);
 }
 
