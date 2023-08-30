@@ -113,10 +113,10 @@ char **argv;
 		/* Save filename irregardless of load() success. */
 		strcpy(filename, *argv);
 		modified = FALSE;
-	}
-	if (!growgap(CHUNK)) {
+	} else if (!growgap(CHUNK)) {
 		fatal(f_alloc);
 	}
+	undoset();
 
 	top();
 	i = msgflag;

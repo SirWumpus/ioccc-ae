@@ -14,7 +14,6 @@
 #include "header.h"
 
 typedef struct t_undo {
-	short u_set;
 	t_point u_point;
 	t_point u_gap;
 	t_point u_egap;
@@ -323,9 +322,8 @@ char *fn;
  *	Record a new undo location.
  */
 void
-undoset()
+undoset(void)
 {
-	ubuf.u_set = TRUE;
 	ubuf.u_point = point;
 	ubuf.u_gap = gap - buf;
 	ubuf.u_egap = egap - buf;
@@ -335,18 +333,14 @@ undoset()
  *	Undo.
  */
 void
-undo()
+undo(void)
 {
 	t_undo tmp;
 
-	if (ubuf.u_set) {
-		memcpy(&tmp, &ubuf, sizeof (t_undo));
-		undoset();
-		point = tmp.u_point;
-		gap = buf + tmp.u_gap;
-		egap = buf + tmp.u_egap;
-	} else {
-		msg(m_undo);
-	}
+	(void) memcpy(&tmp, &ubuf, sizeof (tmp));
+	undoset();
+	point = tmp.u_point;
+	gap = buf + tmp.u_gap;
+	egap = buf + tmp.u_egap;
 }
 

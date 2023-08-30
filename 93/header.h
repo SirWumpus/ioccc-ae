@@ -211,7 +211,7 @@ extern t_msg m_read;
 extern t_msg m_write;
 extern t_msg m_badname;
 extern t_msg m_file;
-extern t_msg m_modified;
+/* extern t_msg m_modified; */
 extern t_msg m_saved;
 extern t_msg m_loaded;
 extern t_msg m_badescape;
@@ -219,7 +219,7 @@ extern t_msg m_nomacro;
 extern t_msg m_slots;
 extern t_msg m_interrupt;
 extern t_msg m_eof;
-extern t_msg m_undo;
+/* extern t_msg m_undo; */
 extern t_msg m_no_match;
 extern t_msg m_no_pattern;
 

@@ -184,7 +184,7 @@ t_msg p_yes = "35: y\b";
 t_msg p_no = "36: n\b";
 t_msg p_quit = "37: q\b";
 
-t_msg m_undo = "38:Nothing to undo.";
+/* t_msg m_undo = "38:Nothing to undo."; */
 
 t_msg p_inc_search = "39:Incremental :";
 t_msg m_no_match = "40:No match.";
