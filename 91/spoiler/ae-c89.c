@@ -1,7 +1,7 @@
 /*
  * Anthony's Editor
  *
- * Public Domain 1991, 2021 by Anthony Howe.  All rights released.
+ * Public Domain 1991, 2023 by Anthony Howe.  All rights released.
  */
 
 #include <ctype.h>
@@ -11,8 +11,11 @@
 #include <unistd.h>
 
 #ifndef BUF
-# define BUF	(USHRT_MAX)
+# define BUF		(USHRT_MAX)
 #endif
+
+#define TABWIDTH	8
+#define TABSTOP(col)	(TABWIDTH - ((col) & (TABWIDTH-1)))
 
 static int done;
 static int row, col;
@@ -131,7 +134,7 @@ adjust(int offset, int column)
 	char *p;
 	int i = 0;
 	while ((p = ptr(offset)) < ebuf && *p != '\n' && i < column) {
-		i += *p == '\t' ? 8-(i&7) : 1;
+		i += *p == '\t' ? TABSTOP(i) : 1;
 		++offset;
 	}
 	return offset;
@@ -153,9 +156,10 @@ display(void)
 		}
 	}
 	move(0, 0);
+	clrtobot();
 	i = j = 0;
 	epage = page;
-	while (1) {
+	for (;;) {
 		if (here == epage) {
 			row = i;
 			col = j;
@@ -174,10 +178,8 @@ display(void)
 			 * NCurses does not by default it seems.
 			 */
 			if (*p == '\t') {
-				for (int t = 8-(j&7); 0 < t; t--) {
-					addch(' ');
-					j++;
-				}
+				j += TABSTOP(j);
+				move(i, j);
 			} else {
 				addch(*p);
 				j++;
@@ -189,7 +191,6 @@ display(void)
 		}
 		++epage;
 	}
-	clrtobot();
 	if (++i < LINES) {
 		mvaddstr(i, 0, "~EOF~");
 	}
