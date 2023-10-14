@@ -1,3 +1,4 @@
+**emacs like**  
 ![AE xterm bindings](./ae_modeless_xterm_75.png)
 
 ae - Anthony's Editor
@@ -32,11 +33,12 @@ After, `ae` grew with additional commands, like block cut/paste, inline help, ma
 * Dale Scheetz, The Debian Linux User's Guide, Linux Press, 1997, pg 192.  
   ISBN 0-9659575-0-0.
 * The C Users Journal , November 1993, pg 121, ISSN: 0898-9788  
-  <https://dl.acm.org/doi/10.5555/169969.169987>
+  <https://dl.acm.org/doi/10.5555/169969.169987>  
   <http://ftp.math.utah.edu/pub/tex/bib/toc/cccuj.html#11(11):November:1993>
 
+**vi like**  
 ![AE modal bindings](./ae_modal_75.png)
 
 ### Rant
 
-I tried to get a version of this history saved on the english Wikipedia, because the [French Wikipedia version](https://fr.wikipedia.org/wiki/Anthony's_Editor) I stumbled on lacked the history.  Wikipedia english rules are so demanding that they just deemed `ae` unworthy, because it wasn't talked about enough.  Middle finger to Wikipedia for any help in perserving smaller parts of tech. history.  (And don't get me started on Wikimedia markup when Markdown is so simple to use.)
+I tried to get a version of this history saved on the english Wikipedia, because the [French Wikipedia version](https://fr.wikipedia.org/wiki/Anthony's_Editor) I stumbled on lacked the history.  Wikipedia english rules are so demanding that they just deemed `ae` unworthy, because it wasn't talked about enough.  Middle finger to Wikipedia for any help in perserving smaller parts of tech. history.
