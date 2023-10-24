@@ -4,7 +4,7 @@
 ae - Anthony's Editor
 =====================
 
-Anthony's Editor aka `ae` is a Curses based text editor for POSIX systems.  It is an example of the "Buffer Gap" method outlined in the [The Craft Of Text Editing](http://www.finseth.com/craft/) used by many Emacs style editors.
+`ae` is a light-weight Curses based text editor for POSIX systems.  It is an example of the "Buffer Gap" method outlined in the [The Craft Of Text Editing](http://www.finseth.com/craft/) used by many Emacs style editors.
 
 
 * [Best Utility - IOCCC Winner 1991](91)  
@@ -18,6 +18,7 @@ Anthony's Editor aka `ae` is a Curses based text editor for POSIX systems.  It i
 
 History
 -------
+
 Written by Anthony Howe, the original `ae` is a full screen vi-style text editor written in less than 1536 bytes of C source code and won the [International Obfuscated C Code Contest](http://ioccc.org) [1991 Best Utility](https://www.ioccc.org/years.html#1991_ant).  It later appeared in Don Libes's book "Obfuscated C And Other Mysteries".
 
 After, `ae` grew with additional commands, like block cut/paste, inline help, macros, and ability to be configured for vi-style (modal) or emacs-style (mode-less) text editing.  It was published as part of a trio of tools in [CUG #388 Anthony's Tools](http://www.hal9k.com/cug/V300E.HTM#cug388) (which included [am](https://github.com/SirWumpus/ioccc-am), [ag](https://github.com/SirWumpus/ioccc-ag)) as reviewed by "The C Users Journal".
@@ -26,18 +27,22 @@ After, `ae` grew with additional commands, like block cut/paste, inline help, ma
 
 `ae` has inspired some derivative editors: a Japanese version [Ari](https://github.com/ari-editor/ari), several by Hugh Barney (Femto, [Atto](https://github.com/hughbarney/atto#derivation), [Zepto](https://github.com/hughbarney/zep#derivation)), Terry Loveall's [ue](https://github.com/kisom/editors/tree/master/ue), and [kg](https://github.com/kristofer/kg#Derivation) written in Go.
 
+
 ### Publications
 
 * Don Libes, Obfuscated C and Other Mysteries, Wiley, 1993, pg 369.  
   ISBN 0-471-57805-3.
 * Dale Scheetz, The Debian Linux User's Guide, Linux Press, 1997, pg 192.  
   ISBN 0-9659575-0-0.
+* Bill McCarty, Learning Debian GNU/Linux 1st ed, O'Reilly, 1999, ch 4.5  
+  ISBN 1-56592-705-2.
 * The C Users Journal , November 1993, pg 121, ISSN: 0898-9788  
   <https://dl.acm.org/doi/10.5555/169969.169987>  
   <http://ftp.math.utah.edu/pub/tex/bib/toc/cccuj.html#11(11):November:1993>
 
 **vi like**  
 ![AE modal bindings](./ae_modal_75.png)
+
 
 ### Rant
 
